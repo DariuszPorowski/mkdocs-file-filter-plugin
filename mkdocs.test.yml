@@ -1,4 +1,4 @@
-gitignore: true
+mkdocsignore: true
 exclude_glob:
   - "aaa/**"
   - "draft-*.md"

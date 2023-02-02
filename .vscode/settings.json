@@ -9,5 +9,8 @@
 	"git.branchProtection": [
 		"main",
 		"master"
-	]
+	],
+	"files.associations": {
+		"*.mkdocsignore": "ignore"
+	}
 }

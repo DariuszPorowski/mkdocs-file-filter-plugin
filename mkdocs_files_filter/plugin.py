@@ -15,16 +15,20 @@ LOG.addFilter(warning_filter)
 
 
 class ExcludeDecider:
-    def __init__(self, exclude_globs, exclude_regexes, include_globs, include_regexes, gitignore):
+    def __init__(self, exclude_globs, exclude_regexes, include_globs, include_regexes, mkdocsignore, mkdocsignore_file):
         self.exclude_globs = exclude_globs
         self.exclude_regexes = exclude_regexes
         self.include_globs = include_globs
         self.include_regexes = include_regexes
-        self.gitignore = gitignore
+        self.mkdocsignore = mkdocsignore
 
-        if self.gitignore:
-            self.gitignore_parser = igittigitt.IgnoreParser()
-            self.gitignore_parser.parse_rule_file(pathlib.Path('.gitignore'))
+        if self.mkdocsignore:
+            self.mkdocsignore_parser = igittigitt.IgnoreParser()
+            mkdocsignore_file_path = pathlib.Path('.mkdocsignore')
+            if mkdocsignore_file is not None:
+                mkdocsignore_file_path = pathlib.Path(mkdocsignore_file)
+            self.mkdocsignore_parser.parse_rule_file(
+                pathlib.Path(mkdocsignore_file_path))
 
     def is_include(self, src_path, abs_src_path):
         if not self._is_include(src_path, abs_src_path):
@@ -58,15 +62,15 @@ class ExcludeDecider:
         for r in self.exclude_regexes:
             if re.match(r, src_path):
                 return False
-        if self.gitignore and self._git_ignores(abs_src_path):
+        if self.mkdocsignore and self._mkdocs_ignores(abs_src_path):
             return False
 
         return True
 
-    def _git_ignores(self, abs_src_path):
+    def _mkdocs_ignores(self, abs_src_path):
         if os.path.basename(abs_src_path) == '.git':  # Ignore .git directory
             return True
-        return self.gitignore_parser.match(pathlib.Path(abs_src_path))
+        return self.mkdocsignore_parser.match(pathlib.Path(abs_src_path))
 
 
 def get_list_from_config(name, config, config_file: False):
@@ -90,7 +94,8 @@ class FilesFilter(mkdocs.plugins.BasePlugin):
         ('exclude_regex', mkdocs.config.config_options.Type((str, list), default=None)),
         ('include_glob', mkdocs.config.config_options.Type((str, list), default=None)),
         ('include_regex', mkdocs.config.config_options.Type((str, list), default=None)),
-        ('gitignore', mkdocs.config.config_options.Type(bool, default=False)),
+        ('mkdocsignore', mkdocs.config.config_options.Type(bool, default=False)),
+        ('mkdocsignore_file', mkdocs.config.config_options.File(exists=True)),
         ('config', mkdocs.config.config_options.File(exists=True)),
     )
 
@@ -118,7 +123,8 @@ class FilesFilter(mkdocs.plugins.BasePlugin):
                 'include_glob', files_filter_config, True)
             include_regexes = get_list_from_config(
                 'include_regex', files_filter_config, True)
-            gitignore = files_filter_config.get('gitignore', False)
+            mkdocsignore = files_filter_config.get('mkdocsignore', False)
+            mkdocsignore_file = files_filter_config.get('mkdocsignore_file', None)
         else:
             exclude_globs = get_list_from_config('exclude_glob', self.config)
             exclude_regexes = get_list_from_config(
@@ -126,16 +132,18 @@ class FilesFilter(mkdocs.plugins.BasePlugin):
             include_globs = get_list_from_config('include_glob', self.config)
             include_regexes = get_list_from_config(
                 'include_regex', self.config)
-            gitignore = self.config['gitignore']
+            mkdocsignore = self.config['mkdocsignore']
+            mkdocsignore_file = self.config['mkdocsignore_file']
 
-        LOG.debug("gitignore: %s", gitignore)
+        LOG.debug("mkdocsignore: %s", mkdocsignore)
+        LOG.debug("mkdocsignore_file: %s", mkdocsignore_file)
         LOG.debug("exclude_glob: %s", exclude_globs)
         LOG.debug("exclude_regex: %s", exclude_regexes)
         LOG.debug("include_glob: %s", include_globs)
         LOG.debug("include_regex: %s", include_regexes)
 
         exclude_decider = ExcludeDecider(
-            exclude_globs, exclude_regexes, include_globs, include_regexes, gitignore)
+            exclude_globs, exclude_regexes, include_globs, include_regexes, mkdocsignore, mkdocsignore_file)
         out = []
         for file in files:
             src_path = file.src_path

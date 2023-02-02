@@ -13,7 +13,7 @@ This implements what people were asking for in some mkdocs bugs, such as <https:
   ```yaml
   plugins:
     - files-filter:
-      gitignore: true
+      mkdocsignore: true
       exclude_glob:
         - "exclude/this/path/*"
         - "*.tmp"
@@ -51,10 +51,10 @@ When writing regexes, it's best to use single quotes rather than double quotes s
 It is possible to exclude and include. For example, you could exclude `*` but include `*.md`.
 **Include** has higher priority over exclude.
 
-## gitignore
+## mkdocsignore
 
-Setting `gitignore` to `true` will ignore files if `git` ignores them.[^1] (This defaults to `false` if omitted.)
+Setting `mkdocsignore` to `true` will ignore files if `git` ignores them.[^1] (This defaults to `false` if omitted.)
 
 ---
 
-[^1]: Some environments like [`tox`](https://tox.readthedocs.io/), do not pass on the `HOME` environment variable by default. `git` uses `HOME` to expand configurations like `excludesfile = ~/.gitignore`. If you rely on `git` configurations other than what lives in your repository, this can lead to disparities between what you observe when running `git` in your shell versus what gets ignored by this plugin. If you experience this and are unable to move the requisite configuration into your repository’s `.gitignore` file(s), consider exposing the `HOME` environment variable to your build environment or modifying `.git/config` or `.git/info/exclude` in your local repository copy.
+[^1]: Some environments like [`tox`](https://tox.readthedocs.io/), do not pass on the `HOME` environment variable by default. `git` uses `HOME` to expand configurations like `excludesfile = ~/.mkdocsignore`. If you rely on `git` configurations other than what lives in your repository, this can lead to disparities between what you observe when running `git` in your shell versus what gets ignored by this plugin. If you experience this and are unable to move the requisite configuration into your repository’s `.mkdocsignore` file(s), consider exposing the `HOME` environment variable to your build environment or modifying `.git/config` or `.git/info/exclude` in your local repository copy.
