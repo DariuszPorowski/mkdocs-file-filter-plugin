@@ -6,7 +6,6 @@ import mkdocs.plugins
 import mkdocs.structure.files
 import pathlib
 import igittigitt
-
 import logging
 from mkdocs.utils import warning_filter
 LOG = logging.getLogger("mkdocs.plugins." + __name__)
@@ -44,11 +43,6 @@ class ExcludeDecider:
                 return False
         return True
 
-    def _git_ignores(self, abs_src_path):
-        if os.path.basename(abs_src_path) == '.git':  # Ignore .git directory
-            return True
-        return self.gitignore_parser.match(pathlib.Path(abs_src_path))
-
     def _is_include(self, src_path, abs_src_path):
         for g in self.include_globs:
             if fnmatch.fnmatchcase(src_path, g):
@@ -66,6 +60,11 @@ class ExcludeDecider:
             return False
 
         return True
+
+    def _git_ignores(self, abs_src_path):
+        if os.path.basename(abs_src_path) == '.git':  # Ignore .git directory
+            return True
+        return self.gitignore_parser.match(pathlib.Path(abs_src_path))
 
 
 def get_list_from_config(name, config):
