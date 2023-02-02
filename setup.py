@@ -19,7 +19,7 @@ setuptools.setup(
     description='A mkdocs plugin that lets you exclude/include files or trees.',
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
-    install_requires=['mkdocs', 'igittigitt'],
+    install_requires=['mkdocs', 'igittigitt', 'pyyaml'],
 
     # The following rows are important to register your plugin.
         # The format is "(plugin name) = (plugin folder):(class name)"

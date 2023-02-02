@@ -7,7 +7,9 @@ import mkdocs.structure.files
 import pathlib
 import igittigitt
 import logging
+import yaml
 from mkdocs.utils import warning_filter
+from mkdocs.config import base, config_options as c
 LOG = logging.getLogger("mkdocs.plugins." + __name__)
 LOG.addFilter(warning_filter)
 
@@ -67,10 +69,14 @@ class ExcludeDecider:
         return self.gitignore_parser.match(pathlib.Path(abs_src_path))
 
 
-def get_list_from_config(name, config):
+def get_list_from_config(name, config, config_file: False):
     """ Gets a list item from config. If it doesn't exist, gets empty list.
     If it is not a list, wrap it in a list """
-    result = config[name] or []
+
+    if config_file:
+        result = config.get(name, [])
+    else:
+        result = config[name] or []
     if not isinstance(result, list):
         result = [result]
     return result
@@ -85,12 +91,8 @@ class FilesFilter(mkdocs.plugins.BasePlugin):
         ('include_glob', mkdocs.config.config_options.Type((str, list), default=None)),
         ('include_regex', mkdocs.config.config_options.Type((str, list), default=None)),
         ('gitignore', mkdocs.config.config_options.Type(bool, default=False)),
+        ('config', mkdocs.config.config_options.File(exists=True)),
     )
-
-    # def on_config(self, config):
-    #     # config['aaa'] = "aaa"
-    #     # print("config:", config['plugins'])
-    #     return config
 
     def on_files(self, files, config):
         for k in self.config:
@@ -101,11 +103,36 @@ class FilesFilter(mkdocs.plugins.BasePlugin):
                 raise Exception(
                     "Configuration '%s' not found for files-filter" % k)
 
-        exclude_globs = get_list_from_config('exclude_glob', self.config)
-        exclude_regexes = get_list_from_config('exclude_regex', self.config)
-        include_globs = get_list_from_config('include_glob', self.config)
-        include_regexes = get_list_from_config('include_regex', self.config)
-        gitignore = self.config['gitignore']
+        files_filter_config_path = self.config['config']
+        if files_filter_config_path is not None:
+            LOG.info("Loading files-filter config file: %s",
+                     os.path.basename(files_filter_config_path))
+            with open(files_filter_config_path, 'r') as f:
+                files_filter_config = yaml.safe_load(f)
+
+            exclude_globs = get_list_from_config(
+                'exclude_glob', files_filter_config, True)
+            exclude_regexes = get_list_from_config(
+                'exclude_regex', files_filter_config, True)
+            include_globs = get_list_from_config(
+                'include_glob', files_filter_config, True)
+            include_regexes = get_list_from_config(
+                'include_regex', files_filter_config, True)
+            gitignore = files_filter_config.get('gitignore', False)
+        else:
+            exclude_globs = get_list_from_config('exclude_glob', self.config)
+            exclude_regexes = get_list_from_config(
+                'exclude_regex', self.config)
+            include_globs = get_list_from_config('include_glob', self.config)
+            include_regexes = get_list_from_config(
+                'include_regex', self.config)
+            gitignore = self.config['gitignore']
+
+        LOG.debug("gitignore: %s", gitignore)
+        LOG.debug("exclude_glob: %s", exclude_globs)
+        LOG.debug("exclude_regex: %s", exclude_regexes)
+        LOG.debug("include_glob: %s", include_globs)
+        LOG.debug("include_regex: %s", include_regexes)
 
         exclude_decider = ExcludeDecider(
             exclude_globs, exclude_regexes, include_globs, include_regexes, gitignore)
@@ -113,14 +140,11 @@ class FilesFilter(mkdocs.plugins.BasePlugin):
         for file in files:
             src_path = file.src_path
             abs_src_path = file.abs_src_path
-            # print("abs_src_path:", abs_src_path)
             if exclude_decider.is_include(src_path, abs_src_path):
-                # print("include:", file_src_path)
                 LOG.info("include: %s", src_path)
                 LOG.debug("include: %s", src_path)
                 out.append(file)
             else:
-                # print("exclude:", file_src_path)
                 LOG.info("exclude: %s", src_path)
                 LOG.debug("exclude: %s", src_path)
         return mkdocs.structure.files.Files(out)
