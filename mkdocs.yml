@@ -6,4 +6,4 @@ theme:
 plugins:
   - tags
   - files-filter:
-      config: !ENV [SITE_ENVIRONMENT, "mkdocs.files-filter.yml"]
+      config: !ENV [SITE_ENVIRONMENT, "mkdocs.test.yml"]

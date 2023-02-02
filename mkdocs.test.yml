@@ -1,6 +1,3 @@
 mkdocsignore: true
-exclude_glob:
-  - "aaa/**"
-  - "draft-*.md"
 include_glob:
   - "aaa/README.md"
