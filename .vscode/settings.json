@@ -9,8 +9,5 @@
 	"git.branchProtection": [
 		"main",
 		"master"
-	],
-	"files.associations": {
-		"*.pages": "yaml"
-	}
+	]
 }

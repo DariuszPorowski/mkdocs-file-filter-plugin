@@ -1,0 +1,8 @@
+gitignore: true
+exclude_glob:
+  - "aaa/**"
+  - "draft-*.md"
+include_glob:
+  - "aaa/README.md"
+exclude_regex:
+  - '.*\.(tmp|bin|tar)$'

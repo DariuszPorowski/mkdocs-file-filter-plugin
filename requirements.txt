@@ -1,0 +1,3 @@
+wheel
+mkdocs
+mkdocs-material

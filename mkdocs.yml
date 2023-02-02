@@ -1,0 +1,20 @@
+# INHERIT: mkdocs.base.yml
+
+site_name: Test Site
+
+theme:
+  name: material
+
+plugins:
+  - tags
+  - files-filter:
+      # config: !ENV [SITE_ENVIRONMENT, "mkdocs.files-filter.yaml"]
+      gitignore: true
+      exclude_glob:
+        - "aaa/**"
+        - "draft-*.md"
+        # - "test.md"
+      include_glob:
+        - "aaa/README.md"
+      exclude_regex:
+        - '.*\.(tmp|bin|tar)$'
