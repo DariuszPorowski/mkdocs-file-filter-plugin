@@ -20,7 +20,6 @@ class Judger:
             self.mkdocsignore_parser.parse_rule_file(
                 pathlib.Path(mkdocsignore_file_path))
 
-
     def evaluate(self, src_path, abs_src_path):
         if os.sep is not '/':
             src_path = src_path.replace(os.sep, '/')
