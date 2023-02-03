@@ -1,10 +1,9 @@
 import os.path
 from setuptools import setup, find_packages
 
-# Initialization
 VERSION_NUMBER = '0.0.1'
 
-# Setup
+
 def read_file(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
