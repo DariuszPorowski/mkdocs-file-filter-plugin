@@ -18,7 +18,7 @@ setup(
     keywords='mkdocs exclude include globs regexes gitignore',
     url='https://github.com/DariuszPorowski/mkdocs-files-filter',
     author='Dariusz Porowski',
-    author_email='Dariusz.Porowski@hotmail.com',
+    author_email='Dariusz.Porowski@microsoft.com',
     license='MIT',
     python_requires='>=3.8',
     install_requires=[

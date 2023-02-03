@@ -23,7 +23,6 @@ class FilesFilterConfig(ConfigBase):
     mkdocsignore = ConfigOptions.Type(bool, default=False)
     mkdocsignore_file = ConfigOptions.File(
         exists=False, default='.mkdocsignore')
-
     config = ConfigOptions.Optional(ConfigOptions.File(exists=True))
 
 
