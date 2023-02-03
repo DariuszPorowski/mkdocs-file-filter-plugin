@@ -72,11 +72,21 @@ Optionally you can set `mkdocsignore_file` parameter with your path to `.mkdocsi
 
 You can combine mkdocsignore with globs/regex as well. The patterns from both will apply.
 
+External config for mkdocsignore.
+
 ```yaml
 plugins:
   - file-filter:
-      mkdocsignore: true
-      mkdocsignore_file: 'custom/path/.mkdocsignore' # relative to mkdocs.yml
+      mkdocsignore: true # default: false
+      mkdocsignore_file: 'custom/path/.mymkdocsignore' # relative to mkdocs.yml, default: .mkdocsignore
+```
+
+Example `.mkdocsignore` file.
+
+```sh
+# MkDocs
+docs/test/**
+docs/**/draft-*.md
 ```
 
 ## Conflict behavior
