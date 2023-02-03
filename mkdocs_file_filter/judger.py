@@ -6,16 +6,13 @@ import igittigitt
 
 
 class Judger:
-    def __init__(self, exclude_glob, exclude_regex, include_glob, include_regex, mkdocsignore, mkdocsignore_file):
-        self.exclude_glob = exclude_glob
-        self.exclude_regex = exclude_regex
-        self.include_glob = include_glob
-        self.include_regex = include_regex
-        self.mkdocsignore = mkdocsignore
+    def __init__(self, config):
+        self.config = config
 
-        if self.mkdocsignore:
+        if self.config.mkdocsignore:
             self.mkdocsignore_parser = igittigitt.IgnoreParser()
-            mkdocsignore_file_path = pathlib.Path(mkdocsignore_file)
+            mkdocsignore_file_path = pathlib.Path(
+                self.config.mkdocsignore_file)
             self.mkdocsignore_parser.parse_rule_file(
                 pathlib.Path(mkdocsignore_file_path))
 
@@ -30,19 +27,19 @@ class Judger:
         return True
 
     def __included(self, src_path, abs_src_path):
-        for glob in self.include_glob:
+        for glob in self.config.include_glob:
             if fnmatch.fnmatchcase(src_path, glob):
                 return True
-        for regex in self.include_regex:
+        for regex in self.config.include_regex:
             if re.match(regex, src_path):
                 return True
-        for glob in self.exclude_glob:
+        for glob in self.config.exclude_glob:
             if fnmatch.fnmatchcase(src_path, glob):
                 return False
-        for regex in self.exclude_regex:
+        for regex in self.config.exclude_regex:
             if re.match(regex, src_path):
                 return False
-        if self.mkdocsignore and self.__mkdocsignore(abs_src_path):
+        if self.config.mkdocsignore and self.__mkdocsignore(abs_src_path):
             return False
 
         return True

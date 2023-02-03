@@ -5,5 +5,5 @@ theme:
 
 plugins:
   - tags
-  - files-filter:
+  - file-filter:
       config: !ENV [SITE_ENVIRONMENT, "mkdocs.test.yml"]

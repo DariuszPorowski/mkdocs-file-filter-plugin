@@ -1,16 +1,16 @@
 # Files exclude/include plugin for MkDocs
 
-`mkdocs-files-filter` is a [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you to exclude or include files from your input using Unix-style wildcards (globs) or regular expressions (regexes).
+`mkdocs-file-filter` is a [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you to exclude or include files from your input using Unix-style wildcards (globs) or regular expressions (regexes).
 
 ## Quick start
 
-1. Install the module using pip: `pip install mkdocs-files-filter`
+1. Install the module using pip: `pip install mkdocs-file-filter`
 
 1. In your project, add a plugin configuration to `mkdocs.yml`:
 
   ```yaml
   plugins:
-    - files-filter:
+    - file-filter:
         mkdocsignore: true
         exclude_glob:
           - 'exclude/this/path/*'
@@ -34,9 +34,9 @@ The plugin supports external files for the plugin's configuration. If the config
 
   ```yaml
   plugins:
-    - files-filter:
-        # config: !ENV [MY_ENV_VAR_, "mkdocs.files-filter.yml"]
-        config: mkdocs.files-filter.yml
+    - file-filter:
+        # config: !ENV [MY_ENV_VAR_, "mkdocs.file-filter.yml"]
+        config: mkdocs.file-filter.yml
   ```
 
 You can provide zero or more patterns of each type. (If you don't give any patterns, nothing will happen!)

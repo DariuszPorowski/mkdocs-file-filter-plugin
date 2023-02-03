@@ -7,7 +7,7 @@ from mkdocs.utils import warning_filter
 log = logging.getLogger("mkdocs.plugins." + __name__)
 log.addFilter(warning_filter)
 
-PLUGIN_LABEL = 'FILES-FILTER'
+PLUGIN_LABEL = 'FILE-FILTER'
 
 
 def _format_trace(*args):
@@ -35,12 +35,3 @@ def debug(*args):
     """
     msg = _format_trace(*args)
     log.debug(msg)
-
-
-def error(*args):
-    """
-    General purpose print function, as error,
-    for the mkdocs-macros framework;
-    """
-    msg = _format_trace(*args)
-    log.error(msg)
