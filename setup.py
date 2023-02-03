@@ -1,32 +1,44 @@
 import os.path
-import setuptools
-from setuptools import setup
+from setuptools import setup, find_packages
+
+# Initialization
+VERSION_NUMBER = '0.0.1'
+
+# Setup
+def read_file(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-def read(name):
-    mydir = os.path.abspath(os.path.dirname(__file__))
-    return open(os.path.join(mydir, name)).read()
-
-
-setuptools.setup(
+setup(
     name='mkdocs-files-filter',
-    version='0.0.1',
-    packages=['mkdocs_files_filter'],
+    version=VERSION_NUMBER,
+    description='A MkDocs plugin that lets you exclude/include docs files using globs, regexes and gitignore-style file.',
+    long_description=read_file('README.md'),
+    long_description_content_type='text/markdown',
+    keywords='mkdocs exclude include globs regexes gitignore',
     url='https://github.com/DariuszPorowski/mkdocs-files-filter',
-    license='MIT',
     author='Dariusz Porowski',
     author_email='Dariusz.Porowski@hotmail.com',
-    description='A mkdocs plugin that lets you exclude/include files or trees.',
-    long_description=read('README.md'),
-    long_description_content_type='text/markdown',
-    install_requires=['mkdocs', 'igittigitt', 'pyyaml'],
-
-    # The following rows are important to register your plugin.
-        # The format is "(plugin name) = (plugin folder):(class name)"
-        # Without them, mkdocs will not be able to recognize it.
-        entry_points={
-                'mkdocs.plugins': [
-                    'files-filter = mkdocs_files_filter:FilesFilter',
-                ]
-    },
+    license='MIT',
+    python_requires='>=3.8',
+    install_requires=[
+        'mkdocs>=1.4.0',
+        'igittigitt',
+        'pyyaml'
+    ],
+    classifiers=[
+        'Development Status :: 1 - Planning',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Information Technology',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3'
+        'Programming Language :: Python :: 3 :: Only',
+    ],
+    packages=['mkdocs_files_filter'],
+    entry_points={
+        'mkdocs.plugins': [
+            'files-filter = mkdocs_files_filter:FilesFilter',
+        ]
+    }
 )

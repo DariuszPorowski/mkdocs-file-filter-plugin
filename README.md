@@ -13,21 +13,21 @@ This implements what people were asking for in some mkdocs bugs, such as <https:
   ```yaml
   plugins:
     - files-filter:
-      mkdocsignore: true
-      exclude_glob:
-        - "exclude/this/path/*"
-        - "*.tmp"
-        - "*.pdf"
-        - "*.gz"
-      exclude_regex:
-        - '.*\.(tmp|bin|tar)$'
-      include_glob:
-        - "include/this/path/*"
-        - "*.png"
-        - "*.md"
-        - "assets/**" # the material theme requires this folder
-      include_regex:
-        - '.*\.(js|css)$'
+        mkdocsignore: true
+        exclude_glob:
+          - "exclude/this/path/*"
+          - "*.tmp"
+          - "*.pdf"
+          - "*.gz"
+        exclude_regex:
+          - '.*\.(tmp|bin|tar)$'
+        include_glob:
+          - "include/this/path/*"
+          - "*.png"
+          - "*.md"
+          - "assets/**" # the material theme requires this folder
+        include_regex:
+          - '.*\.(js|css)$'
   ```
 
 1. Config file TODO
