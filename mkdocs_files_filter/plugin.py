@@ -27,12 +27,7 @@ class FilesFilterConfig(ConfigBase):
 
 
 class FilesFilter(BasePlugin[FilesFilterConfig]):
-    """A mkdocs plugin that removes all matching files from the input list."""
-
     def __config_list(self, name, config, external_config_file: False):
-        """ Gets a list item from config. If it doesn't exist, gets empty list.
-        If it is not a list, wrap it in a list """
-
         if external_config_file:
             result = config.get(name, [])
         else:

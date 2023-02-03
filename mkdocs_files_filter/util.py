@@ -29,7 +29,7 @@ def trace(*args):
 
 def debug(*args):
     """
-    General purpose print function, as trace,
+    General purpose print function, as debug,
     for the mkdocs-macros framework;
     it will appear if --verbose option is activated
     """
@@ -39,9 +39,8 @@ def debug(*args):
 
 def error(*args):
     """
-    General purpose print function, as trace,
+    General purpose print function, as error,
     for the mkdocs-macros framework;
-    it will appear if --verbose option is activated
     """
     msg = _format_trace(*args)
     log.error(msg)
