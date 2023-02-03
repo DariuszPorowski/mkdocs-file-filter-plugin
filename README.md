@@ -60,7 +60,7 @@ include_regex:
   - '.*\.(js|css)$'
 ```
 
-> **TIP**
+> **HINT**
 >
 > For external file config, you can use [MkDocs Environment Variables](https://www.mkdocs.org/user-guide/configuration/#environment-variables) to set the desired file dynamically. A useful case for serving the site with different content based on stage/environment. Works well with CI/CD automation.
 
@@ -83,7 +83,7 @@ plugins:
 
 Example `.mkdocsignore` file.
 
-```sh
+```bash
 # MkDocs
 docs/test/**
 docs/**/draft-*.md
@@ -91,14 +91,12 @@ docs/**/draft-*.md
 
 ## Conflict behavior
 
-It is possible to exclude and include will have conflict. For example, you could exclude `drafts/*` but include `*.md`. In that case, **include** has higher priority over exclude. So all `*.md` files from the drafts folder will be on your site.
+It is possible to exclude and include will have conflict. For example, you could exclude `drafts/*` but include `*.md`. In that case, **include** has higher priority over exclude. So all `*.md` files from the drafts folder will be included.
 
----
+## Some useful stuff
 
-You can provide zero or more patterns of each type. (If you don't give any patterns, nothing will happen!)
+If you do not provide patterns, everything will stay the same - standard MkDocs behavior.
 
-Note! Because of the peculiarity of yaml syntax, the `*_glob:` and `*_regex:` lines **must not** start with a dash, but the lines under them **must** begin with a dash.
+Because of the YAML syntax specifics, patterns that start with a punctuation mark must be quoted.
 
-Also, because of yaml, patterns that start with a punctuation mark must be quoted.
-
-When writing regexes, it's best to use single quotes rather than double quotes so that your regex backslash escapes are preserved correctly without being doubled up.
+The preferred way for quotes is to use single quotes `'` rather than double quotes `"` - regex backslash escapes are preserved correctly without being doubled up.
