@@ -18,8 +18,9 @@ class FilesFilterConfig(ConfigBase):
         ConfigOptions.Type((str, list), default=None))
     include_regex = ConfigOptions.Optional(
         ConfigOptions.Type((str, list), default=None))
-    conflict_behavior = ConfigOptions.Choice(
-        ('include', 'exclude'), default='include')
+    # TODO
+    # conflict_behavior = ConfigOptions.Choice(
+    #     ('include', 'exclude'), default='include')
     mkdocsignore = ConfigOptions.Type(bool, default=False)
     mkdocsignore_file = ConfigOptions.File(
         exists=False, default='.mkdocsignore')
@@ -51,8 +52,8 @@ class FilesFilter(BasePlugin[FilesFilterConfig]):
                 'include_glob', files_filter_config, True)
             self.config.include_regex = self.__config_list(
                 'include_regex', files_filter_config, True)
-            self.config.conflict_behavior = files_filter_config.get(
-                'conflict_behavior', 'include')
+            # self.config.conflict_behavior = files_filter_config.get(
+            #     'conflict_behavior', 'include')
             self.config.mkdocsignore = files_filter_config.get(
                 'mkdocsignore', False)
             self.config.mkdocsignore_file = files_filter_config.get(
@@ -67,8 +68,8 @@ class FilesFilter(BasePlugin[FilesFilterConfig]):
             self.config.mkdocsignore_file = None
 
         LOG.debug("Config value 'config' = ", self.config.config)
-        LOG.debug("Config value 'conflict_behavior' = ",
-                  self.config.conflict_behavior)
+        # LOG.debug("Config value 'conflict_behavior' = ",
+        #           self.config.conflict_behavior)
         LOG.debug("Config value 'mkdocsignore' = ", self.config. mkdocsignore)
         LOG.debug("Config value 'mkdocsignore_file' = ",
                   self.config.mkdocsignore_file)
@@ -81,7 +82,7 @@ class FilesFilter(BasePlugin[FilesFilterConfig]):
 
     def on_files(self, files, config):
         judger = Judger(
-            self.config.exclude_glob, self.config.exclude_regex, self.config.include_glob, self.config.include_regex, self.config.conflict_behavior, self.config.mkdocsignore, self.config.mkdocsignore_file)
+            self.config.exclude_glob, self.config.exclude_regex, self.config.include_glob, self.config.include_regex, self.config.mkdocsignore, self.config.mkdocsignore_file)
         out = []
         for file in files:
             if judger.evaluate(file.src_path, file.abs_src_path):

@@ -6,12 +6,11 @@ import igittigitt
 
 
 class Judger:
-    def __init__(self, exclude_glob, exclude_regex, include_glob, include_regex, conflict_behavior, mkdocsignore, mkdocsignore_file):
+    def __init__(self, exclude_glob, exclude_regex, include_glob, include_regex, mkdocsignore, mkdocsignore_file):
         self.exclude_glob = exclude_glob
         self.exclude_regex = exclude_regex
         self.include_glob = include_glob
         self.include_regex = include_regex
-        self.conflict_behavior = conflict_behavior
         self.mkdocsignore = mkdocsignore
 
         if self.mkdocsignore:
