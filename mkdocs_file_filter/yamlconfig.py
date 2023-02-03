@@ -20,7 +20,7 @@ class YamlConfig:
         LOG.trace("Loading config file: ",
                   os.path.basename(config_path))
         with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
+            config = yaml.safe_load(f) or {}
         self.__validate(config)
         return config
 

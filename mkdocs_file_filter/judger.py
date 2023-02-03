@@ -11,10 +11,8 @@ class Judger:
 
         if self.config.mkdocsignore:
             self.mkdocsignore_parser = igittigitt.IgnoreParser()
-            mkdocsignore_file_path = pathlib.Path(
-                self.config.mkdocsignore_file)
             self.mkdocsignore_parser.parse_rule_file(
-                pathlib.Path(mkdocsignore_file_path))
+                pathlib.Path(self.config.mkdocsignore_file))
 
     def evaluate(self, src_path, abs_src_path):
         if os.sep is not '/':

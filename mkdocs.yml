@@ -1,9 +1,9 @@
 site_name: Test Site
 
-theme:
-  name: material
+# theme:
+#   name: material
 
 plugins:
-  - tags
+  # - tags
   - file-filter:
-      config: !ENV [SITE_ENVIRONMENT, "mkdocs.test.yml"]
+      config: !ENV [SITE_ENVIRONMENT, "mkdocs.file-filter.yml"]
