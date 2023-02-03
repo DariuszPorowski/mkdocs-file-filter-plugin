@@ -78,7 +78,7 @@ External config for mkdocsignore.
 plugins:
   - file-filter:
       mkdocsignore: true # default: false
-      mkdocsignore_file: 'custom/path/.mymkdocsignore' # relative to mkdocs.yml, default: .mkdocsignore
+      mkdocsignore_file: 'custom/path/.myignore' # relative to mkdocs.yml, default: .mkdocsignore
 ```
 
 Example `.mkdocsignore` file.
