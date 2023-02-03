@@ -1,8 +1,6 @@
-# Files exclude/include plugin for mkdocs
+# Files exclude/include plugin for MkDocs
 
 `mkdocs-files-filter` is a [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you to exclude or include files from your input using Unix-style wildcards (globs) or regular expressions (regexes).
-
-This implements what people were asking for in some mkdocs bugs, such as <https://github.com/mkdocs/mkdocs/issues/1500> and <https://github.com/mkdocs/mkdocs/issues/1152>.
 
 ## Quick start
 
@@ -15,46 +13,46 @@ This implements what people were asking for in some mkdocs bugs, such as <https:
     - files-filter:
         mkdocsignore: true
         exclude_glob:
-          - "exclude/this/path/*"
-          - "*.tmp"
-          - "*.pdf"
-          - "*.gz"
+          - 'exclude/this/path/*'
+          - '*.tmp'
+          - '*.pdf'
+          - '*.gz'
         exclude_regex:
           - '.*\.(tmp|bin|tar)$'
         include_glob:
-          - "include/this/path/*"
-          - "*.png"
-          - "*.md"
-          - "assets/**" # the material theme requires this folder
+          - 'include/this/path/*'
+          - '*.png"
+          - '*.md"
+          - 'assets/**' # the material theme requires this folder
         include_regex:
           - '.*\.(js|css)$'
   ```
 
-1. Config file TODO
+## External config file
+
+The plugin supports external files for the plugin's configuration. If the config file is specified, then `*_glob:` and `*_regex:` are not taken
 
   ```yaml
   plugins:
     - files-filter:
-        # config: !ENV [SITE_ENVIRONMENT, "mkdocs.files-filter.yml"]
+        # config: !ENV [MY_ENV_VAR_, "mkdocs.files-filter.yml"]
         config: mkdocs.files-filter.yml
   ```
 
 You can provide zero or more patterns of each type. (If you don't give any patterns, nothing will happen!)
 
-Note! Because of the peculiarity of yaml syntax, the `glob:` and `regex:` lines **must not** start with a dash, but the lines under them **must** begin with a dash.
+Note! Because of the peculiarity of yaml syntax, the `*_glob:` and `*_regex:` lines **must not** start with a dash, but the lines under them **must** begin with a dash.
+
 Also, because of yaml, patterns that start with a punctuation mark must be quoted.
 
-When writing regexes, it's best to use single quotes rather than double quotes so that your regex backslash escapes are preserved correctly without having to be doubled up.
+When writing regexes, it's best to use single quotes rather than double quotes so that your regex backslash escapes are preserved correctly without being doubled up.
 
 ## Exclude and Include
 
 It is possible to exclude and include. For example, you could exclude `*` but include `*.md`.
+
 **Include** has higher priority over exclude.
 
-## mkdocsignore
+## .mkdocsignore
 
-Setting `mkdocsignore` to `true` will ignore files if `git` ignores them.[^1] (This defaults to `false` if omitted.)
-
----
-
-[^1]: Some environments like [`tox`](https://tox.readthedocs.io/), do not pass on the `HOME` environment variable by default. `git` uses `HOME` to expand configurations like `excludesfile = ~/.mkdocsignore`. If you rely on `git` configurations other than what lives in your repository, this can lead to disparities between what you observe when running `git` in your shell versus what gets ignored by this plugin. If you experience this and are unable to move the requisite configuration into your repository’s `.mkdocsignore` file(s), consider exposing the `HOME` environment variable to your build environment or modifying `.git/config` or `.git/info/exclude` in your local repository copy.
+Setting `mkdocsignore` to `true` will ignore dirs/files specified in the `.mkdocsignore`. Use the same syntax as you use for gitignore.
