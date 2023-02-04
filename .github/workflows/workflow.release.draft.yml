@@ -1,5 +1,5 @@
 ---
-name: Draft New Release
+name: Release Drafter
 
 on:
   workflow_dispatch:
