@@ -1,0 +1,70 @@
+name-template: "v$RESOLVED_VERSION"
+tag-template: "v$RESOLVED_VERSION"
+categories:
+  - title: "Breaking"
+    labels:
+      - "major"
+      - "breaking"
+  - title: "New"
+    labels:
+      - "minor"
+      - "feature"
+      - "enhancement"
+  - title: "Bug Fixes"
+    labels:
+      - "fix"
+      - "bugfix"
+      - "bug"
+  - title: "Maintenance"
+    labels:
+      - "maintenance"
+      - "chore"
+  - title: "Documentation"
+    labels:
+      - "docs"
+      - "documentation"
+  - title: "Other changes"
+    label: "patch"
+  - title: "Dependency Updates"
+    label: "dependencies"
+  - title: "Security Updates"
+    label: "security"
+    collapse-after: 5
+exclude-labels:
+  - "skip-changelog"
+change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+version-resolver:
+  major:
+    labels:
+      - "major"
+      - "breaking"
+  minor:
+    labels:
+      - "minor"
+      - "feature"
+      - "enhancement"
+  patch:
+    labels:
+      - "patch"
+      - "fix"
+      - "bugfix"
+      - "bug"
+      - "maintenance"
+      - "docs"
+      - "documentation"
+      - "dependencies"
+      - "security"
+  default: patch
+template: |
+  # Summary
+
+  ## What's Changed
+
+  $CHANGES
+
+  ## Contributors
+
+  $CONTRIBUTORS
+
+  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
