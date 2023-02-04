@@ -10,17 +10,10 @@ from .yamlconfig import YamlConfig
 
 
 class FileFilterConfig(ConfigBase):
-    exclude_glob = ConfigOptions.Optional(ConfigOptions.Type((str, list), default=None))
-    exclude_regex = ConfigOptions.Optional(
-        ConfigOptions.Type((str, list), default=None)
-    )
-    include_glob = ConfigOptions.Optional(ConfigOptions.Type((str, list), default=None))
-    include_regex = ConfigOptions.Optional(
-        ConfigOptions.Type((str, list), default=None)
-    )
-    # TODO
-    # conflict_behavior = ConfigOptions.Choice(
-    #     ('include', 'exclude'), default='include')
+    exclude_glob = ConfigOptions.Type((str, list), default=[])
+    exclude_regex = ConfigOptions.Type((str, list), default=[])
+    include_glob = ConfigOptions.Type((str, list), default=[])
+    include_regex = ConfigOptions.Type((str, list), default=[])
     mkdocsignore = ConfigOptions.Type(bool, default=False)
     mkdocsignore_file = ConfigOptions.File(exists=False, default=".mkdocsignore")
     config = ConfigOptions.Optional(ConfigOptions.File(exists=True, default=None))
@@ -41,11 +34,6 @@ class FileFilter(BasePlugin[FileFilterConfig]):
                 "mkdocsignore_file", ".mkdocsignore"
             )
 
-        self.config.exclude_glob = self.__config_list("exclude_glob", self.config)
-        self.config.exclude_regex = self.__config_list("exclude_regex", self.config)
-        self.config.include_glob = self.__config_list("include_glob", self.config)
-        self.config.include_regex = self.__config_list("include_regex", self.config)
-
         if self.config.mkdocsignore:
             if pathlib.Path(self.config.mkdocsignore_file).is_file() is False:
                 raise PluginError(
@@ -64,14 +52,13 @@ class FileFilter(BasePlugin[FileFilterConfig]):
 
     def on_files(self, files, config):
         judger = Judger(self.config)
-        out = []
         for file in files:
             if judger.evaluate(file.src_path, file.abs_src_path):
                 LOG.debug("include file: ", file.src_path)
-                out.append(file)
             else:
                 LOG.debug("exclude file: ", file.src_path)
-        return MkdocsFiles(out)
+                files.remove(file)
+        return MkdocsFiles(files)
 
     def on_serve(self, server, config, builder):
         if "config" in self.config and self.config.config is not None:
@@ -79,9 +66,3 @@ class FileFilter(BasePlugin[FileFilterConfig]):
         if self.config.mkdocsignore:
             server.watch(self.config.mkdocsignore_file)
         return server
-
-    def __config_list(self, name, config):
-        result = config[name] or []
-        if not isinstance(result, list):
-            result = [result]
-        return result
