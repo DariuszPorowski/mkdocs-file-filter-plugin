@@ -1,23 +1,34 @@
 [tool.poetry]
 name = "mkdocs-file-filter-plugin"
-version = "0.0.1"
+version = "0.0.2"
 description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes and gitignore-style file.'
 authors = ["Dariusz Porowski"]
+homepage = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 repository = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
+documentation = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md"
 readme = "README.md"
 license = "MIT"
 keywords = ["mkdocs", "exclude", "include", "globs", "regexes", "gitignore"]
 classifiers = [
 	"Development Status :: 3 - Alpha",
 	"Programming Language :: Python",
+	"Programming Language :: Python :: 3",
 	"Programming Language :: Python :: 3.8",
 	"Programming Language :: Python :: 3.9",
 	"Programming Language :: Python :: 3.10",
 	"Programming Language :: Python :: 3.11",
-	"Programming Language :: Python :: Implementation :: CPython",
-	"Programming Language :: Python :: Implementation :: PyPy",
+	"Programming Language :: Python :: 3 :: Only",
+	"Operating System :: OS Independent",
+	"License :: OSI Approved :: MIT License",
+	"Intended Audience :: Developers",
+	"Intended Audience :: Information Technology",
+	"Topic :: Documentation",
 ]
 packages = [{ include = "mkdocs_file_filter_plugin" }]
+
+[tool.poetry.urls]
+Issues = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/issues"
+History = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/releases"
 
 [tool.poetry.plugins."mkdocs.plugins"]
 file-filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
