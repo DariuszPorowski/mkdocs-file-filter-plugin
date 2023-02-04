@@ -1,3 +1,1 @@
 # draft-aaa
-
-draft-aaa

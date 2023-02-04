@@ -1,3 +1,0 @@
-mkdocsignore: true
-exclude_glob:
-  - "aaa/README.md"
