@@ -1,0 +1,4 @@
+site_name: Test Site
+
+plugins:
+  - file-filter:

@@ -1,0 +1,41 @@
+---
+name: Release
+
+on:
+  release:
+    types:
+      - prereleased
+      - released
+      - published
+
+jobs:
+  release:
+    if: ${{ !github.event.release.prerelease && github.event.action == 'released' && github.repository_owner == 'DariuszPorowski' }}
+    environment:
+      name: PyPI
+      url: "https://pypi.org/project/mkdocs-file-filter-plugin"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "poetry"
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Set Version
+        run: poetry version ${GITHUB_REF_NAME/v/}
+
+      - name: Build
+        run: poetry build
+
+      - name: Publish
+        run: poetry publish --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}

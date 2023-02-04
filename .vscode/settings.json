@@ -1,0 +1,20 @@
+{
+	"yaml.schemas": {
+		"https://squidfunk.github.io/mkdocs-material/schema.json": [
+			"mkdocs.yml"
+		]
+	},
+	"files.trimTrailingWhitespace": true,
+	"git.autofetch": true,
+	"git.fetchOnPull": true,
+	"git.pruneOnFetch": true,
+	"git.branchProtection": [
+		"main",
+		"master"
+	],
+	"files.associations": {
+		"*.mkdocsignore": "ignore",
+		".pages": "yaml"
+	},
+	"python.linting.enabled": true
+}

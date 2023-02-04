@@ -1,0 +1,3 @@
+mkdocsignore: true
+include_glob:
+  - 'test/test.md'
