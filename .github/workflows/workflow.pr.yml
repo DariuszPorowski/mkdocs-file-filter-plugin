@@ -1,9 +1,42 @@
 ---
 name: Pull Request checker
-on: pull_request
+on:
+  pull_request:
+    branches:
+      - main
+
+# Allow one concurrent
+concurrency:
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  ci:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "poetry"
+
+      - name: Setup Poetry
+        run: |
+          pip install poetry
+          poetry --version
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Check formatting
+        run: poetry run black --check .
+
+  test:
+    needs: lint
     strategy:
       fail-fast: false
       matrix:
@@ -11,11 +44,24 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - run: |
+          cache: "poetry"
+
+      - name: Setup Poetry
+        run: |
           pip install poetry
-      - name: View poetry --help
-        run: poetry --help
+          poetry --version
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Test Build
+        run: |
+          poetry version
+          poetry build
