@@ -8,14 +8,14 @@ log = logging.getLogger("mkdocs.plugins." + __name__)
 log.addFilter(warning_filter)
 
 
-PLUGIN_LABEL = 'FILE-FILTER'
+PLUGIN_LABEL = "FILE-FILTER"
 
 
 def _format_trace(*args):
     first = args[0]
     rest = [str(el) for el in args[1:]]
     text = "[%s] %s" % (PLUGIN_LABEL, first)
-    return ' '.join([text] + rest)
+    return " ".join([text] + rest)
 
 
 def trace(*args):

@@ -32,6 +32,7 @@ schema = "^0.7.5"
 [tool.poetry.dev-dependencies]
 pytest = "^7.2.1"
 autopep8 = "^2.0.1"
+black = "^23.1.0"
 
 [build-system]
 requires = ["poetry-core"]

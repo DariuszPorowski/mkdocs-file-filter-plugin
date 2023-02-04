@@ -12,12 +12,13 @@ class Judger:
         if self.config.mkdocsignore:
             self.mkdocsignore_parser = igittigitt.IgnoreParser()
             self.mkdocsignore_parser.parse_rule_file(
-                pathlib.Path(self.config.mkdocsignore_file))
+                pathlib.Path(self.config.mkdocsignore_file)
+            )
 
     def evaluate(self, src_path, abs_src_path):
-        if os.sep is not '/':
-            src_path = src_path.replace(os.sep, '/')
-            abs_src_path = abs_src_path.replace(os.sep, '/')
+        if os.sep is not "/":
+            src_path = src_path.replace(os.sep, "/")
+            abs_src_path = abs_src_path.replace(os.sep, "/")
 
         if not self.__included(src_path, abs_src_path):
             return False
