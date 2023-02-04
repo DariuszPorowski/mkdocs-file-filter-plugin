@@ -2,7 +2,7 @@
 name = "mkdocs-file-filter-plugin"
 version = "0.0.1"
 description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes and gitignore-style file.'
-authors = ["Dariusz Porowski <Dariusz.Porowski@hotmail.com>"]
+authors = ["Dariusz Porowski"]
 repository = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 readme = "README.md"
 license = "MIT"
