@@ -8,7 +8,7 @@ repository = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 documentation = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md"
 readme = "README.md"
 license = "MIT"
-keywords = ["mkdocs", "exclude", "include", "globs", "regexes", "gitignore"]
+keywords = ["mkdocs", "plugin", "exclude", "include", "globs", "regexes", "gitignore"]
 classifiers = [
 	"Development Status :: 3 - Alpha",
 	"Programming Language :: Python",
