@@ -1,10 +1,19 @@
 # File exclude/include plugin for MkDocs
 
+[![PyPI - Version](https://img.shields.io/pypi/v/mkdocs-file-filter-plugin.svg)](https://pypi.org/project/mkdocs-file-filter-plugin)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mkdocs-file-filter-plugin.svg)](https://pypi.org/project/mkdocs-file-filter-plugin)
+
+---
+
 `mkdocs-file-filter` is a [mkdocs plugin](http://www.mkdocs.org/user-guide/plugins/) that allows you to exclude/include files from your input using Unix-style wildcards (globs), regular expressions (regexes) or .mkdocsignore file ([gitignore-style](https://git-scm.com/docs/gitignore) syntax).
 
 ## Quick start
 
-1. Install the plugin using pip: `pip install mkdocs-file-filter`
+1. Install the plugin using pip.
+
+```console
+pip install mkdocs-file-filter-plugin
+```
 
 1. In your project, add a plugin configuration to `mkdocs.yml`:
 
@@ -100,3 +109,7 @@ If you do not provide patterns, everything will stay the same - standard MkDocs 
 Because of the YAML syntax specifics, patterns that start with a punctuation mark must be quoted.
 
 The preferred way for quotes is to use single quotes `'` rather than double quotes `"` - regex backslash escapes are preserved correctly without being doubled up.
+
+## License
+
+`mkdocs-file-filter-plugin` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.

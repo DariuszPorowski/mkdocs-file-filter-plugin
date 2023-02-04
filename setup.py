@@ -34,10 +34,10 @@ setup(
         'Programming Language :: Python :: 3'
         'Programming Language :: Python :: 3 :: Only',
     ],
-    packages=['mkdocs_file_filter'],
+    packages=['mkdocs_file_filter_plugin'],
     entry_points={
         'mkdocs.plugins': [
-            'file-filter = mkdocs_file_filter:FileFilter',
+            'file-filter = mkdocs_file_filter_plugin:FileFilter',
         ]
     }
 )
