@@ -15,5 +15,6 @@
 	"files.associations": {
 		"*.mkdocsignore": "ignore",
 		".pages": "yaml"
-	}
+	},
+	"python.linting.enabled": true
 }

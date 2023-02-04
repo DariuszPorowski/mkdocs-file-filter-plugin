@@ -1,60 +1,38 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
+[tool.poetry]
 name = "mkdocs-file-filter-plugin"
-description = ''
+version = "0.0.1"
+description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes and gitignore-style file.'
+authors = ["Dariusz Porowski <Dariusz.Porowski@hotmail.com>"]
+repository = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 readme = "README.md"
-requires-python = ">=3.8"
 license = "MIT"
-keywords = []
-authors = [
-  { name = "Dariusz Porowski", email = "3431813+DariuszPorowski@users.noreply.github.com" },
-]
+keywords = ["mkdocs", "exclude", "include", "globs", "regexes", "gitignore"]
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: Implementation :: CPython",
-  "Programming Language :: Python :: Implementation :: PyPy",
+	"Development Status :: 3 - Alpha",
+	"Programming Language :: Python",
+	"Programming Language :: Python :: 3.8",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: Implementation :: CPython",
+	"Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
-dynamic = ["version"]
+packages = [{ include = "mkdocs_file_filter_plugin" }]
 
-[project.urls]
-Documentation = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin#readme"
-Issues = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/issues"
-Source = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
+[tool.poetry.plugins."mkdocs.plugins"]
+file-filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
 
-[tool.hatch.version]
-path = "mkdocs_file_filter_plugin/__about__.py"
+[tool.poetry.dependencies]
+python = ">=3.8"
+mkdocs = "^1.4.0"
+igittigitt = "^2.1.2"
+pyyaml = "^6.0"
+schema = "^0.7.5"
 
-[tool.hatch.envs.default]
-dependencies = [
-  "pytest",
-  "pytest-cov",
-]
-[tool.hatch.envs.default.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=mkdocs_file_filter_plugin --cov=tests {args}"
-no-cov = "cov --no-cov {args}"
+[tool.poetry.dev-dependencies]
+pytest = "^7.2.1"
+autopep8 = "^2.0.1"
 
-[[tool.hatch.envs.test.matrix]]
-python = ["38", "39", "310", "311"]
-
-[tool.coverage.run]
-branch = true
-parallel = true
-omit = [
-  "mkdocs_file_filter_plugin/__about__.py",
-]
-
-[tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
