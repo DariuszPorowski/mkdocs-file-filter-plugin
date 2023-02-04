@@ -1,9 +1,5 @@
 site_name: Test Site
 
-# theme:
-#   name: material
-
 plugins:
-  # - tags
   - file-filter:
-      config: !ENV [SITE_ENVIRONMENT, "mkdocs.file-filter.yml"]
+      config: !ENV [MY_FILE_FILTER_CONFIG, "mkdocs.file-filter.yml"]
