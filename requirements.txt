@@ -1,4 +1,6 @@
 wheel
+bdist_wheel
+sdist
+twine
 setuptools
 mkdocs
-mkdocs-material
