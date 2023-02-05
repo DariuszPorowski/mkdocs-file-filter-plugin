@@ -1,7 +1,8 @@
 {
 	"yaml.schemas": {
 		"https://squidfunk.github.io/mkdocs-material/schema.json": [
-			"mkdocs.yml"
+			"mkdocs.yml",
+			"mkdocs.base.yml"
 		]
 	},
 	"files.trimTrailingWhitespace": true,

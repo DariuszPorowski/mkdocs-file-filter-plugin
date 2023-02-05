@@ -1,0 +1,51 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "mkdocs-file-filter-plugin config schema",
+	"markdownDescription": "Configuration",
+	"additionalProperties": false,
+	"type": "object",
+	"properties": {
+		"mkdocsignore": {
+			"type": "boolean"
+		},
+		"mkdocsignore_file": {
+			"type": "string"
+		},
+		"exclude_glob": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"exclude_regex": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"exclude_tag": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"include_glob": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"include_regex": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"include_tag": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		}
+	}
+}

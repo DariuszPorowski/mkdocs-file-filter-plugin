@@ -35,17 +35,17 @@ class Judger:
         return src_path, abs_src_path
 
     def __included(self, file: MkDocsFile):
-        if file.is_documentation_page() and self.plugin_config.include_tag is not []:
-            tags = self.__get_metadata_tags(file)
-            for tag in self.plugin_config.include_tag:
-                if tag in tags:
-                    return True
         for glob in self.plugin_config.include_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
                 return True
         for regex in self.plugin_config.include_regex:
             if re.match(regex, file.src_path):
                 return True
+        if file.is_documentation_page() and self.plugin_config.include_tag is not []:
+            tags = self.__get_metadata_tags(file)
+            for tag in self.plugin_config.include_tag:
+                if tag in tags:
+                    return True
         for glob in self.plugin_config.exclude_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
                 return False

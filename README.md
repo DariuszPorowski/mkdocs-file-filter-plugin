@@ -5,7 +5,7 @@
 
 ---
 
-`mkdocs-file-filter-plugin` is a [mkdocs plugin][mkdocs-plugins] that allows you to exclude/include files from your input using Unix-style wildcards (globs), regular expressions (regexes) or .mkdocsignore file ([gitignore-style][gitignore] syntax).
+`mkdocs-file-filter-plugin` is a [mkdocs plugin][mkdocs-plugins] that allows you to exclude/include files from your input using Unix-style wildcards (`globs`), regular expressions (`regexes`), `.mkdocsignore` file ([gitignore-style][gitignore] syntax) or Markdown/Frontmatter `tags` metadata.
 
 ## Installation
 
