@@ -1,10 +1,9 @@
 ---
+aaa: bbb
 tags:
-  - Secrets Store
-  - Secrets Storage
-  - Keys Store
-  - Keys Storage
-  - Security
+  - test
+  - foo
+  - bar
 ---
 
 # file-filter

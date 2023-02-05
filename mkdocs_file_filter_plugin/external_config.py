@@ -6,7 +6,7 @@ from mkdocs.exceptions import PluginError
 from . import util as LOG
 
 
-class YamlConfig:
+class ExternalConfig:
     def __init__(self):
         self.config_schema = Schema(
             {
@@ -14,8 +14,10 @@ class YamlConfig:
                 Optional("mkdocsignore_file"): str,
                 Optional("exclude_glob"): [str],
                 Optional("exclude_regex"): [str],
+                Optional("exclude_tag"): [str],
                 Optional("include_glob"): [str],
                 Optional("include_regex"): [str],
+                Optional("include_tag"): [str],
             }
         )
 

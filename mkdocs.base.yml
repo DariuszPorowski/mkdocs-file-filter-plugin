@@ -1,4 +1,5 @@
 site_name: Test Site
 
 plugins:
+  - search
   - file-filter:
