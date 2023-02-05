@@ -27,7 +27,6 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
         if not self.config.enabled:
             LOG.debug("plugin disabled")
             return
-
         if not self.config.enabled_on_serve and self.is_serve:
             LOG.debug("plugin disabled on serve")
             return
@@ -50,9 +49,9 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
     def on_files(self, files: MkDocsFiles, config: MkDocsConfig):
         if not self.config.enabled:
             return
-
         if not self.config.enabled_on_serve and self.is_serve:
             return
+
         judger = Judger(self.config, config)
         for file in files:
             if judger.evaluate(file):
