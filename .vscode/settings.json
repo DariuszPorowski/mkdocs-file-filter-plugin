@@ -1,9 +1,20 @@
 {
 	"yaml.schemas": {
-		"https://squidfunk.github.io/mkdocs-material/schema.json": [
+		// "https://squidfunk.github.io/mkdocs-material/schema.json": [
+		// 	"mkdocs.yml",
+		// 	"mkdocs.base.yml"
+		// ],
+		// "https://json.schemastore.org/mkdocs-1.0.json": [
+		// 	"mkdocs.yml",
+		// 	"mkdocs.base.yml"
+		// ],
+		"schema.json": [
 			"mkdocs.yml",
 			"mkdocs.base.yml"
-		]
+		],
+		"schema-config.json": [
+			"mkdocs.file-filter.yml"
+		],
 	},
 	"files.trimTrailingWhitespace": true,
 	"git.autofetch": true,

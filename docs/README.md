@@ -1,5 +1,4 @@
 ---
-aaa: bbb
 tags:
   - test
   - foo

@@ -1,51 +1,39 @@
 {
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"title": "mkdocs-file-filter-plugin config schema",
-	"markdownDescription": "Configuration",
-	"additionalProperties": false,
-	"type": "object",
-	"properties": {
-		"mkdocsignore": {
-			"type": "boolean"
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"$id": "https://json-schema.org/draft/2019-09/schema",
+	"title": "mkdocs-file-filter-plugin schema",
+	"oneOf": [
+		{
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#readme",
+			"enum": [
+				"file-filter"
+			]
 		},
-		"mkdocsignore_file": {
-			"type": "string"
-		},
-		"exclude_glob": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		},
-		"exclude_regex": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		},
-		"exclude_tag": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		},
-		"include_glob": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		},
-		"include_regex": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		},
-		"include_tag": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
+		{
+			"type": "object",
+			"properties": {
+				"file-filter": {
+					"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#configuring",
+					"type": "object",
+					"default": null,
+					"properties": {
+						"config": {
+							"title": "External config file path",
+							"markdownDescription": "https://mkdocstrings.github.io/handlers/overview/",
+							"type": "string",
+							"default": null
+						}
+					},
+					"anyOf": [
+						{
+							"$ref": "schema-config.json"
+						}
+					],
+					"unevaluatedProperties": true,
+					"additionalProperties": true
+				}
+			},
+			"additionalProperties": false
 		}
-	}
+	]
 }

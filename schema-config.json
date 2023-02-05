@@ -1,0 +1,75 @@
+{
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"$id": "https://json-schema.org/draft/2019-09/schema",
+	"title": "mkdocs-file-filter-plugin config schema",
+	"type": "object",
+	"properties": {
+		"mkdocsignore": {
+			"title": "TODO",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "boolean",
+			"default": false
+		},
+		"mkdocsignore_file": {
+			"title": "TODO",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "string",
+			"default": ".mkdocsignore"
+		},
+		"exclude_glob": {
+			"title": "Globs to exclude",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"default": []
+		},
+		"exclude_regex": {
+			"title": "Regexes to exclude",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"default": []
+		},
+		"exclude_tag": {
+			"title": "Tags to exclude",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"default": []
+		},
+		"include_glob": {
+			"title": "Globs to include",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"default": []
+		},
+		"include_regex": {
+			"title": "Regexes to include",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"default": []
+		},
+		"include_tag": {
+			"title": "Tags to include",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"default": []
+		}
+	},
+	"additionalProperties": false
+}

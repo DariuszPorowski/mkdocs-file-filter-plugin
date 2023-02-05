@@ -1,5 +1,11 @@
 site_name: Test Site
 
+theme:
+  name: material
+
 plugins:
   - search
-  - file-filter:
+  # - monorepo
+  # - awesome-pages
+  - file-filter
+  - tags

@@ -3,3 +3,10 @@ INHERIT: mkdocs.base.yml
 plugins:
   - file-filter:
       config: !ENV [MY_FILE_FILTER_CONFIG, "mkdocs.file-filter.yml"]
+  - tags
+
+file-filter:
+  config: ss
+  mkdocsignore: false
+  include_glob:
+    - ss
