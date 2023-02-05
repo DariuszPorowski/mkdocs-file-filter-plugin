@@ -1,7 +1,7 @@
 mkdocsignore: true
 include_glob:
   - 'test/test.md'
-exclude_tag:
-  - test
 include_tag:
   - foo
+  - '#bar'
+enabled_on_serve: true

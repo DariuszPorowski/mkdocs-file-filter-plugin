@@ -3,6 +3,24 @@
 	"title": "mkdocs-file-filter-plugin config schema",
 	"type": "object",
 	"properties": {
+		"enabled": {
+			"title": "Enable plugin",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "boolean",
+			"default": true
+		},
+		"enabled_on_serve": {
+			"title": "Enable on serve",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "boolean",
+			"default": false
+		},
+		"metadata_property": {
+			"title": "Metadata property name for Tags",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"type": "string",
+			"default": "tags"
+		},
 		"mkdocsignore": {
 			"title": "Enable .mkdocsignore support",
 			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",

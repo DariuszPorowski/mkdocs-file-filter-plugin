@@ -10,23 +10,27 @@ from .plugin_config import PluginConfig
 
 
 class FileFilter(MkDocsPlugin[PluginConfig]):
+    def on_startup(self, *, command, dirty):
+        self.is_serve = command == "serve"
+
     def on_config(self, config: MkDocsConfig):
         if self.config.config is not None:
             external_config = ExternalConfig()
             file_filter_config = external_config.load(self.config.config)
 
-            self.config.exclude_glob = file_filter_config.get("exclude_glob", [])
-            self.config.exclude_regex = file_filter_config.get("exclude_regex", [])
-            self.config.exclude_tag = file_filter_config.get("exclude_tag", [])
-            self.config.include_glob = file_filter_config.get("include_glob", [])
-            self.config.include_regex = file_filter_config.get("include_regex", [])
-            self.config.include_tag = file_filter_config.get("include_tag", [])
-            self.config.mkdocsignore = file_filter_config.get("mkdocsignore", False)
-            self.config.mkdocsignore_file = file_filter_config.get(
-                "mkdocsignore_file", ".mkdocsignore"
-            )
+            for k in self.config.keys():
+                if k is not "config":
+                    self.config[k] = file_filter_config.get(k, self.config[k])
 
             config.watch.append(pathlib.Path(self.config.config))
+
+        if not self.config.enabled:
+            LOG.debug("plugin disabled")
+            return
+
+        if not self.config.enabled_on_serve and self.is_serve:
+            LOG.debug("plugin disabled on serve")
+            return
 
         if self.config.mkdocsignore is True:
             if pathlib.Path(self.config.mkdocsignore_file).is_file() is False:
@@ -37,8 +41,6 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                     )
                 )
             config.watch.append(pathlib.Path(self.config.mkdocsignore_file))
-        else:
-            self.config.mkdocsignore_file = None
 
         for k in self.config.keys():
             LOG.debug("Config value '%s' = %s" % (k, self.config[k]))
@@ -46,6 +48,11 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
         return config
 
     def on_files(self, files: MkDocsFiles, config: MkDocsConfig):
+        if not self.config.enabled:
+            return
+
+        if not self.config.enabled_on_serve and self.is_serve:
+            return
         judger = Judger(self.config, config)
         for file in files:
             if judger.evaluate(file):

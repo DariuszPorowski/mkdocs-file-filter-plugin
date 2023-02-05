@@ -10,6 +10,9 @@ class ExternalConfig:
     def __init__(self):
         self.config_schema = Schema(
             {
+                Optional("enabled"): bool,
+                Optional("enabled_on_serve"): bool,
+                Optional("metadata_property"): str,
                 Optional("mkdocsignore"): bool,
                 Optional("mkdocsignore_file"): str,
                 Optional("exclude_glob"): [str],

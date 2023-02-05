@@ -65,4 +65,4 @@ class Judger:
     def __get_metadata_tags(self, file: MkDocsFile):
         page = MkDocsPage(None, file, self.mkdocs_config)
         page.read_source(self.mkdocs_config)
-        return page.meta.get("tags") or []
+        return page.meta.get(self.plugin_config.metadata_property) or []

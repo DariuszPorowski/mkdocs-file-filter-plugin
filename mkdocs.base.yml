@@ -4,8 +4,5 @@ theme:
   name: material
 
 plugins:
-  - search
   - monorepo
   - awesome-pages
-  - file-filter
-  - tags

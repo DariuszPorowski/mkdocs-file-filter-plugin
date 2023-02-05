@@ -48,6 +48,8 @@ Add a plugin configuration to `mkdocs.yml`:
 plugins:
   - search # if you include another plugin, and want search you have to add it again
   - file-filter:
+      enabled: !ENV [CI, false]
+      enabled_on_serve: !ENV [CI, false]
       mkdocsignore: true
       mkdocsignore_file: 'custom/path/.mkdocsignore' # relative to mkdocs.yml
       exclude_glob:
@@ -90,6 +92,7 @@ plugins:
 External plugin config file example.
 
 ```yaml
+enabled_on_serve: true
 mkdocsignore: false
 exclude_glob:
   - 'exclude/this/path/*'
@@ -114,8 +117,6 @@ include_tag:
 >
 > For external file config, you can use [MkDocs Environment Variables][mkdocs-envs] to set the desired file dynamically. A useful case for serving the site with different content based on stage/environment/etc. Works well with CI/CD automation.
 
-## Usage
-
 ### .mkdocsignore
 
 Setting `mkdocsignore` to `true` will exclude the dirs/files specified in the `.mkdocsignore`. Use the same syntax as you use for gitignore.
@@ -129,6 +130,7 @@ External config for mkdocsignore.
 ```yaml
 plugins:
   - file-filter:
+      enabled_on_serve: true
       mkdocsignore: true # default: false
       mkdocsignore_file: 'custom/path/.myignore' # relative to mkdocs.yml, default: .mkdocsignore
 ```
@@ -141,7 +143,26 @@ docs/test/**
 docs/**/draft-*.md
 ```
 
-### Conflict behavior
+## Usage
+
+TODO
+
+| parameter | Default | Description |
+| --- | --- | --- |
+| config | none | TODO |
+| enabled | true | TODO |
+| enabled_on_serve | false | TODO |
+| mkdocsignore | false | TODO |
+| mkdocsignore_file | `.mkdocsignore` | TODO |
+| metadata_property | tags | TODO |
+| exclude_tag | none | TODO |
+| include_tag | none | TODO |
+| exclude_glob | none | TODO |
+| include_glob | none | TODO |
+| exclude_regex | none | TODO |
+| include_regex | none | TODO |
+
+## Conflict behavior
 
 It is possible to exclude and include will have conflict. For example, you could exclude `drafts/*` but include `*.md`. In that case, **include** has higher priority over exclude. So all `*.md` files from the drafts folder will be included.
 
