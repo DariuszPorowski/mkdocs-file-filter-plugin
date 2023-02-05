@@ -26,6 +26,8 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                 "mkdocsignore_file", ".mkdocsignore"
             )
 
+            config.watch.append(pathlib.Path(self.config.config))
+
         if self.config.mkdocsignore is True:
             if pathlib.Path(self.config.mkdocsignore_file).is_file() is False:
                 raise MkDocsPluginError(
@@ -34,6 +36,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                         % self.config.mkdocsignore_file
                     )
                 )
+            config.watch.append(pathlib.Path(self.config.mkdocsignore_file))
         else:
             self.config.mkdocsignore_file = None
 
@@ -52,9 +55,3 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                 files.remove(file)
         return MkDocsFiles(files)
 
-    def on_serve(self, server, config: MkDocsConfig, builder):
-        if self.config.config is not None:
-            server.watch(self.config.config)
-        if self.config.mkdocsignore is True:
-            server.watch(self.config.mkdocsignore_file)
-        return server
