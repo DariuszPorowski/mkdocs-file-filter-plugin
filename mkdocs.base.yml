@@ -5,7 +5,7 @@ theme:
 
 plugins:
   - search
-  # - monorepo
-  # - awesome-pages
+  - monorepo
+  - awesome-pages
   - file-filter
   - tags

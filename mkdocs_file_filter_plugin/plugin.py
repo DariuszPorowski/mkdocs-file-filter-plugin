@@ -54,4 +54,3 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                 LOG.debug("exclude file: ", file.src_path)
                 files.remove(file)
         return MkDocsFiles(files)
-

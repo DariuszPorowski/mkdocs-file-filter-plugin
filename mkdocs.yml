@@ -1,6 +1,7 @@
 INHERIT: mkdocs.base.yml
 
 plugins:
+  - search
+  - tags
   - file-filter:
       config: !ENV [MY_FILE_FILTER_CONFIG, "mkdocs.file-filter.yml"]
-  - tags
