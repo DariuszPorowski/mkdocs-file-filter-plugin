@@ -1,20 +1,20 @@
 {
-	"$schema": "https://json-schema.org/draft/2019-09/schema",
-	"$id": "https://json-schema.org/draft/2019-09/schema",
+	"$schema": "https://json-schema.org/draft-07/schema",
 	"title": "mkdocs-file-filter-plugin config schema",
 	"type": "object",
 	"properties": {
 		"mkdocsignore": {
-			"title": "TODO",
+			"title": "Enable .mkdocsignore support",
 			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
 			"type": "boolean",
 			"default": false
 		},
 		"mkdocsignore_file": {
-			"title": "TODO",
+			"title": ".mkdocsignore file path",
 			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
 			"type": "string",
-			"default": ".mkdocsignore"
+			"default": ".mkdocsignore",
+			"format": "path"
 		},
 		"exclude_glob": {
 			"title": "Globs to exclude",
