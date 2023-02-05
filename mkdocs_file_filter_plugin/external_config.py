@@ -26,7 +26,7 @@ class ExternalConfig:
 
     def load(self, config_path):
         config_path = pathlib.Path(config_path)
-        LOG.trace("Loading config file: ", os.path.basename(config_path))
+        LOG.debug("Loading config file: ", os.path.basename(config_path))
         with open(config_path, "r") as f:
             config = yaml.safe_load(f) or {}
         self.__validate(config)
