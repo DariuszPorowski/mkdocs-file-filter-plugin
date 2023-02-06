@@ -1,6 +1,7 @@
 import os
 import pathlib
 import yaml
+from yaml_env_tag import construct_env_tag
 from schema import Optional, Schema, SchemaError
 from mkdocs.exceptions import PluginError
 from . import util as LOG
@@ -27,6 +28,7 @@ class ExternalConfig:
     def load(self, config_path):
         config_path = pathlib.Path(config_path)
         LOG.debug("Loading config file: ", os.path.basename(config_path))
+        yaml.SafeLoader.add_constructor("!ENV", construct_env_tag)
         with open(config_path, "r") as f:
             config = yaml.safe_load(f) or {}
         self.__validate(config)

@@ -47,6 +47,7 @@ poetry add mkdocs-file-filter-plugin
 Add a plugin configuration to `mkdocs.yml`:
 
 ```yaml
+# mkdocs.yml
 plugins:
   - search # if you include another plugin, and want search you have to add it again
   - file-filter:
@@ -81,6 +82,7 @@ More information about plugins in the [MkDocs documentation][mkdocs-plugins].
 The plugin supports external files for the plugin configuration. If the external config file is specified, then plugin's config properties from `mkdocs.yml` are overwritten.
 
 ```yaml
+# mkdocs.yml
 plugins:
   - search # if you include another plugin, and want search you have to add it again
   - file-filter:
@@ -90,6 +92,8 @@ plugins:
 External plugin config file example:
 
 ```yaml
+# file-filter-config.yml
+enabled: !ENV [CI, true]
 enabled_on_serve: true
 mkdocsignore: false
 exclude_glob:
@@ -111,6 +115,10 @@ include_tag:
   - prod
 ```
 
+> **NOTE**
+>
+> External config **does** support [MkDocs Environment Variables][mkdocs-envs] as well.
+
 > **HINT**
 >
 > For external file config, you can use [MkDocs Environment Variables][mkdocs-envs] to set the desired file dynamically. A useful case for serving the site with different content based on stage/environment/etc. Works well with CI/CD automation.
@@ -126,6 +134,7 @@ You can combine mkdocsignore with globs/regexes nad tags as well. The patterns f
 Example config for mkdocsignore.
 
 ```yaml
+# mkdocs.yml
 plugins:
   - file-filter:
       enabled_on_serve: true # default: false
@@ -171,6 +180,7 @@ The below table shows all supported properties by the plugin.
 ### Globs
 
 ```yaml
+# mkdocs.yml
 plugins:
   - file-filter:
       exclude_glob:
@@ -184,6 +194,7 @@ plugins:
 ### Regexes
 
 ```yaml
+# mkdocs.yml
 plugins:
   - file-filter:
       exclude_regex:
@@ -199,6 +210,7 @@ plugins:
 #### Tags metadata property
 
 ```yaml
+# mkdocs.yml
 plugins:
   - file-filter:
       exclude_tag:
