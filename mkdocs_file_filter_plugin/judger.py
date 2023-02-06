@@ -1,12 +1,14 @@
-import os
 import fnmatch
-import re
+import os
 import pathlib
+import re
+
 import igittigitt
-from .plugin_config import PluginConfig
+from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File as MkDocsFile
 from mkdocs.structure.pages import Page as MkDocsPage
-from mkdocs.config.defaults import MkDocsConfig
+
+from .plugin_config import PluginConfig
 
 
 class Judger:
@@ -52,7 +54,7 @@ class Judger:
         return True, "no rule"
 
     def __path_fix(self, src_path, abs_src_path):
-        if os.sep is not "/":
+        if os.sep != "/":
             src_path = src_path.replace(os.sep, "/")
             abs_src_path = abs_src_path.replace(os.sep, "/")
         return src_path, abs_src_path

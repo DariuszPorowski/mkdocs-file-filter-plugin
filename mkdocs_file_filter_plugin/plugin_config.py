@@ -1,5 +1,5 @@
-from mkdocs.config.base import Config as MkDocsConfigBase
 import mkdocs.config.config_options as MkDocsConfigOptions
+from mkdocs.config.base import Config as MkDocsConfigBase
 
 
 class PluginConfig(MkDocsConfigBase):

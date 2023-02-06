@@ -1,11 +1,13 @@
 import pathlib
-from mkdocs.plugins import BasePlugin as MkDocsPlugin
+
 from mkdocs.config.defaults import MkDocsConfig
-from mkdocs.structure.files import Files as MkDocsFiles
 from mkdocs.exceptions import PluginError as MkDocsPluginError
+from mkdocs.plugins import BasePlugin as MkDocsPlugin
+from mkdocs.structure.files import Files as MkDocsFiles
+
 from . import util as LOG
-from .judger import Judger
 from .external_config import ExternalConfig
+from .judger import Judger
 from .plugin_config import PluginConfig
 
 
@@ -19,7 +21,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
             file_filter_config = external_config.load(self.config.config)
 
             for k in self.config.keys():
-                if k is not "config":
+                if k != "config":
                     self.config[k] = file_filter_config.get(k, self.config[k])
 
             config.watch.append(pathlib.Path(self.config.config))

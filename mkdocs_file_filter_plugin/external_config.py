@@ -1,9 +1,11 @@
 import os
 import pathlib
+
 import yaml
-from yaml_env_tag import construct_env_tag
-from schema import Optional, Schema, SchemaError
 from mkdocs.exceptions import PluginError
+from schema import Optional, Schema, SchemaError
+from yaml_env_tag import construct_env_tag
+
 from . import util as LOG
 
 
