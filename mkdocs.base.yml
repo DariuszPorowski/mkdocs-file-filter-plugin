@@ -1,4 +1,11 @@
 site_name: Test Site
 
+theme:
+  name: material
+
 plugins:
-  - file-filter:
+  - monorepo
+  - awesome-pages
+  # - literate-nav:
+  #     nav_file: NAV.md
+

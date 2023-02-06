@@ -1,68 +1,63 @@
 import pathlib
-from mkdocs.plugins import BasePlugin
-from mkdocs.config.base import Config as ConfigBase
-import mkdocs.config.config_options as ConfigOptions
-from mkdocs.structure.files import Files as MkdocsFiles
-from mkdocs.exceptions import PluginError
+from mkdocs.plugins import BasePlugin as MkDocsPlugin
+from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.structure.files import Files as MkDocsFiles
+from mkdocs.exceptions import PluginError as MkDocsPluginError
 from . import util as LOG
 from .judger import Judger
-from .yamlconfig import YamlConfig
+from .external_config import ExternalConfig
+from .plugin_config import PluginConfig
 
 
-class FileFilterConfig(ConfigBase):
-    exclude_glob = ConfigOptions.Type((str, list), default=[])
-    exclude_regex = ConfigOptions.Type((str, list), default=[])
-    include_glob = ConfigOptions.Type((str, list), default=[])
-    include_regex = ConfigOptions.Type((str, list), default=[])
-    mkdocsignore = ConfigOptions.Type(bool, default=False)
-    mkdocsignore_file = ConfigOptions.File(exists=False, default=".mkdocsignore")
-    config = ConfigOptions.Optional(ConfigOptions.File(exists=True, default=None))
+class FileFilter(MkDocsPlugin[PluginConfig]):
+    def on_startup(self, *, command, dirty):
+        self.is_serve = command == "serve"
 
+    def on_config(self, config: MkDocsConfig):
+        if self.config.config is not None:
+            external_config = ExternalConfig()
+            file_filter_config = external_config.load(self.config.config)
 
-class FileFilter(BasePlugin[FileFilterConfig]):
-    def on_config(self, config):
-        if "config" in self.config and self.config.config is not None:
-            yaml_config = YamlConfig()
-            file_filter_config = yaml_config.load(self.config.config)
+            for k in self.config.keys():
+                if k is not "config":
+                    self.config[k] = file_filter_config.get(k, self.config[k])
 
-            self.config.exclude_glob = file_filter_config.get("exclude_glob", [])
-            self.config.exclude_regex = file_filter_config.get("exclude_regex", [])
-            self.config.include_glob = file_filter_config.get("include_glob", [])
-            self.config.include_regex = file_filter_config.get("include_regex", [])
-            self.config.mkdocsignore = file_filter_config.get("mkdocsignore", False)
-            self.config.mkdocsignore_file = file_filter_config.get(
-                "mkdocsignore_file", ".mkdocsignore"
-            )
+            config.watch.append(pathlib.Path(self.config.config))
 
-        if self.config.mkdocsignore:
+        if not self.config.enabled:
+            LOG.debug("plugin disabled")
+            return
+        if not self.config.enabled_on_serve and self.is_serve:
+            LOG.debug("plugin disabled on serve")
+            return
+
+        if self.config.mkdocsignore is True:
             if pathlib.Path(self.config.mkdocsignore_file).is_file() is False:
-                raise PluginError(
+                raise MkDocsPluginError(
                     str(
                         "The path '%s' isn't an existing file."
                         % self.config.mkdocsignore_file
                     )
                 )
-        else:
-            self.config.mkdocsignore_file = None
+            config.watch.append(pathlib.Path(self.config.mkdocsignore_file))
 
         for k in self.config.keys():
             LOG.debug("Config value '%s' = %s" % (k, self.config[k]))
 
         return config
 
-    def on_files(self, files, config):
-        judger = Judger(self.config)
-        for file in files:
-            if judger.evaluate(file.src_path, file.abs_src_path):
-                LOG.debug("include file: ", file.src_path)
-            else:
-                LOG.debug("exclude file: ", file.src_path)
-                files.remove(file)
-        return MkdocsFiles(files)
+    def on_files(self, files: MkDocsFiles, config: MkDocsConfig):
+        if not self.config.enabled:
+            return
+        if not self.config.enabled_on_serve and self.is_serve:
+            return
 
-    def on_serve(self, server, config, builder):
-        if "config" in self.config and self.config.config is not None:
-            server.watch(self.config.config)
-        if self.config.mkdocsignore:
-            server.watch(self.config.mkdocsignore_file)
-        return server
+        judger = Judger(self.config, config)
+        for file in files:
+            result, reason = judger.evaluate(file)
+            if result:
+                LOG.debug("include file: %s (because %s)" % (file.src_path, reason))
+            else:
+                LOG.debug("exclude file: %s (because %s)" % (file.src_path, reason))
+                files.remove(file)
+        return MkDocsFiles(files)

@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "mkdocs-file-filter-plugin"
 version = "0.0.1"
-description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes and gitignore-style file.'
+description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes, gitignore-style file and Markdown/Frontmatter tags metadata.'
 authors = ["Dariusz Porowski"]
 homepage = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 repository = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 documentation = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md"
 readme = "README.md"
 license = "MIT"
-keywords = ["mkdocs", "plugin", "exclude", "include", "globs", "regexes", "gitignore"]
+keywords = ["mkdocs", "plugin", "exclude", "include", "glob", "regex", "gitignore", "markdown", "frontmatter", "metadata", "tags"]
 classifiers = [
 	"Development Status :: 3 - Alpha",
 	"Programming Language :: Python",
@@ -34,13 +34,18 @@ History = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/releases
 file-filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.8,<3.11"
 mkdocs = "^1.4.0"
 igittigitt = "^2.1.2"
 pyyaml = "^6.0"
 schema = "^0.7.5"
+pyyaml-env-tag = "^0.1"
 
 [tool.poetry.dev-dependencies]
+mkdocs-material="^9.0.11"
+mkdocs-awesome-pages-plugin="^2.8.0"
+mkdocs-monorepo-plugin="^1.0.4"
+mkdocs-literate-nav = "^0.6.0"
 pytest = "^7.2.1"
 autopep8 = "^2.0.1"
 black = "^23.1.0"

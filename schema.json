@@ -1,0 +1,40 @@
+{
+	"$schema": "https://json-schema.org/draft-07/schema",
+	"title": "mkdocs-file-filter-plugin schema",
+	"oneOf": [
+		{
+			"title": "mkdocs-file-filter-plugin",
+			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#readme",
+			"enum": [
+				"file-filter"
+			]
+		},
+		{
+			"type": "object",
+			"properties": {
+				"file-filter": {
+					"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#configuring",
+					"type": "object",
+					"default": null,
+					"properties": {
+						"config": {
+							"title": "External config file path",
+							"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#configuring",
+							"type": "string",
+							"default": null,
+							"format": "path"
+						}
+					},
+					"anyOf": [
+						{
+							"$ref": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/schema-config.json",
+							"additionalProperties": true
+						}
+					],
+					"additionalProperties": true
+				}
+			},
+			"additionalProperties": false
+		}
+	]
+}

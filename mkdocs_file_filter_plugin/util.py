@@ -18,7 +18,7 @@ def _format_trace(*args):
     return " ".join([text] + rest)
 
 
-def trace(*args):
+def info(*args):
     """
     General purpose print function, as trace,
     for the mkdocs-macros framework;
