@@ -168,6 +168,123 @@ The below table shows all supported properties by the plugin.
 >
 > - The preferred way for quotes is to use single quotes `'` rather than double quotes `"` - regex backslash escapes are preserved correctly without being doubled up.
 
+### Globs
+
+```yaml
+plugins:
+  - file-filter:
+      exclude_glob:
+        - 'TODO'
+        - 'TODO'
+      include_glob:
+        - 'TODO'
+        - 'TODO'
+```
+
+### Regexes
+
+```yaml
+plugins:
+  - file-filter:
+      exclude_regex:
+        - 'TODO'
+        - 'TODO'
+      include_regex:
+        - 'TODO'
+        - 'TODO'
+```
+
+### Tags
+
+#### Tags metadata property
+
+```yaml
+plugins:
+  - file-filter:
+      exclude_tag:
+        - foo
+        - draft
+        - alpha
+      include_tag:
+        - xyz
+        - release
+        - beta
+```
+
+```markdown
+<!-- fileA.md -->
+---
+tags:
+  - foo
+  - bar
+---
+
+# Markdown with tags metadata
+
+Lorem ipsum dolor sit amet...
+```
+
+```markdown
+<!-- fileB.md -->
+---
+tags:
+  - abc
+  - xyz
+---
+
+# Markdown with tags metadata
+
+Lorem ipsum dolor sit amet...
+```
+
+#### Custom metadata property
+
+```yaml
+plugins:
+  - file-filter:
+      metadata_property: labels
+      exclude_tag:
+        - foo
+        - draft
+        - alpha
+      include_tag:
+        - xyz
+        - release
+        - beta
+```
+
+```markdown
+<!-- fileA.md -->
+---
+tags:
+  - foo
+  - bar
+labels:
+  - draft
+  - internal
+---
+
+# Markdown with metadata - tags and labels
+
+Lorem ipsum dolor sit amet...
+```
+
+```markdown
+<!-- fileB.md -->
+---
+tags:
+  - foo
+  - bar
+labels:
+  - release
+  - v1
+---
+
+# Markdown with metadata - tags and labels
+
+Lorem ipsum dolor sit amet...
+```
+
 ### Conflict behavior
 
 It is possible to exclude and include will have conflict. For example, you could exclude `drafts/*` but include `*.md`. In that case, **include** has higher priority over exclude. So all `*.md` files from the drafts folder will be **included**.
