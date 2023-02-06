@@ -31,7 +31,7 @@ class Judger:
             if re.match(regex, file.src_path):
                 return True, str(f"regex: {regex}")
         if file.is_documentation_page() and self.plugin_config.include_tag is not []:
-            tags = self.__get_metadata_tags(file)
+            tags = self.__get_metadata(file)
             for tag in self.plugin_config.include_tag:
                 if tag in tags:
                     return True, str(f"tag: {tag}")
@@ -42,7 +42,7 @@ class Judger:
             if re.match(regex, file.src_path):
                 return False, str(f"regex: {regex}")
         if file.is_documentation_page() and self.plugin_config.exclude_tag is not []:
-            tags = self.__get_metadata_tags(file)
+            tags = self.__get_metadata(file)
             for tag in self.plugin_config.exclude_tag:
                 if tag in tags:
                     return False, str(f"tag: {tag}")
@@ -57,7 +57,7 @@ class Judger:
             abs_src_path = abs_src_path.replace(os.sep, "/")
         return src_path, abs_src_path
 
-    def __get_metadata_tags(self, file: MkDocsFile):
+    def __get_metadata(self, file: MkDocsFile):
         page = MkDocsPage(None, file, self.mkdocs_config)
         page.read_source(self.mkdocs_config)
         return page.meta.get(self.plugin_config.metadata_property) or []
