@@ -5,7 +5,7 @@
 
 ---
 
-`mkdocs-file-filter-plugin` is a [mkdocs plugin][mkdocs-plugins] that allows you to exclude/include files from your input using Unix-style wildcards (`globs`), regular expressions (`regexes`), `.mkdocsignore` file ([gitignore-style][gitignore] syntax) or Markdown/Frontmatter `tags` metadata.
+`mkdocs-file-filter-plugin` is a [mkdocs plugin][mkdocs-plugins] that allows you to exclude/include files from your input using Unix-style wildcards (`globs`), regular expressions (`regexes`), `.mkdocsignore` file ([gitignore-style][gitignore] syntax) or Markdown/FrontMatter `tags` metadata.
 
 ## Installation
 
@@ -161,7 +161,7 @@ The below table shows all supported properties by the plugin.
 | `enabled_on_serve` | bool | `false` | Turn on/off plugin on `serve` command |
 | `mkdocsignore` | bool | `false` | Use gitignore-style file for patterns |
 | `mkdocsignore_file` | string | `.mkdocsignore` | Path to gitignore-style file with patterns |
-| `metadata_property` | string | `tags` | What markdown/frontmatter metadata property will be used for checking tags |
+| `metadata_property` | string | `tags` | What Markdown/FrontMatter metadata property will be used for checking tags |
 | `exclude_tag` | [string] | *none* | List of excluded tags |
 | `include_tag` | [string] | *none* | List of included tags |
 | `exclude_glob` | [string] | *none* | Exclude glob patterns |
@@ -209,6 +209,8 @@ plugins:
 
 #### Tags metadata property
 
+By default plugin filter files using `tags` property of your Markdown metadata.
+
 ```yaml
 # mkdocs.yml
 plugins:
@@ -251,6 +253,10 @@ Lorem ipsum dolor sit amet...
 
 #### Custom metadata property
 
+Because the `tags` property is very often used to render tags on the site, in some scenarios, you'd like to filter files using specific tag keywords and avoid rendering them. In that case, you can create a custom metadata list and use it for filtering without affecting tags' used for rendering.
+
+Set `metadata_property` with your custom list property, e.g., `labels` for this example.
+
 ```yaml
 plugins:
   - file-filter:
@@ -264,6 +270,8 @@ plugins:
         - release
         - beta
 ```
+
+In `fileA.md`, place your `labels` list in the metadata section.
 
 ```markdown
 <!-- fileA.md -->
@@ -281,6 +289,8 @@ labels:
 Lorem ipsum dolor sit amet...
 ```
 
+Do the same for `fileB.md`
+
 ```markdown
 <!-- fileB.md -->
 ---
@@ -291,6 +301,8 @@ labels:
   - release
   - v1
 ---
+
+In the result, only `fileB.md` will be included.
 
 # Markdown with metadata - tags and labels
 
@@ -307,6 +319,7 @@ It is possible to exclude and include will have conflict. For example, you could
 
 [mkdocs-plugins]: http://www.mkdocs.org/user-guide/plugins/
 [mkdocs-envs]: https://www.mkdocs.org/user-guide/configuration/#environment-variables
+[mkdocs-meta]: https://www.mkdocs.org/user-guide/writing-your-docs/#meta-data
 [poetry]: https://python-poetry.org/
 [pip]: https://pip.pypa.io/
 [gitignore]: https://git-scm.com/docs/gitignore
