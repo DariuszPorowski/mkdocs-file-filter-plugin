@@ -89,6 +89,10 @@ plugins:
       config: !ENV [MY_FILE_FILTER_CONFIG, 'mkdocs.file-filter.yml']
 ```
 
+> **HINT**
+>
+> For external file config, you can use [MkDocs Environment Variables][mkdocs-envs] to set the desired file dynamically. A useful case for serving the site with different content based on stage/environment/etc. Works well with CI/CD automation.
+
 External plugin config file example:
 
 ```yaml
@@ -118,10 +122,6 @@ include_tag:
 > **NOTE**
 >
 > External config **does** support [MkDocs Environment Variables][mkdocs-envs] as well.
-
-> **HINT**
->
-> For external file config, you can use [MkDocs Environment Variables][mkdocs-envs] to set the desired file dynamically. A useful case for serving the site with different content based on stage/environment/etc. Works well with CI/CD automation.
 
 ### .mkdocsignore
 
