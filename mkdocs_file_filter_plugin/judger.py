@@ -34,7 +34,7 @@ class Judger:
             tags = self.__get_metadata(file)
             for tag in self.plugin_config.include_tag:
                 if tag in tags:
-                    return True, str(f"tag: {tag}")
+                    return True, str(f"{self.plugin_config.metadata_property}: {tag}")
         for glob in self.plugin_config.exclude_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
                 return False, str(f"glob: {glob}")
@@ -45,7 +45,7 @@ class Judger:
             tags = self.__get_metadata(file)
             for tag in self.plugin_config.exclude_tag:
                 if tag in tags:
-                    return False, str(f"tag: {tag}")
+                    return False, str(f"{self.plugin_config.metadata_property}: {tag}")
         if self.plugin_config.mkdocsignore is True:
             if self.mkdocsignore_parser.match(pathlib.Path(file.abs_src_path)):
                 return False, "mkdocsignore"

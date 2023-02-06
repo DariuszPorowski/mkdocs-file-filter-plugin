@@ -1,8 +1,11 @@
 enabled: !ENV [CI, true]
-mkdocsignore: true
+mkdocsignore: false
 include_glob:
   - 'test/test.md'
+  - '**/draft-*.md'
 include_tag:
   - foo
   - '#bar'
 enabled_on_serve: !ENV [CI, true]
+exclude_tag:
+  - test

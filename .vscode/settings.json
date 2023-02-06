@@ -10,7 +10,7 @@
 		// ],
 		"schema-config.json": [
 			"mkdocs.file-filter.yml"
-		],
+		]
 	},
 	"files.trimTrailingWhitespace": true,
 	"git.autofetch": true,
@@ -24,5 +24,6 @@
 		"*.mkdocsignore": "ignore",
 		".pages": "yaml"
 	},
-	"python.linting.enabled": true
+	"python.linting.enabled": true,
+	"markdown.extension.toc.levels": "2..6"
 }
