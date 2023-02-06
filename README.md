@@ -9,6 +9,8 @@
 
 ## Installation
 
+This package requires Python >=3.8 and MkDocs version 1.4.0 or higher.
+
 ### pip
 
 Install the plugin using [pip][pip]:

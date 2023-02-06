@@ -1,13 +1,15 @@
 INHERIT: mkdocs.base.yml
 
-# dev_addr: 127.0.0.1:1234
+dev_addr: 127.0.0.1:1234
 
 plugins:
+  - monorepo
+  - awesome-pages
   - tags:
       tags_file: tags.md
   # - meta
   - file-filter:
       config: !ENV [MY_FILE_FILTER_CONFIG, "mkdocs.file-filter.yml"]
-      metadata_property: labels
+      # metadata_property: labels
       exclude_tag:
         - test

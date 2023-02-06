@@ -24,43 +24,38 @@ class Judger:
         file.src_path, file.abs_src_path = self.__path_fix(
             file.src_path, file.abs_src_path
         )
-        if not self.__included(file):
-            return False
-        return True
+        for glob in self.plugin_config.include_glob:
+            if fnmatch.fnmatchcase(file.src_path, glob):
+                return True, str(f"glob: {glob}")
+        for regex in self.plugin_config.include_regex:
+            if re.match(regex, file.src_path):
+                return True, str(f"regex: {regex}")
+        if file.is_documentation_page() and self.plugin_config.include_tag is not []:
+            tags = self.__get_metadata_tags(file)
+            for tag in self.plugin_config.include_tag:
+                if tag in tags:
+                    return True, str(f"tag: {tag}")
+        for glob in self.plugin_config.exclude_glob:
+            if fnmatch.fnmatchcase(file.src_path, glob):
+                return False, str(f"glob: {glob}")
+        for regex in self.plugin_config.exclude_regex:
+            if re.match(regex, file.src_path):
+                return False, str(f"regex: {regex}")
+        if file.is_documentation_page() and self.plugin_config.exclude_tag is not []:
+            tags = self.__get_metadata_tags(file)
+            for tag in self.plugin_config.exclude_tag:
+                if tag in tags:
+                    return False, str(f"tag: {tag}")
+        if self.plugin_config.mkdocsignore is True:
+            if self.mkdocsignore_parser.match(pathlib.Path(file.abs_src_path)):
+                return False, "mkdocsignore"
+        return True, "no rule"
 
     def __path_fix(self, src_path, abs_src_path):
         if os.sep is not "/":
             src_path = src_path.replace(os.sep, "/")
             abs_src_path = abs_src_path.replace(os.sep, "/")
         return src_path, abs_src_path
-
-    def __included(self, file: MkDocsFile):
-        for glob in self.plugin_config.include_glob:
-            if fnmatch.fnmatchcase(file.src_path, glob):
-                return True
-        for regex in self.plugin_config.include_regex:
-            if re.match(regex, file.src_path):
-                return True
-        if file.is_documentation_page() and self.plugin_config.include_tag is not []:
-            tags = self.__get_metadata_tags(file)
-            for tag in self.plugin_config.include_tag:
-                if tag in tags:
-                    return True
-        for glob in self.plugin_config.exclude_glob:
-            if fnmatch.fnmatchcase(file.src_path, glob):
-                return False
-        for regex in self.plugin_config.exclude_regex:
-            if re.match(regex, file.src_path):
-                return False
-        if file.is_documentation_page() and self.plugin_config.exclude_tag is not []:
-            tags = self.__get_metadata_tags(file)
-            for tag in self.plugin_config.exclude_tag:
-                if tag in tags:
-                    return False
-        if self.plugin_config.mkdocsignore is True:
-            if self.mkdocsignore_parser.match(pathlib.Path(file.abs_src_path)):
-                return False
-        return True
 
     def __get_metadata_tags(self, file: MkDocsFile):
         page = MkDocsPage(None, file, self.mkdocs_config)

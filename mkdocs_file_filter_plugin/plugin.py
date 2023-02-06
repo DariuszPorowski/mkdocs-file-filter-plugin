@@ -54,9 +54,10 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         judger = Judger(self.config, config)
         for file in files:
-            if judger.evaluate(file):
-                LOG.debug("include file: ", file.src_path)
+            result, reason = judger.evaluate(file)
+            if result:
+                LOG.debug("include file: %s (because %s)" % (file.src_path, reason))
             else:
-                LOG.debug("exclude file: ", file.src_path)
+                LOG.debug("exclude file: %s (because %s)" % (file.src_path, reason))
                 files.remove(file)
         return MkDocsFiles(files)
