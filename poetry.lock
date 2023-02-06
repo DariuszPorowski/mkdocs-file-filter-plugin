@@ -529,21 +529,6 @@ natsort = ">=8.1.0"
 wcmatch = ">=7"
 
 [[package]]
-name = "mkdocs-gen-files"
-version = "0.4.0"
-description = "MkDocs plugin to programmatically generate documentation pages during the build"
-category = "dev"
-optional = false
-python-versions = ">=3.7,<4.0"
-files = [
-    {file = "mkdocs-gen-files-0.4.0.tar.gz", hash = "sha256:377bff8ee8e93515916689f483d971643f83a94eed7e92318854da8f344f0163"},
-    {file = "mkdocs_gen_files-0.4.0-py3-none-any.whl", hash = "sha256:3241a4c947ecd11763ca77cc645015305bf71a0e1b9b886801c114fcf9971e71"},
-]
-
-[package.dependencies]
-mkdocs = ">=1.0.3,<2.0.0"
-
-[[package]]
 name = "mkdocs-literate-nav"
 version = "0.6.0"
 description = "MkDocs plugin to specify the navigation in Markdown instead of YAML"
@@ -1132,4 +1117,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "720a1d1cd9ceab2c524fe077d83451921e6a01657eb8fa39de563305127810ad"
+content-hash = "1234e083b510c9bac12c23be8cdf0f7120308f898293831ed49f5ddd000261f7"
