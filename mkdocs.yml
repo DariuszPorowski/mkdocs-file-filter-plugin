@@ -1,6 +1,6 @@
 INHERIT: mkdocs.base.yml
 
-dev_addr: 127.0.0.1:1357
+#! dev_addr: 127.0.0.1:1357
 
 plugins:
   - search
