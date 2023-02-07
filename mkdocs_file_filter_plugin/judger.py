@@ -28,30 +28,38 @@ class Judger:
         )
         for glob in self.plugin_config.include_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
-                return True, str(f"glob: {glob}")
+                return file, True, str(f"glob: {glob}")
         for regex in self.plugin_config.include_regex:
             if re.match(regex, file.src_path):
-                return True, str(f"regex: {regex}")
+                return file, True, str(f"regex: {regex}")
         if file.is_documentation_page() and self.plugin_config.include_tag is not []:
             tags = self.__get_metadata(file)
             for tag in self.plugin_config.include_tag:
                 if tag in tags:
-                    return True, str(f"{self.plugin_config.metadata_property}: {tag}")
+                    return (
+                        file,
+                        True,
+                        str(f"{self.plugin_config.metadata_property}: {tag}"),
+                    )
         for glob in self.plugin_config.exclude_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
-                return False, str(f"glob: {glob}")
+                return file, False, str(f"glob: {glob}")
         for regex in self.plugin_config.exclude_regex:
             if re.match(regex, file.src_path):
-                return False, str(f"regex: {regex}")
+                return file, False, str(f"regex: {regex}")
         if file.is_documentation_page() and self.plugin_config.exclude_tag is not []:
             tags = self.__get_metadata(file)
             for tag in self.plugin_config.exclude_tag:
                 if tag in tags:
-                    return False, str(f"{self.plugin_config.metadata_property}: {tag}")
+                    return (
+                        file,
+                        False,
+                        str(f"{self.plugin_config.metadata_property}: {tag}"),
+                    )
         if self.plugin_config.mkdocsignore is True:
             if self.mkdocsignore_parser.match(pathlib.Path(file.abs_src_path)):
-                return False, "mkdocsignore"
-        return True, "no rule"
+                return file, False, "mkdocsignore"
+        return file, True, "no rule"
 
     def __path_fix(self, src_path, abs_src_path):
         if os.sep != "/":
