@@ -1,3 +1,4 @@
+import concurrent.futures
 import pathlib
 
 from mkdocs.config.defaults import MkDocsConfig
@@ -55,11 +56,18 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
             return
 
         judger = Judger(self.config, config)
-        for file in files:
-            result, reason = judger.evaluate(file)
-            if result:
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            results = [executor.submit(judger.evaluate, file) for file in files]
+            concurrent.futures.wait(results)
+
+        for result in results:
+            file, included, reason = result.result()
+            if included:
                 LOG.debug("include file: %s (because %s)" % (file.src_path, reason))
+                continue
             else:
                 LOG.debug("exclude file: %s (because %s)" % (file.src_path, reason))
                 files.remove(file)
-        return MkDocsFiles(files)
+
+        return files
