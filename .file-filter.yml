@@ -1,4 +1,3 @@
-enabled: !ENV [CI, true]
 mkdocsignore: false
 include_glob:
   - 'test/test.md'
@@ -8,7 +7,5 @@ exclude_glob:
 include_tag:
   - foo
   - '#bar'
-enabled_on_serve: !ENV [CI, true]
 exclude_tag:
   - test
-filter_nav: true

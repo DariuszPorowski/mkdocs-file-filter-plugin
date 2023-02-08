@@ -27,7 +27,7 @@
 					},
 					"anyOf": [
 						{
-							"$ref": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/schema-config.json",
+							"$ref": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/schema-file-filter-config.json",
 							"additionalProperties": true
 						}
 					],

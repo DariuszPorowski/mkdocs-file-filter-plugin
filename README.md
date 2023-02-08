@@ -106,7 +106,8 @@ The plugin supports external files for the plugin configuration. If the external
 plugins:
   - search # if you include another plugin, and want search you have to add it again
   - file-filter:
-      config: !ENV [MY_FILE_FILTER_CONFIG, 'mkdocs.file-filter.yml']
+      config: !ENV [MY_FILE_FILTER_CONFIG, '.file-filter.yml']
+      # config: path/to/config/file/.file-filter.yml
 ```
 
 > :bulb: **HINT**

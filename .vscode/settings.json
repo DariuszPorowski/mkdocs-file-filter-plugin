@@ -4,8 +4,8 @@
 			"mkdocs.yml",
 			"mkdocs.base.yml"
 		],
-		"schema-config.json": [
-			"mkdocs.file-filter.yml"
+		"schema-file-filter-config.json": [
+			".file-filter.yml"
 		]
 	},
 	"files.trimTrailingWhitespace": true,
