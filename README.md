@@ -70,6 +70,7 @@ Add a plugin configuration to `mkdocs.yml` - below example contains only example
 plugins:
   - search # if you include another plugin, and want search you have to add it again
   - file-filter:
+      filter_nav: true # default value
       exclude_glob:
         - 'exclude/this/path/*'
         - 'exclude/this/file/draft.md'
@@ -118,6 +119,7 @@ External plugin config file example:
 # mkdocs.file-filter.yml
 enabled: !ENV [CI, true]
 enabled_on_serve: true
+filter_nav: true
 mkdocsignore: false
 exclude_glob:
   - 'exclude/this/path/*'
@@ -153,9 +155,10 @@ The below table shows all supported options by the plugin.
 | `config` | string | *none* | Path to external plugin's configuration file |
 | `enabled` | bool | `true` | Turn on/off plugin without removing/adding plugin's config from `mkdocs.yml` |
 | `enabled_on_serve` | bool | `false` | Turn on/off plugin on `serve` command |
+| `filter_nav` | bool | `true` | Remove `nav` items pointed to excluded files |
 | `mkdocsignore` | bool | `false` | Use gitignore-style file for patterns |
 | `mkdocsignore_file` | string | `.mkdocsignore` | Path to gitignore-style file with patterns |
-| `metadata_property` | string | `tags` | What Markdown/FrontMatter metadata property will be used for checking tags |
+| `metadata_property` | string | `tags` | What Markdown/FrontMatter metadata property list will be used for checking keywords |
 | `exclude_tag` | [string] | *none* | List of excluded tags |
 | `include_tag` | [string] | *none* | List of included tags |
 | `exclude_glob` | [string] | *none* | Exclude glob patterns |
@@ -181,6 +184,7 @@ The below table shows all supported options by the plugin.
 # mkdocs.yml
 plugins:
   - file-filter:
+      filter_nav: true # default value
       exclude_glob:
         - 'drafts/**'
       include_glob:
@@ -199,6 +203,7 @@ plugins:
 # mkdocs.yml
 plugins:
   - file-filter:
+      filter_nav: true # default value
       exclude_regex:
         - '.*\.(tmp|bin|tar)$'
       include_regex:
@@ -223,6 +228,7 @@ By default plugin filter files using `tags` property of your Markdown metadata.
 # mkdocs.yml
 plugins:
   - file-filter:
+      filter_nav: true # default value
       exclude_tag:
         - abc
         - draft
@@ -275,6 +281,7 @@ Set `metadata_property` with your custom list property, e.g., `labels` for this 
 # mkdocs.yml
 plugins:
   - file-filter:
+      filter_nav: true # default value
       metadata_property: labels
       exclude_tag:
         - foo
@@ -336,6 +343,7 @@ Example config for mkdocsignore.
 # mkdocs.yml
 plugins:
   - file-filter:
+      filter_nav: true # default value
       mkdocsignore: true # default: false
       mkdocsignore_file: 'custom/path/.myignore' # optional, relative to mkdocs.yml, default: .mkdocsignore
 ```
