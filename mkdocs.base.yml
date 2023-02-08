@@ -3,9 +3,8 @@ site_name: Test Site
 theme:
   name: material
 
-plugins:
-  - monorepo
-  - awesome-pages
+#plugins:
+
   # - literate-nav:
   #     nav_file: NAV.md
 

@@ -2,8 +2,8 @@
 title: nav
 ---
 
-* [Frob](index.md)
+<!-- * [Frob](index.md)
 * [Baz](baz.md)
 * [Borgs](borgs/index.md)
   * [Bar](borgs/bar.md)
-  * [Foo](borgs/foo.md)
+  * [Foo](borgs/foo.md) -->

@@ -24,6 +24,7 @@ class ExternalConfig:
                 Optional("include_glob"): [str],
                 Optional("include_regex"): [str],
                 Optional("include_tag"): [str],
+                Optional("exclude_nav"): bool,
             }
         )
 

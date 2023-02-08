@@ -373,4 +373,4 @@ It is possible to exclude and include will have conflict. For example, you could
 [poetry]: https://python-poetry.org
 [pip]: https://pip.pypa.io
 [gitignore]: https://git-scm.com/docs/gitignore
-[mit]: https://spdx.org/licenses/MIT.html
+[mit]: https://opensource.org/licenses/MIT

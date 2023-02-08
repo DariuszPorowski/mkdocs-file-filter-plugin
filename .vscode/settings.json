@@ -4,10 +4,6 @@
 			"mkdocs.yml",
 			"mkdocs.base.yml"
 		],
-		// "https://json.schemastore.org/mkdocs-1.0.json": [
-		// 	"mkdocs.yml",
-		// 	"mkdocs.base.yml"
-		// ],
 		"schema-config.json": [
 			"mkdocs.file-filter.yml"
 		]

@@ -10,7 +10,7 @@ indent_style = tab
 [*.{cmd,bat}]
 end_of_line = crlf
 
-[*.{yml,yaml,md}]
+[*.{yml,yaml,md,pages}]
 indent_style = space
 indent_size = 2
 

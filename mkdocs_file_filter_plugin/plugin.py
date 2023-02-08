@@ -1,10 +1,12 @@
-import concurrent.futures
 import pathlib
+from urllib.parse import urlsplit
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.exceptions import PluginError as MkDocsPluginError
 from mkdocs.plugins import BasePlugin as MkDocsPlugin
 from mkdocs.structure.files import Files as MkDocsFiles
+from mkdocs.structure.nav import Link as MkDocsLink
+from mkdocs.structure.nav import Navigation as MkDocsNavigation
 
 from . import util as LOG
 from .external_config import ExternalConfig
@@ -17,6 +19,28 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
         self.is_serve = command == "serve"
 
     def on_config(self, config: MkDocsConfig):
+        for name, plugin in config.plugins.items():
+            if name == "file-filter":
+                break
+            if hasattr(plugin, "on_nav"):
+                LOG.info(
+                    str(
+                        f'The plugin "{name}" might not work correctly when '
+                        "placed before file-filter in the list of plugins. "
+                        'It defines an "on_nav" handler that will be overridden '
+                        "by file-filter in some circumstances."
+                    )
+                )
+            if hasattr(plugin, "on_files"):
+                LOG.info(
+                    str(
+                        f'The plugin "{name}" might not work correctly when '
+                        "placed before file-filter in the list of plugins. "
+                        'It defines an "on_files" handler that will be overridden '
+                        "by file-filter in some circumstances."
+                    )
+                )
+
         if self.config.config is not None:
             external_config = ExternalConfig()
             file_filter_config = external_config.load(self.config.config)
@@ -38,14 +62,14 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
             if pathlib.Path(self.config.mkdocsignore_file).is_file() is False:
                 raise MkDocsPluginError(
                     str(
-                        "The path '%s' isn't an existing file."
-                        % self.config.mkdocsignore_file
+                        f"The path '{self.config.mkdocsignore_file}' "
+                        "isn't an existing file."
                     )
                 )
             config.watch.append(pathlib.Path(self.config.mkdocsignore_file))
 
         for k in self.config.keys():
-            LOG.debug("Config value '%s' = %s" % (k, self.config[k]))
+            LOG.debug(f"Config value '{k}' = {self.config[k]}")
 
         return config
 
@@ -56,18 +80,35 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
             return
 
         judger = Judger(self.config, config)
-
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            results = [executor.submit(judger.evaluate, file) for file in files]
-            concurrent.futures.wait(results)
-
-        for result in results:
-            file, included, reason = result.result()
+        results = [judger.evaluate(file) for file in files]
+        for file, included, reason in results:
             if included:
-                LOG.debug("include file: %s (because %s)" % (file.src_path, reason))
-                continue
+                LOG.debug(f"include file: {file.src_path} (because {reason})")
             else:
-                LOG.debug("exclude file: %s (because %s)" % (file.src_path, reason))
+                LOG.debug(f"exclude file: {file.src_path} (because {reason})")
                 files.remove(file)
 
         return files
+
+    def on_nav(self, nav: MkDocsNavigation, config: MkDocsConfig, files: MkDocsFiles):
+        if not self.config.enabled:
+            return
+        if not self.config.enabled_on_serve and self.is_serve:
+            return
+        if not self.config.exclude_nav:
+            return
+
+        nav_items_new = []
+        for nav_item in nav.items:
+            scheme, netloc, path, query, fragment = urlsplit(nav_item.url)
+            if (
+                isinstance(nav_item, MkDocsLink)
+                and not nav_item.url.startswith("/")
+                and not scheme
+                and not netloc
+            ):
+                LOG.debug(f"removing navigation item: {nav_item.url}")
+            else:
+                nav_items_new.append(nav_item)
+
+        return MkDocsNavigation(nav_items_new, nav.pages)
