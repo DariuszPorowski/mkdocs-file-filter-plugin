@@ -1,4 +1,4 @@
-# mkdocs-file-filter-plugin
+# MkDocs File Filter Plugin
 
 [![PyPI - Version][pypi-v-image]][pypi-v-link]
 [![PyPI - Python Version][pypi-pyversions-image]][pypi-pyversions-link]
@@ -411,6 +411,12 @@ plugins:
 - Xyz: path/xyz.md
 ```
 
+> :warning: **NOTE**
+>
+> If you use any other 3rd-party plugins that modify navigation (e.g., [mkdocs-awesome-pages-plugin][mkdocs-awesome-pages-plugin-pypi]) - first, test and evaluate expected behavior. Plugin configuration order may impact results.
+
+> In most cases is recommended to transform navigation first and next filter with the file-filter plugin.
+
 ### Conflict behavior
 
 It is possible to exclude and include will have conflict. For example, you could exclude `drafts/**` but include `*.md`. In that case, **include** has higher priority over exclude. So all `*.md` files from the drafts folder will be **included**.
@@ -432,3 +438,4 @@ It is possible to exclude and include will have conflict. For example, you could
 [pip]: https://pip.pypa.io
 [gitignore]: https://git-scm.com/docs/gitignore
 [mit]: https://opensource.org/licenses/MIT
+[mkdocs-awesome-pages-plugin-pypi]: https://pypi.org/project/mkdocs-awesome-pages-plugin
