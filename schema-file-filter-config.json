@@ -16,7 +16,7 @@
 			"default": false
 		},
 		"filter_nav": {
-			"title": "Filter navigation items based on excludes",
+			"title": "Remove navigation items based on excludes",
 			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
 			"type": "boolean",
 			"default": true
