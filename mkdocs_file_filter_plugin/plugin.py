@@ -80,7 +80,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
         judger = Judger(self.config, config)
         files_new = []
         for file in files:
-            result, reason = judger.evaluate(file)
+            result, reason = judger.evaluate_file(file)
             if result:
                 LOG.debug(f"include file: {file.src_path} (because {reason})")
                 files_new.append(file)
@@ -100,7 +100,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
         judger = Judger(self.config, config)
         nav_items_new = []
         for nav_item in nav:
-            result = judger.nav_filter(nav_item)
+            result = judger.evaluate_nav(nav_item)
             if result is not None:
                 nav_items_new.append(result)
 

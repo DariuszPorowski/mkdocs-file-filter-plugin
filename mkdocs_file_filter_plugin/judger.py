@@ -26,9 +26,9 @@ class Judger:
                 pathlib.Path(self.plugin_config.mkdocsignore_file)
             )
 
-    def nav_filter(self, nav):
+    def evaluate_nav(self, nav):
         if isinstance(nav, MkDocsSection):
-            nev_section = [self.nav_filter(child) for child in nav.children]
+            nev_section = [self.evaluate_nav(child) for child in nav.children]
             nev_section = list(filter(lambda item: item is not None, nev_section))
             if nev_section != []:
                 return MkDocsSection(nav.title, nev_section)
@@ -46,7 +46,7 @@ class Judger:
             else:
                 return nav
 
-    def evaluate(self, file: MkDocsFile):
+    def evaluate_file(self, file: MkDocsFile):
         file.src_path, file.abs_src_path = self.__path_fix(
             file.src_path, file.abs_src_path
         )
