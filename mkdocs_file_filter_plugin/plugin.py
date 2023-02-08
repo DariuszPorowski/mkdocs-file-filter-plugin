@@ -104,6 +104,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
         for nav_item in nav.items:
             if not isinstance(nav_item, MkDocsSection):
                 scheme, netloc, path, query, fragment = urlsplit(nav_item.url)
+
             if (
                 isinstance(nav_item, MkDocsLink)
                 and not nav_item.url.startswith("/")
