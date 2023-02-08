@@ -11,4 +11,4 @@ include_tag:
 enabled_on_serve: !ENV [CI, true]
 exclude_tag:
   - test
-exclude_nav: true
+filter_nav: true

@@ -11,7 +11,7 @@ class PluginConfig(MkDocsConfigBase):
     include_glob = MkDocsConfigOptions.Type(list, default=[])
     include_regex = MkDocsConfigOptions.Type(list, default=[])
     include_tag = MkDocsConfigOptions.Type(list, default=[])
-    exclude_nav = MkDocsConfigOptions.Type(bool, default=True)
+    filter_nav = MkDocsConfigOptions.Type(bool, default=True)
     metadata_property = MkDocsConfigOptions.Type(str, default="tags")
     mkdocsignore = MkDocsConfigOptions.Type(bool, default=False)
     mkdocsignore_file = MkDocsConfigOptions.File(exists=False, default=".mkdocsignore")

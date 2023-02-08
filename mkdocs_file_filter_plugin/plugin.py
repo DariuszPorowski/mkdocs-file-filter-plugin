@@ -96,7 +96,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
             return
         if not self.config.enabled_on_serve and self.is_serve:
             return
-        if not self.config.exclude_nav:
+        if not self.config.filter_nav:
             return
 
         nav_items_new = []
