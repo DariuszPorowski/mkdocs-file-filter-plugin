@@ -7,6 +7,7 @@ from mkdocs.plugins import BasePlugin as MkDocsPlugin
 from mkdocs.structure.files import Files as MkDocsFiles
 from mkdocs.structure.nav import Link as MkDocsLink
 from mkdocs.structure.nav import Navigation as MkDocsNavigation
+from mkdocs.structure.nav import Section as MkDocsSection
 
 from . import util as LOG
 from .external_config import ExternalConfig
@@ -100,7 +101,8 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         nav_items_new = []
         for nav_item in nav.items:
-            scheme, netloc, path, query, fragment = urlsplit(nav_item.url)
+            if not isinstance(nav_item, MkDocsSection):
+                scheme, netloc, path, query, fragment = urlsplit(nav_item.url)
             if (
                 isinstance(nav_item, MkDocsLink)
                 and not nav_item.url.startswith("/")

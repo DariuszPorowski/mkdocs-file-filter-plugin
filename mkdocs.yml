@@ -7,7 +7,7 @@ plugins:
   # - monorepo
   - tags:
       tags_file: tags.md
-  # - awesome-pages
+  - awesome-pages
   - file-filter:
       config: !ENV [MY_FILE_FILTER_CONFIG, "mkdocs.file-filter.yml"]
       # metadata_property: labels

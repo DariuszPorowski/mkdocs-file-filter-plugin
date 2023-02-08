@@ -2,9 +2,3 @@ site_name: Test Site
 
 theme:
   name: material
-
-#plugins:
-
-  # - literate-nav:
-  #     nav_file: NAV.md
-
