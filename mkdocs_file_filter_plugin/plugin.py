@@ -81,15 +81,16 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
             return
 
         judger = Judger(self.config, config)
-        results = [judger.evaluate(file) for file in files]
-        for file, included, reason in results:
-            if included:
+        files_new = []
+        for file in files:
+            results, reason = judger.evaluate(file)
+            if results:
                 LOG.debug(f"include file: {file.src_path} (because {reason})")
+                files_new.append(file)
             else:
                 LOG.debug(f"exclude file: {file.src_path} (because {reason})")
-                files.remove(file)
 
-        return files
+        return MkDocsFiles(files_new)
 
     def on_nav(self, nav: MkDocsNavigation, config: MkDocsConfig, files: MkDocsFiles):
         if not self.config.enabled:
