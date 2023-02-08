@@ -1,13 +1,10 @@
 import pathlib
-from urllib.parse import urlsplit
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.exceptions import PluginError as MkDocsPluginError
 from mkdocs.plugins import BasePlugin as MkDocsPlugin
 from mkdocs.structure.files import Files as MkDocsFiles
-from mkdocs.structure.nav import Link as MkDocsLink
 from mkdocs.structure.nav import Navigation as MkDocsNavigation
-from mkdocs.structure.nav import Section as MkDocsSection
 
 from . import util as LOG
 from .external_config import ExternalConfig
@@ -83,8 +80,8 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
         judger = Judger(self.config, config)
         files_new = []
         for file in files:
-            results, reason = judger.evaluate(file)
-            if results:
+            result, reason = judger.evaluate(file)
+            if result:
                 LOG.debug(f"include file: {file.src_path} (because {reason})")
                 files_new.append(file)
             else:
@@ -100,19 +97,13 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
         if not self.config.filter_nav:
             return
 
+        judger = Judger(self.config, config)
         nav_items_new = []
-        for nav_item in nav.items:
-            if not isinstance(nav_item, MkDocsSection):
-                scheme, netloc, path, query, fragment = urlsplit(nav_item.url)
+        for nav_item in nav:
+            result = judger.nav_filter(nav_item)
+            if result is not None:
+                nav_items_new.append(result)
 
-            if (
-                isinstance(nav_item, MkDocsLink)
-                and not nav_item.url.startswith("/")
-                and not scheme
-                and not netloc
-            ):
-                LOG.debug(f"removing navigation item: {nav_item.url}")
-            else:
-                nav_items_new.append(nav_item)
+        nav_items_new = list(filter(lambda item: item is not None, nav_items_new))
 
         return MkDocsNavigation(nav_items_new, nav.pages)

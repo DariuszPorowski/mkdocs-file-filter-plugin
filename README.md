@@ -23,6 +23,7 @@
     - [Tags metadata property](#tags-metadata-property)
     - [Custom metadata list](#custom-metadata-list)
   - [.mkdocsignore](#mkdocsignore)
+  - [Navigation filtering](#navigation-filtering)
   - [Conflict behavior](#conflict-behavior)
 - [License](#license)
 
@@ -72,7 +73,7 @@ plugins:
   - file-filter:
       filter_nav: true # default value
       exclude_glob:
-        - 'exclude/this/path/*'
+        - 'exclude/this/path/**'
         - 'exclude/this/file/draft.md'
         - '*.tmp'
       exclude_regex:
@@ -81,7 +82,7 @@ plugins:
         - draft
         - preview
       include_glob:
-        - 'include/this/path/*'
+        - 'include/this/path/**'
         - 'include/this/file/Code-of-Conduct.md'
         - '*.png'
         - 'assets/**' # the material theme requires this folder
@@ -346,7 +347,7 @@ plugins:
   - file-filter:
       filter_nav: true # default value
       mkdocsignore: true # default: false
-      mkdocsignore_file: 'custom/path/.myignore' # optional, relative to mkdocs.yml, default: .mkdocsignore
+      mkdocsignore_file: 'custom/path/.mkdocsignore' # optional, relative to mkdocs.yml, default: .mkdocsignore
 ```
 
 Example `.mkdocsignore` file.
@@ -362,6 +363,53 @@ docs/**/draft-*.md
 > :warning: **NOTE**
 >
 > **.mkdocsignore** patterns relative to your root.
+
+### Navigation filtering
+
+Suppose you customized [MkDocs navigation configuration][mkdocs-nav], and your `nav` contains elements defined in exclude patterns. In that case, the default MkDocs behavior is to render navigation to a non-existing file, and generated site gives 404.
+
+By default, the plugin filters those cases and removes not working navigation items.
+
+You can control the plugin's behavior to explicitly disable that option by setting `filter_nav: false`.
+
+Example `mkdocs.yml` config.
+
+```yaml
+# mkdocs.yml
+nav:
+- Foo: exclude/this/path
+- Bar: exclude/this/file/draft.md
+- Abc:
+    - About: exclude/this/path/about.md
+    - Contact: include/this/file/contact.md
+- Xyz: path/xyz.md
+
+plugins:
+  - file-filter:
+      filter_nav: true # default value
+      exclude_glob:
+        - 'exclude/this/path/**'
+        - 'exclude/this/file/draft.md'
+```
+
+**Nav** results with `filter_nav: false`:
+
+```yaml
+- Foo: exclude/this/path # -> 404
+- Bar: exclude/this/file/draft.md # -> 404
+- Abc:
+    - About: exclude/this/path/about.md # -> 404
+    - Contact: include/this/file/contact.md
+- Xyz: path/xyz.md
+```
+
+**Nav** results with `filter_nav: true`:
+
+```yaml
+- Abc:
+    - Contact: include/this/file/contact.md
+- Xyz: path/xyz.md
+```
 
 ### Conflict behavior
 
@@ -379,6 +427,7 @@ It is possible to exclude and include will have conflict. For example, you could
 [mkdocs-envs]: https://www.mkdocs.org/user-guide/configuration/#environment-variables
 [mkdocs-metadata]: https://www.mkdocs.org/user-guide/writing-your-docs/#meta-data
 [mkdocs-docs-dir]: https://www.mkdocs.org/user-guide/configuration/#docs_dir
+[mkdocs-nav]: https://www.mkdocs.org/user-guide/writing-your-docs/#configure-pages-and-navigation
 [poetry]: https://python-poetry.org
 [pip]: https://pip.pypa.io
 [gitignore]: https://git-scm.com/docs/gitignore
