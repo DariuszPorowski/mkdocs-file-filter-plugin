@@ -2,12 +2,16 @@ import fnmatch
 import os
 import pathlib
 import re
+from urllib.parse import urlsplit
 
 import igittigitt
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File as MkDocsFile
+from mkdocs.structure.nav import Link as MkDocsLink
+from mkdocs.structure.nav import Section as MkDocsSection
 from mkdocs.structure.pages import Page as MkDocsPage
 
+from . import util as LOG
 from .plugin_config import PluginConfig
 
 
@@ -22,44 +26,62 @@ class Judger:
                 pathlib.Path(self.plugin_config.mkdocsignore_file)
             )
 
-    def evaluate(self, file: MkDocsFile):
+    def evaluate_nav(self, nav):
+        if isinstance(nav, MkDocsSection):
+            nev_section = [self.evaluate_nav(child) for child in nav.children]
+            nev_section = list(filter(lambda item: item is not None, nev_section))
+            if nev_section != []:
+                return MkDocsSection(nav.title, nev_section)
+            else:
+                LOG.debug(f"remove navigation section: {nav.title}")
+        else:
+            scheme, netloc, path, query, fragment = urlsplit(nav.url)
+            if (
+                isinstance(nav, MkDocsLink)
+                and not nav.url.startswith("/")
+                and not scheme
+                and not netloc
+            ):
+                LOG.debug(f"remove navigation item: {nav.title} {nav.url}")
+            else:
+                return nav
+
+    def evaluate_file(self, file: MkDocsFile):
         file.src_path, file.abs_src_path = self.__path_fix(
             file.src_path, file.abs_src_path
         )
         for glob in self.plugin_config.include_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
-                return file, True, str(f"glob: {glob}")
+                return True, str(f"glob: {glob}")
         for regex in self.plugin_config.include_regex:
             if re.match(regex, file.src_path):
-                return file, True, str(f"regex: {regex}")
+                return True, str(f"regex: {regex}")
         if file.is_documentation_page() and self.plugin_config.include_tag is not []:
             tags = self.__get_metadata(file)
             for tag in self.plugin_config.include_tag:
                 if tag in tags:
                     return (
-                        file,
                         True,
                         str(f"{self.plugin_config.metadata_property}: {tag}"),
                     )
         for glob in self.plugin_config.exclude_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
-                return file, False, str(f"glob: {glob}")
+                return False, str(f"glob: {glob}")
         for regex in self.plugin_config.exclude_regex:
             if re.match(regex, file.src_path):
-                return file, False, str(f"regex: {regex}")
+                return False, str(f"regex: {regex}")
         if file.is_documentation_page() and self.plugin_config.exclude_tag is not []:
             tags = self.__get_metadata(file)
             for tag in self.plugin_config.exclude_tag:
                 if tag in tags:
                     return (
-                        file,
                         False,
                         str(f"{self.plugin_config.metadata_property}: {tag}"),
                     )
         if self.plugin_config.mkdocsignore is True:
             if self.mkdocsignore_parser.match(pathlib.Path(file.abs_src_path)):
                 return file, False, "mkdocsignore"
-        return file, True, "no rule"
+        return True, "no rule"
 
     def __path_fix(self, src_path, abs_src_path):
         if os.sep != "/":

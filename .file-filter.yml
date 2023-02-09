@@ -1,11 +1,11 @@
-enabled: !ENV [CI, true]
 mkdocsignore: false
 include_glob:
   - 'test/test.md'
   - '**/draft-*.md'
+exclude_glob:
+  - 'Contributions/**'
 include_tag:
   - foo
   - '#bar'
-enabled_on_serve: !ENV [CI, true]
 exclude_tag:
   - test
