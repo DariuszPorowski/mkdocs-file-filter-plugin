@@ -67,4 +67,10 @@ jobs:
       - name: Test Build
         run: |
           poetry version
-          poetry build
+          poetry build --verbose
+
+      - name: Test MkDocs build
+        run: |
+          pip uninstall -y mkdocs_file_filter_plugin
+          pip install dist/mkdocs_file_filter_plugin-*.tar.gz
+          poetry run mkdocs build --verbose
