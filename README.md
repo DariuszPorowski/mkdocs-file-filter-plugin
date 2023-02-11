@@ -118,7 +118,7 @@ plugins:
 External plugin config file example:
 
 ```yaml
-# mkdocs.file-filter.yml
+# .file-filter.yml
 enabled: !ENV [CI, true]
 enabled_on_serve: true
 filter_nav: true
