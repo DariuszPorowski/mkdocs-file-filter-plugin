@@ -13,7 +13,7 @@
 			"title": "Enable on serve",
 			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
 			"type": "boolean",
-			"default": false
+			"default": true
 		},
 		"filter_nav": {
 			"title": "Remove navigation items based on excludes",

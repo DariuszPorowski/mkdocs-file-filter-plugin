@@ -1,11 +1,10 @@
 {
 	"yaml.schemas": {
 		"https://squidfunk.github.io/mkdocs-material/schema.json": [
-			"mkdocs.yml",
-			"mkdocs.base.yml"
+			"mkdocs*.yml"
 		],
 		"schema-file-filter-config.json": [
-			".file-filter.yml"
+			".file-filter*.yml"
 		]
 	},
 	"files.trimTrailingWhitespace": true,
