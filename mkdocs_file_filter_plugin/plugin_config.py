@@ -4,7 +4,7 @@ from mkdocs.config.base import Config as MkDocsConfigBase
 
 class PluginConfig(MkDocsConfigBase):
     enabled = MkDocsConfigOptions.Type(bool, default=True)
-    enabled_on_serve = MkDocsConfigOptions.Type(bool, default=False)
+    enabled_on_serve = MkDocsConfigOptions.Type(bool, default=True)
     exclude_glob = MkDocsConfigOptions.Type(list, default=[])
     exclude_regex = MkDocsConfigOptions.Type(list, default=[])
     exclude_tag = MkDocsConfigOptions.Type(list, default=[])
