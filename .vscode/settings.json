@@ -20,5 +20,8 @@
 		".pages": "yaml"
 	},
 	"python.linting.enabled": true,
-	"markdown.extension.toc.levels": "2..6"
+	"markdown.extension.toc.levels": "2..6",
+	"python.analysis.extraPaths": [
+		".venv/lib/site-packages"
+	]
 }

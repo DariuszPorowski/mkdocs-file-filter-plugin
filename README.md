@@ -152,11 +152,12 @@ include_tag:
 
 The below table shows all supported options by the plugin.
 
-| Property | Type | Default | Description |
+| Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `config` | string | *none* | Path to external plugin's configuration file |
 | `enabled` | bool | `true` | Turn on/off plugin without removing/adding plugin's config from `mkdocs.yml` |
 | `enabled_on_serve` | bool | `true` | Turn on/off plugin on `serve` command |
+| `only_doc_pages` | bool | `false` | Filtering limited only to the documentation pages (markdown files), the rest included by default. |
 | `filter_nav` | bool | `true` | Remove `nav` items pointed to excluded files |
 | `mkdocsignore` | bool | `false` | Use gitignore-style file for patterns |
 | `mkdocsignore_file` | string | `.mkdocsignore` | Path to gitignore-style file with patterns |

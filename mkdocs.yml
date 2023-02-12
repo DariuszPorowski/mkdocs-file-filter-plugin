@@ -13,3 +13,4 @@ plugins:
       enabled: !ENV [CI, true]
       enabled_on_serve: true
       filter_nav: true
+      only_doc_pages: true

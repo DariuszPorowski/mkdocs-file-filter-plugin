@@ -15,6 +15,7 @@ class ExternalConfig:
             {
                 Optional("enabled"): bool,
                 Optional("enabled_on_serve"): bool,
+                Optional("only_doc_pages"): bool,
                 Optional("metadata_property"): str,
                 Optional("mkdocsignore"): bool,
                 Optional("mkdocsignore_file"): str,

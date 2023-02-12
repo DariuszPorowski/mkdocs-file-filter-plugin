@@ -47,9 +47,13 @@ class Judger:
                 return nav
 
     def evaluate_file(self, file: MkDocsFile):
+        if self.plugin_config.only_doc_pages and not file.is_documentation_page():
+            return True, "omitted - not doc page"
+
         file.src_path, file.abs_src_path = self.__path_fix(
             file.src_path, file.abs_src_path
         )
+
         for glob in self.plugin_config.include_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
                 return True, str(f"glob: {glob}")
