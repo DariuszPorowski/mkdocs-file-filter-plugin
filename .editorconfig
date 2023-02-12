@@ -10,10 +10,13 @@ indent_style = tab
 [*.{cmd,bat}]
 end_of_line = crlf
 
-[*.{yml,yaml,md,pages}]
+[*.{yml,yaml,pages,md,markdown}]
 indent_style = space
 indent_size = 2
 
 [*.py]
 indent_style = space
 indent_size = 4
+
+[*.json]
+indent_size = 2

@@ -1,11 +1,11 @@
 mkdocsignore: false
 include_glob:
-  - 'test/test.md'
-  - '**/draft-*.md'
+  - "test/test.md"
+  - "**/draft-*.md"
 exclude_glob:
-  - 'Contributions/**'
+  - "Contributions/**"
 include_tag:
   - foo
-  - '#bar'
+  - "#bar"
 exclude_tag:
   - test
