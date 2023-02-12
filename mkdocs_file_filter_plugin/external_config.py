@@ -33,7 +33,7 @@ class ExternalConfig:
         config_path = pathlib.Path(config_path)
         LOG.debug("Loading config file: ", os.path.basename(config_path))
         yaml.SafeLoader.add_constructor("!ENV", construct_env_tag)
-        with open(config_path, "r") as f:
+        with open(config_path, encoding="utf-8", mode="r") as f:
             config = yaml.safe_load(f) or {}
         self.__validate(config)
         return config
