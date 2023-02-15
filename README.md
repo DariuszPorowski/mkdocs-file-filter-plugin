@@ -437,6 +437,6 @@ It is possible to exclude and include will have conflict. For example, you could
 [mkdocs-nav]: https://www.mkdocs.org/user-guide/writing-your-docs/#configure-pages-and-navigation
 [poetry]: https://python-poetry.org
 [pip]: https://pip.pypa.io
-[gitignore]: https://git-scm.com/docs/gitignore
+[gitignore]: https://git-scm.com/docs/gitignore#_pattern_format
 [mit]: https://opensource.org/licenses/MIT
 [mkdocs-awesome-pages-plugin-pypi]: https://pypi.org/project/mkdocs-awesome-pages-plugin
