@@ -16,6 +16,7 @@
 		"master"
 	],
 	"files.associations": {
+		"CODEOWNERS": "ignore",
 		"*.mkdocsignore": "ignore",
 		".pages": "yaml"
 	},
