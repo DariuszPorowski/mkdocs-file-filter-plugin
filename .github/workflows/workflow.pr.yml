@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - "mkdocs_file_filter_plugin/**"
 
 # Allow one concurrent
 concurrency:
