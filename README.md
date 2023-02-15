@@ -415,7 +415,7 @@ plugins:
 > :warning: **NOTE**
 >
 > If you use any other 3rd-party plugins that modify navigation (e.g., [mkdocs-awesome-pages-plugin][mkdocs-awesome-pages-plugin-pypi]) - first, test and evaluate expected behavior. Plugin configuration order may impact results.
-
+>
 > In most cases is recommended to transform navigation first and next filter with the file-filter plugin.
 
 ### Conflict behavior
