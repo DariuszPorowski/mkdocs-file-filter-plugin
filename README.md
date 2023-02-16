@@ -24,6 +24,7 @@
     - [Custom metadata list](#custom-metadata-list)
   - [.mkdocsignore](#mkdocsignore)
   - [Navigation filtering](#navigation-filtering)
+  - [Filter only documentation pages](#filter-only-documentation-pages)
   - [Conflict behavior](#conflict-behavior)
 - [License](#license)
 
@@ -393,7 +394,7 @@ plugins:
         - 'exclude/this/file/draft.md'
 ```
 
-**Nav** results with `filter_nav: false`:
+Nav **results** with `filter_nav: false`:
 
 ```yaml
 - Foo: exclude/this/path # -> 404
@@ -404,7 +405,7 @@ plugins:
 - Xyz: path/xyz.md
 ```
 
-**Nav** results with `filter_nav: true`:
+Nav **results** with `filter_nav: true`:
 
 ```yaml
 - Abc:
@@ -417,6 +418,25 @@ plugins:
 > If you use any other 3rd-party plugins that modify navigation (e.g., [mkdocs-awesome-pages-plugin][mkdocs-awesome-pages-plugin-pypi]) - first, test and evaluate expected behavior. Plugin configuration order may impact results.
 >
 > In most cases is recommended to transform navigation first and next filter with the file-filter plugin.
+
+### Filter only documentation pages
+
+By default, the plugin analyzes all files required to build a site. It includes the theme and all files inside docs like jpg, png, etc. By setting the `only_doc_pages` option to `true`, the plugin will only analyze and applies rules to documentation pages (markdown files). All rules that apply to non-documentation pages, such as regexes or globs with patterns related to jpg, png, tmp, css, etc, will be omitted.
+
+Example `mkdocs.yml` config.
+
+```yaml
+# mkdocs.yml
+plugins:
+  - file-filter:
+      only_doc_pages: true # default value is false
+      exclude_regex:
+        - '.*\.md$'
+      include_tag:
+        - released
+```
+
+**RESULT:** Include only markdown files with the meta-data tag `released` and all theme and other files under the docs folder like images, etc.
 
 ### Conflict behavior
 
