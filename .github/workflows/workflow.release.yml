@@ -17,8 +17,12 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    name: Build
+  pypi-release:
+    name: PyPI Release
+    # if: ${{ !github.event.release.prerelease && github.event.action == 'released' && github.repository_owner == 'DariuszPorowski' }}
+    environment:
+      name: PyPI
+      url: "https://pypi.org/project/mkdocs-file-filter-plugin"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -42,8 +46,8 @@ jobs:
       - name: Build
         run: poetry build
 
-      - run: |
-          tree
+      - name: Publish to PyPI
+        run: poetry publish --dry-run --verbose --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -55,23 +59,17 @@ jobs:
 
   gh-release:
     name: GitHub Release
-    needs: build
+    needs: pypi-release
     environment:
       name: GitHub
       url: ${{ steps.gh-release.outputs.url }}
     runs-on: ubuntu-latest
     steps:
-      # - uses: actions/checkout@v3
-
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
           name: plugin
           path: artifact
-
-      - run: |
-          cd artifact
-          tree
 
       - name: Release
         id: gh-release
@@ -81,35 +79,3 @@ jobs:
           files: |
             artifact/dist/*
             artifact/schema*.json
-
-  pypi-release:
-    name: PyPI Release
-    needs: gh-release
-    # if: ${{ !github.event.release.prerelease && github.event.action == 'released' && github.repository_owner == 'DariuszPorowski' }}
-    environment:
-      name: PyPI
-      url: "https://pypi.org/project/mkdocs-file-filter-plugin"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install Poetry
-        run: pipx install poetry
-
-      # - name: Setup Python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: "3.10"
-      #     cache: "poetry"
-
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: plugin
-          path: .
-
-      - run: |
-          tree
-
-      - name: Publish to PyPI
-        run: poetry publish --dry-run --verbose --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
