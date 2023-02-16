@@ -60,7 +60,8 @@ jobs:
     steps:
       # - uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v3
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
         with:
           name: plugin
           path: artifact
@@ -89,13 +90,20 @@ jobs:
     steps:
       # - uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v3
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "poetry"
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
         with:
           name: plugin
           path: .
 
-      - run: |
-          tree
-
-      # - name: Publish
-      #   run: poetry publish --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
+      - name: Publish
+        run: poetry publish --dry-run --verbose --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
