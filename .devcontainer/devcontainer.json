@@ -31,8 +31,12 @@
 			"extensions": [
 				"EditorConfig.EditorConfig",
 				"GitHub.vscode-pull-request-github",
-				"yzhang.markdown-all-in-one",
-				"ms-vscode-remote.vscode-remote-extensionpack"
+				"ms-vscode-remote.vscode-remote-extensionpack",
+				"ms-vscode-remote.remote-containers",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.isort",
+				"yzhang.markdown-all-in-one"
 			]
 		}
 	}

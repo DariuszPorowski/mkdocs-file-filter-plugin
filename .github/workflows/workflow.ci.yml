@@ -1,9 +1,20 @@
 ---
-name: Pull Request checker
+name: CI
 on:
-  pull_request:
+  push:
     branches:
       - main
+  pull_request:
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+    branches:
+      - main
+    paths:
+      - "mkdocs_file_filter_plugin/**"
 
 # Allow one concurrent
 concurrency:
@@ -12,6 +23,7 @@ concurrency:
 
 jobs:
   lint:
+    if: ${{ !github.event.pull_request.draft }}
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +40,7 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        run: poetry install --only=dev
+        run: poetry install --verbose --only=dev
 
       - name: Check imports sort
         run: poetry run isort --check-only .
@@ -40,6 +52,7 @@ jobs:
         run: poetry run flake8 --count .
 
   test:
+    if: ${{ !github.event.pull_request.draft }}
     name: Test
     needs: lint
     strategy:
@@ -62,11 +75,11 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --verbose
 
       - name: Test Build
         run: |
-          poetry version
+          poetry version --verbose
           poetry build --verbose
 
       - name: Test MkDocs build

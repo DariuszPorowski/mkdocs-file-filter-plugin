@@ -1,11 +1,10 @@
 {
 	"yaml.schemas": {
 		"https://squidfunk.github.io/mkdocs-material/schema.json": [
-			"mkdocs.yml",
-			"mkdocs.base.yml"
+			"mkdocs*.yml"
 		],
 		"schema-file-filter-config.json": [
-			".file-filter.yml"
+			".file-filter*.yml"
 		]
 	},
 	"files.trimTrailingWhitespace": true,
@@ -17,9 +16,14 @@
 		"master"
 	],
 	"files.associations": {
+		"CODEOWNERS": "ignore",
 		"*.mkdocsignore": "ignore",
 		".pages": "yaml"
 	},
 	"python.linting.enabled": true,
-	"markdown.extension.toc.levels": "2..6"
+	"markdown.extension.toc.levels": "2..6",
+	"python.analysis.extraPaths": [
+		".venv/lib/site-packages"
+	],
+	"editor.formatOnSave": true
 }

@@ -5,44 +5,50 @@
 	"properties": {
 		"enabled": {
 			"title": "Enable plugin",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "boolean",
 			"default": true
 		},
 		"enabled_on_serve": {
 			"title": "Enable on serve",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+			"type": "boolean",
+			"default": true
+		},
+		"only_doc_pages": {
+			"title": "Filter only documentation pages",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "boolean",
 			"default": false
 		},
 		"filter_nav": {
 			"title": "Remove navigation items based on excludes",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "boolean",
 			"default": true
 		},
 		"metadata_property": {
 			"title": "Metadata property name for Tags",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "string",
 			"default": "tags"
 		},
 		"mkdocsignore": {
 			"title": "Enable .mkdocsignore support",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "boolean",
 			"default": false
 		},
 		"mkdocsignore_file": {
 			"title": ".mkdocsignore file path",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "string",
 			"default": ".mkdocsignore",
 			"format": "path"
 		},
 		"exclude_glob": {
 			"title": "Globs to exclude",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "array",
 			"items": {
 				"type": "string"
@@ -51,7 +57,7 @@
 		},
 		"exclude_regex": {
 			"title": "Regexes to exclude",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "array",
 			"items": {
 				"type": "string"
@@ -60,7 +66,7 @@
 		},
 		"exclude_tag": {
 			"title": "Tags to exclude",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "array",
 			"items": {
 				"type": "string"
@@ -69,7 +75,7 @@
 		},
 		"include_glob": {
 			"title": "Globs to include",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "array",
 			"items": {
 				"type": "string"
@@ -78,7 +84,7 @@
 		},
 		"include_regex": {
 			"title": "Regexes to include",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "array",
 			"items": {
 				"type": "string"
@@ -87,7 +93,7 @@
 		},
 		"include_tag": {
 			"title": "Tags to include",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#usage",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
 			"type": "array",
 			"items": {
 				"type": "string"

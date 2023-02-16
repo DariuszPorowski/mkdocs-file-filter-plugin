@@ -4,7 +4,7 @@
 	"oneOf": [
 		{
 			"title": "mkdocs-file-filter-plugin",
-			"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#readme",
+			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md",
 			"enum": [
 				"file-filter"
 			]
@@ -13,13 +13,13 @@
 			"type": "object",
 			"properties": {
 				"file-filter": {
-					"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#configuring",
+					"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#configuration",
 					"type": "object",
 					"default": null,
 					"properties": {
 						"config": {
 							"title": "External config file path",
-							"markdownDescription": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/#configuring",
+							"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#configuration",
 							"type": "string",
 							"default": null,
 							"format": "path"
@@ -27,7 +27,7 @@
 					},
 					"anyOf": [
 						{
-							"$ref": "https://dariusz.porowski.dev/mkdocs-file-filter-plugin/schema-file-filter-config.json",
+							"$ref": "https://raw.githubusercontent.com/DariuszPorowski/mkdocs-file-filter-plugin/main/schema-file-filter-config.json",
 							"additionalProperties": true
 						}
 					],
