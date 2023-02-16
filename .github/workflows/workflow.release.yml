@@ -1,19 +1,23 @@
 ---
 name: Release
 
+# on:
+#   release:
+#     types:
+#       - prereleased
+#       - released
+#       - published
+
 on:
-  release:
-    types:
-      - prereleased
-      - released
-      - published
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
 
 jobs:
-  release:
-    if: ${{ !github.event.release.prerelease && github.event.action == 'released' && github.repository_owner == 'DariuszPorowski' }}
-    environment:
-      name: PyPI
-      url: "https://pypi.org/project/mkdocs-file-filter-plugin"
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -37,5 +41,44 @@ jobs:
       - name: Build
         run: poetry build
 
-      - name: Publish
-        run: poetry publish --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: plugin
+          path: |
+            dist/
+            schema?.json
+
+  gh-release:
+    needs: build
+    environment:
+      name: GitHub
+      url: ${{ steps.gh-release.outputs.url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+
+      - name: GitHub Release
+        id: gh-release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          files: |
+            dist/
+            schema?.json
+
+  pypi-release:
+    needs: gh-release
+    # if: ${{ !github.event.release.prerelease && github.event.action == 'released' && github.repository_owner == 'DariuszPorowski' }}
+    environment:
+      name: PyPI
+      url: "https://pypi.org/project/mkdocs-file-filter-plugin"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+
+      # - name: Publish
+      #   run: poetry publish --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
