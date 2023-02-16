@@ -46,7 +46,7 @@ jobs:
           name: plugin
           path: |
             dist/
-            schema?.json
+            schema*.json
 
   gh-release:
     needs: build
@@ -58,6 +58,13 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: actions/download-artifact@v3
+        with:
+          name: plugin
+          path: artifact
+
+      - run: |
+          cd artifact
+          tree
 
       - name: GitHub Release
         id: gh-release
@@ -65,8 +72,8 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            dist/
-            schema?.json
+            artifact/dist/
+            artifact/schema*.json
 
   pypi-release:
     needs: gh-release
@@ -79,6 +86,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: actions/download-artifact@v3
+        with:
+          name: plugin
+          path: artifact
 
       # - name: Publish
       #   run: poetry publish --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
