@@ -30,13 +30,13 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --verbose
 
       - name: Set Version
         run: poetry version ${GITHUB_REF_NAME/v/}
 
       - name: Build
-        run: poetry build
+        run: poetry build --verbose
 
       - name: Publish to PyPI
         run: poetry publish --verbose --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}

@@ -30,7 +30,7 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        run: poetry install --only=dev
+        run: poetry install --verbose --only=dev
 
       - name: Check imports sort
         run: poetry run isort --check-only .
@@ -64,11 +64,11 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --verbose
 
       - name: Test Build
         run: |
-          poetry version
+          poetry version --verbose
           poetry build --verbose
 
       - name: Test MkDocs build
