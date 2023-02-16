@@ -93,11 +93,11 @@ jobs:
       - name: Install Poetry
         run: pipx install poetry
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-          cache: "poetry"
+      # - name: Setup Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: "3.10"
+      #     cache: "poetry"
 
       - name: Download Artifact
         uses: actions/download-artifact@v3
@@ -105,5 +105,5 @@ jobs:
           name: plugin
           path: .
 
-      - name: Publish
+      - name: Publish to PyPI
         run: poetry publish --dry-run --verbose --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
