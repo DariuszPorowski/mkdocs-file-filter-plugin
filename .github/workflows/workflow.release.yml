@@ -88,7 +88,7 @@ jobs:
       url: "https://pypi.org/project/mkdocs-file-filter-plugin"
     runs-on: ubuntu-latest
     steps:
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Install Poetry
         run: pipx install poetry
