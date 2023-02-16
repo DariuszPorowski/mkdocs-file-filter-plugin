@@ -1,7 +1,16 @@
 ---
-name: Pull Request checker
+name: CI
 on:
+  push:
+    branches:
+      - main
   pull_request:
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
     branches:
       - main
     paths:
@@ -14,6 +23,7 @@ concurrency:
 
 jobs:
   lint:
+    if: ${{ !github.event.pull_request.draft }}
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -42,6 +52,7 @@ jobs:
         run: poetry run flake8 --count .
 
   test:
+    if: ${{ !github.event.pull_request.draft }}
     name: Test
     needs: lint
     strategy:
