@@ -2,6 +2,7 @@ import fnmatch
 import os
 import pathlib
 import re
+from typing import Union
 from urllib.parse import urlsplit
 
 import igittigitt
@@ -13,6 +14,8 @@ from mkdocs.structure.pages import Page as MkDocsPage
 
 from . import util as LOG
 from .plugin_config import PluginConfig
+
+NavigationItem = Union[MkDocsPage, MkDocsSection, MkDocsLink]
 
 
 class Judger:
@@ -26,7 +29,7 @@ class Judger:
                 pathlib.Path(self.plugin_config.mkdocsignore_file)
             )
 
-    def evaluate_nav(self, nav):
+    def evaluate_nav(self, nav: NavigationItem) -> NavigationItem | None:
         if isinstance(nav, MkDocsSection):
             nev_section = [self.evaluate_nav(child) for child in nav.children]
             nev_section = list(filter(lambda item: item is not None, nev_section))
@@ -34,6 +37,7 @@ class Judger:
                 return MkDocsSection(nav.title, nev_section)
             else:
                 LOG.debug(f"remove navigation section: {nav.title}")
+                return None
         else:
             scheme, netloc, path, query, fragment = urlsplit(nav.url)
             if (
@@ -42,7 +46,8 @@ class Judger:
                 and not scheme
                 and not netloc
             ):
-                LOG.debug(f"remove navigation item: {nav.title} {nav.url}")
+                LOG.debug(f"remove navigation link: {nav.title} {nav.url}")
+                return None
             else:
                 return nav
 

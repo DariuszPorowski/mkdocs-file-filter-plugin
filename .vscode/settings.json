@@ -22,8 +22,6 @@
 	},
 	"python.linting.enabled": true,
 	"markdown.extension.toc.levels": "2..6",
-	"python.analysis.extraPaths": [
-		".venv/lib/site-packages"
-	],
-	"editor.formatOnSave": true
+	"editor.formatOnSave": true,
+	"python.formatting.provider": "black"
 }
