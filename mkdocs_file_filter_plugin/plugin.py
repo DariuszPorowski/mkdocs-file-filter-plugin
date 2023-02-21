@@ -1,13 +1,10 @@
 import pathlib
-from typing import Union
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.exceptions import PluginError as MkDocsPluginError
 from mkdocs.plugins import BasePlugin as MkDocsPlugin
 from mkdocs.structure.files import Files as MkDocsFiles
-from mkdocs.structure.nav import Link as MkDocsLink
 from mkdocs.structure.nav import Navigation as MkDocsNavigation
-from mkdocs.structure.nav import Section as MkDocsSection
 from mkdocs.structure.nav import (
     _add_parent_links,
     _add_previous_and_next_links,
@@ -19,8 +16,6 @@ from . import util as LOG
 from .external_config import ExternalConfig
 from .judger import Judger
 from .plugin_config import PluginConfig
-
-NavigationItem = Union[MkDocsPage, MkDocsSection, MkDocsLink]
 
 
 class FileFilter(MkDocsPlugin[PluginConfig]):
