@@ -5,6 +5,12 @@ from mkdocs.exceptions import PluginError as MkDocsPluginError
 from mkdocs.plugins import BasePlugin as MkDocsPlugin
 from mkdocs.structure.files import Files as MkDocsFiles
 from mkdocs.structure.nav import Navigation as MkDocsNavigation
+from mkdocs.structure.nav import (
+    _add_parent_links,
+    _add_previous_and_next_links,
+    _get_by_type,
+)
+from mkdocs.structure.pages import Page as MkDocsPage
 
 from . import util as LOG
 from .external_config import ExternalConfig
@@ -99,11 +105,13 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         judger = Judger(self.config, config)
         nav_items_new = []
-        for nav_item in nav:
+        for nav_item in nav.items:
             result = judger.evaluate_nav(nav_item)
             if result is not None:
                 nav_items_new.append(result)
 
-        nav_items_new = list(filter(lambda item: item is not None, nav_items_new))
+        pages = _get_by_type(nav_items_new, MkDocsPage)
+        _add_previous_and_next_links(pages)
+        _add_parent_links(nav_items_new)
 
-        return MkDocsNavigation(nav_items_new, nav.pages)
+        return MkDocsNavigation(nav_items_new, pages)

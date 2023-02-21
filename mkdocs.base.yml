@@ -2,3 +2,14 @@ site_name: Test Site
 
 theme:
   name: material
+  features:
+    - navigation.instant
+    - navigation.indexes
+    - navigation.tracking
+    - navigation.top
+    - content.tooltips
+    - search.suggest
+    - search.highlight
+    - search.share
+    - navigation.tabs
+    - navigation.tabs.sticky

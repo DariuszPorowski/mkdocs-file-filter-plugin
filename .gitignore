@@ -1,6 +1,8 @@
 # MkDocs
 site/**
 docs/Contributions
+docs1/
+docs2/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

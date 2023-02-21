@@ -66,6 +66,9 @@ isort = "^5.12.0"
 flake8 = "^6.0.0"
 bandit = "^1.7.4"
 
+[tool.isort]
+profile = "black"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
