@@ -15,6 +15,9 @@ on:
       - main
     paths:
       - "mkdocs_file_filter_plugin/**"
+      - "poetry.lock"
+      - "pyproject.toml"
+      - "setup.py"
 
 # Allow one concurrent
 concurrency:
