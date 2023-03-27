@@ -3,7 +3,20 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pip"
-    directory: "/" # Location of package manifests
+  - package-ecosystem: pip
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: daily
+    commit-message:
+      prefix: "[pip] "
+    reviewers:
+      - DariuszPorowski
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: "[github-actions] "
+    reviewers:
+      - DariuszPorowski
