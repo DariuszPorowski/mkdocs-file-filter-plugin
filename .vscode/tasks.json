@@ -3,6 +3,15 @@
 		"version": "2.0.0",
 		"tasks": [
 			{
+				"label": "Run ruff",
+				"type": "shell",
+				"command": "poetry run ruff check .",
+				"group": "none",
+				"options": {
+					"cwd": "${workspaceFolder}"
+				}
+			},
+			{
 				"label": "Run build",
 				"type": "shell",
 				"command": "poetry build --verbose",
