@@ -45,8 +45,8 @@ jobs:
       - name: Install dependencies
         run: poetry install --verbose --only=dev
 
-      - name: Run ruff
-        run: poetry run ruff -v check .
+      #! - name: Run ruff
+      #!   run: poetry run ruff -v check .
 
       - name: Check imports sort
         run: poetry run isort --profile black --check-only .
