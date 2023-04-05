@@ -15,7 +15,7 @@ from mkdocs.structure.pages import Page as MkDocsPage
 from . import util as LOG
 from .plugin_config import PluginConfig
 
-NavigationItem = Union[MkDocsPage, MkDocsSection, MkDocsLink, None]
+NavigationItem = Union[MkDocsPage, MkDocsSection, MkDocsLink] | None
 
 
 class Judger:
@@ -33,21 +33,19 @@ class Judger:
         if isinstance(nav, MkDocsSection):
             nev_section = [self.evaluate_nav(child) for child in nav.children]
             nev_section = list(filter(lambda item: item is not None, nev_section))
-            if nev_section != []:
-                return MkDocsSection(nav.title, nev_section)
+            if nev_section != [] or nev_section is not None:
+                return MkDocsSection(nav.title, nev_section)  # type: ignore
             else:
                 LOG.debug(f"remove navigation section: {nav.title}")
                 return None
         else:
-            scheme, netloc, path, query, fragment = urlsplit(nav.url)
-            if (
-                isinstance(nav, MkDocsLink)
-                and not nav.url.startswith("/")
-                and not scheme
-                and not netloc
-            ):
-                LOG.debug(f"remove navigation link: {nav.title} {nav.url}")
-                return None
+            if isinstance(nav, MkDocsLink):
+                scheme, netloc, path, query, fragment = urlsplit(nav.url)
+                if not nav.url.startswith("/") and not scheme and not netloc:
+                    LOG.debug(f"remove navigation link: {nav.title} {nav.url}")
+                    return None
+                else:
+                    return nav
             else:
                 return nav
 

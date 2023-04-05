@@ -51,11 +51,9 @@ file-filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
 python = ">=3.8.1,<4.0"
 mkdocs = "^1.4.2"
 igittigitt = "^2.1.2"
-pyyaml = "^6.0"
 schema = "^0.7.5"
+pyyaml = "^6.0"
 pyyaml-env-tag = "^0.1"
-
-# https://github.com/python-poetry/poetry/issues/461#issuecomment-1348696119
 [tool.poetry.group.dev.dependencies]
 mkdocs-material = "^9.1.5"
 mkdocs-awesome-pages-plugin = "^2.8.0"
@@ -71,6 +69,8 @@ bandit = "^1.7.5"
 ruff = "^0.0.261"
 poetry-plugin-up = "^0.3.0"
 pyupgrade = "^3.3.1"
+mypy = "^1.1.1"
+types-pyyaml = "^6.0.12.9"
 
 [tool.poetry.plugins."poetry-plugin-up"]
 
@@ -92,6 +92,15 @@ exclude_dirs = [".venv"]
 target-version = "py310"
 exclude = [".venv"]
 line-length = 88
+
+[tool.mypy]
+# https://mypy.readthedocs.io/en/stable/config_file.html
+python_version = "3.10"
+files = "**/*.py"
+exclude = ['/setup\.py$']
+
+[tool.pyright]
+venvPath = ".venv"
 
 [build-system]
 requires = ["poetry-core"]

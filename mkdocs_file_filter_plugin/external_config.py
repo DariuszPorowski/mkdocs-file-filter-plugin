@@ -3,8 +3,8 @@ import pathlib
 
 import yaml
 from mkdocs.exceptions import PluginError
-from schema import Optional, Schema, SchemaError
-from yaml_env_tag import construct_env_tag
+from schema import Optional, Schema, SchemaError  # type: ignore
+from yaml_env_tag import construct_env_tag  # type: ignore
 
 from . import util as LOG
 
