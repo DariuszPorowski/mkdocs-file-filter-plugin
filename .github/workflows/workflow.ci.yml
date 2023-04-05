@@ -23,11 +23,27 @@ on:
 concurrency:
   group: pr-${{ github.ref }}
   cancel-in-progress: true
+  
+permissions:
+  contents: read
 
 jobs:
+  dependency-review:
+    if: ${{ !github.event.pull_request.draft }}
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Run Dependency Review
+        uses: actions/dependency-review-action@v3
+
   lint:
     if: ${{ !github.event.pull_request.draft }}
     name: Lint
+    needs:
+      - dependency-review
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -60,7 +76,9 @@ jobs:
   test:
     if: ${{ !github.event.pull_request.draft }}
     name: Test
-    needs: lint
+    needs:
+      - lint
+      - dependency-review
     strategy:
       fail-fast: false
       matrix:
