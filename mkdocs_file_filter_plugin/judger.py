@@ -39,7 +39,6 @@ class Judger:
                 LOG.debug(f"remove navigation section: {nav.title}")
                 return None
         else:
-            # if isinstance(nav, MkDocsLink):
             scheme, netloc, path, query, fragment = urlsplit(nav.url)  # type: ignore
             if (
                 isinstance(nav, MkDocsLink)
