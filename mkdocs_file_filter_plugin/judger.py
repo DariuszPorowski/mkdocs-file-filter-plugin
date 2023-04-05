@@ -5,7 +5,7 @@ import re
 from typing import Union
 from urllib.parse import urlsplit
 
-import igittigitt
+import igittigitt  # type: ignore
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File as MkDocsFile
 from mkdocs.structure.nav import Link as MkDocsLink
