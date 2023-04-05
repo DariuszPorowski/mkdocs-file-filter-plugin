@@ -15,7 +15,7 @@ from mkdocs.structure.pages import Page as MkDocsPage
 from . import util as LOG
 from .plugin_config import PluginConfig
 
-NavigationItem = Union[MkDocsPage, MkDocsSection, MkDocsLink] | None
+NavigationItem = Union[MkDocsPage, MkDocsSection, MkDocsLink, None]
 
 
 class Judger:
