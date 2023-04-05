@@ -33,7 +33,7 @@ class Judger:
         if isinstance(nav, MkDocsSection):
             nev_section = [self.evaluate_nav(child) for child in nav.children]
             nev_section = list(filter(lambda item: item is not None, nev_section))
-            if nev_section != [] or nev_section is not None:
+            if nev_section != []:
                 return MkDocsSection(nav.title, nev_section)  # type: ignore
             else:
                 LOG.debug(f"remove navigation section: {nav.title}")
