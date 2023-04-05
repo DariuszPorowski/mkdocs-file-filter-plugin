@@ -4,10 +4,13 @@
 	"recommendations": [
 		// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
 		"EditorConfig.EditorConfig",
+		"GitHub.vscode-pull-request-github",
+		"ms-vscode-remote.vscode-remote-extensionpack",
 		"ms-vscode-remote.remote-containers",
 		"ms-python.python",
 		"ms-python.vscode-pylance",
 		"ms-python.isort",
-		"yzhang.markdown-all-in-one"
+		"yzhang.markdown-all-in-one",
+		"charliermarsh.ruff"
 	]
 }

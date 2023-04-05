@@ -2,7 +2,7 @@
 
 import sys
 
-from setuptools import setup
+from setuptools import setup  # type: ignore
 
 sys.exit(__doc__)
 

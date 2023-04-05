@@ -33,23 +33,20 @@ class Judger:
         if isinstance(nav, MkDocsSection):
             nev_section = [self.evaluate_nav(child) for child in nav.children]
             nev_section = list(filter(lambda item: item is not None, nev_section))
-            if nev_section != []:
-                return MkDocsSection(nav.title, nev_section)
+            if nev_section != [] or nev_section is not None:
+                return MkDocsSection(nav.title, nev_section)  # type: ignore
             else:
                 LOG.debug(f"remove navigation section: {nav.title}")
                 return None
-        else:
+        elif isinstance(nav, MkDocsLink):
             scheme, netloc, path, query, fragment = urlsplit(nav.url)
-            if (
-                isinstance(nav, MkDocsLink)
-                and not nav.url.startswith("/")
-                and not scheme
-                and not netloc
-            ):
+            if not nav.url.startswith("/") and not scheme and not netloc:
                 LOG.debug(f"remove navigation link: {nav.title} {nav.url}")
                 return None
             else:
                 return nav
+        else:
+            return nav
 
     def evaluate_file(self, file: MkDocsFile):
         if self.plugin_config.only_doc_pages and not file.is_documentation_page():

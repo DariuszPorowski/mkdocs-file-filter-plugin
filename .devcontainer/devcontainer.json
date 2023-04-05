@@ -36,7 +36,8 @@
 				"ms-python.python",
 				"ms-python.vscode-pylance",
 				"ms-python.isort",
-				"yzhang.markdown-all-in-one"
+				"yzhang.markdown-all-in-one",
+				"charliermarsh.ruff"
 			]
 		}
 	}

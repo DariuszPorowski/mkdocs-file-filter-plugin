@@ -23,5 +23,6 @@
 	"python.linting.enabled": true,
 	"markdown.extension.toc.levels": "2..6",
 	"editor.formatOnSave": true,
-	"python.formatting.provider": "black"
+	"python.formatting.provider": "black",
+	"python.terminal.activateEnvInCurrentTerminal": true
 }
