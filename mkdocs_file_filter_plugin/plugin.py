@@ -1,5 +1,6 @@
 import pathlib
 
+import mkdocs.config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.exceptions import PluginError as MkDocsPluginError
 from mkdocs.plugins import BasePlugin as MkDocsPlugin
@@ -77,6 +78,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         return config
 
+    @mkdocs.plugins.event_priority(-100)
     def on_files(self, files: MkDocsFiles, config: MkDocsConfig):
         if not self.config.enabled:
             return
@@ -95,6 +97,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         return MkDocsFiles(files_new)
 
+    @mkdocs.plugins.event_priority(-100)
     def on_nav(self, nav: MkDocsNavigation, config: MkDocsConfig, files: MkDocsFiles):
         if not self.config.enabled:
             return
