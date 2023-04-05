@@ -64,11 +64,11 @@ mkdocs-literate-nav = "^0.6.0"
 pytest = "^7.2.2"
 autopep8 = "^2.0.2"
 black = "^23.3.0"
-pre-commit = "^3.2.1"
+pre-commit = "^3.2.2"
 isort = "^5.12.0"
 flake8 = "^6.0.0"
 bandit = "^1.7.5"
-ruff = "^0.0.260"
+ruff = "^0.0.261"
 poetry-plugin-up = "^0.3.0"
 pyupgrade = "^3.3.1"
 
@@ -82,6 +82,10 @@ target-version = ["py310"]
 # https://pycqa.github.io/isort/docs/configuration/options.html
 py_version = 310
 profile = "black"
+
+[tool.bandit]
+# https://bandit.readthedocs.io/en/latest/config.html#bandit-settings
+exclude_dirs = [".venv"]
 
 [tool.ruff]
 # https://beta.ruff.rs/docs/settings/

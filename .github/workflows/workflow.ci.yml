@@ -32,12 +32,16 @@ jobs:
     if: ${{ !github.event.pull_request.draft }}
     name: Dependency Review
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Run Dependency Review
         uses: actions/dependency-review-action@v3
+        with:
+          comment-summary-in-pr: true
 
   lint:
     if: ${{ !github.event.pull_request.draft }}
@@ -61,17 +65,20 @@ jobs:
       - name: Install dependencies
         run: poetry install --verbose --only=dev
 
-      - name: Run ruff
-        run: poetry run ruff -v check .
+      # - name: Run ruff
+      #   run: poetry run ruff -v check .
 
-      - name: Check imports sort
-        run: poetry run isort --profile black --check-only .
+      - name: Run isort
+        run: poetry run isort --settings-path pyproject.toml --check-only .
 
-      - name: Check formatting
-        run: poetry run black --check .
+      - name: Run black
+        run: poetry run black  --config pyproject.toml --check .
 
-      - name: Check formatting
+      - name: Run flake8
         run: poetry run flake8 --count .
+
+      - name: Run bandit
+        run: poetry run bandit --configfile pyproject.toml --recursive .
 
   test:
     if: ${{ !github.event.pull_request.draft }}
