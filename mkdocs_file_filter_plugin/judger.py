@@ -38,18 +38,15 @@ class Judger:
             else:
                 LOG.debug(f"remove navigation section: {nav.title}")
                 return None
-        else:
-            scheme, netloc, path, query, fragment = urlsplit(nav.url)  # type: ignore
-            if (
-                isinstance(nav, MkDocsLink)
-                and not nav.url.startswith("/")
-                and not scheme
-                and not netloc
-            ):
+        elif isinstance(nav, MkDocsLink):
+            scheme, netloc, path, query, fragment = urlsplit(nav.url)
+            if not nav.url.startswith("/") and not scheme and not netloc:
                 LOG.debug(f"remove navigation link: {nav.title} {nav.url}")
                 return None
             else:
                 return nav
+        else:
+            return nav
 
     def evaluate_file(self, file: MkDocsFile):
         if self.plugin_config.only_doc_pages and not file.is_documentation_page():

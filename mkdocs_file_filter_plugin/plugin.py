@@ -1,9 +1,9 @@
 import pathlib
 
-import mkdocs.config
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.exceptions import PluginError as MkDocsPluginError
 from mkdocs.plugins import BasePlugin as MkDocsPlugin
+from mkdocs.plugins import event_priority
 from mkdocs.structure.files import Files as MkDocsFiles
 from mkdocs.structure.nav import Navigation as MkDocsNavigation
 from mkdocs.structure.nav import (
@@ -31,7 +31,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                 LOG.info(
                     str(
                         f'The plugin "{name}" might not work correctly when '
-                        "placed before file-filter in the list of plugins. "
+                        "placed after file-filter in the list of plugins. "
                         'It defines an "on_nav" handler that will be overridden '
                         "by file-filter in some circumstances."
                     )
@@ -40,7 +40,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                 LOG.info(
                     str(
                         f'The plugin "{name}" might not work correctly when '
-                        "placed before file-filter in the list of plugins. "
+                        "placed after file-filter in the list of plugins. "
                         'It defines an "on_files" handler that will be overridden '
                         "by file-filter in some circumstances."
                     )
@@ -78,7 +78,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         return config
 
-    @mkdocs.plugins.event_priority(-100)
+    @event_priority(-100)
     def on_files(self, files: MkDocsFiles, config: MkDocsConfig):
         if not self.config.enabled:
             return
@@ -97,7 +97,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         return MkDocsFiles(files_new)
 
-    @mkdocs.plugins.event_priority(-100)
+    @event_priority(-100)
     def on_nav(self, nav: MkDocsNavigation, config: MkDocsConfig, files: MkDocsFiles):
         if not self.config.enabled:
             return
