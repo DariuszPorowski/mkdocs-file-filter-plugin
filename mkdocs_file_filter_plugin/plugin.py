@@ -53,7 +53,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                 if k != "config":
                     self.config[k] = file_filter_config.get(k, self.config[k])
 
-            config.watch.append(pathlib.Path(self.config.config))
+            config.watch.append(str(pathlib.Path(self.config.config)))
 
         if not self.config.enabled:
             LOG.debug("plugin disabled")
@@ -70,7 +70,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
                         "isn't an existing file."
                     )
                 )
-            config.watch.append(pathlib.Path(self.config.mkdocsignore_file))
+            config.watch.append(str(pathlib.Path(self.config.mkdocsignore_file)))
 
         for k in self.config.keys():
             LOG.debug(f"Config value '{k}' = {self.config[k]}")

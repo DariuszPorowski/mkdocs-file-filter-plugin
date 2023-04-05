@@ -15,7 +15,7 @@ PLUGIN_LABEL = "FILE-FILTER"
 def _format_trace(*args):
     first = args[0]
     rest = [str(el) for el in args[1:]]
-    text = "[%s] %s" % (PLUGIN_LABEL, first)
+    text = f"[{PLUGIN_LABEL}] {first}"
     return " ".join([text] + rest)
 
 

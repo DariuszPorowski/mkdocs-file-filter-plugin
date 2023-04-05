@@ -3,8 +3,8 @@ import pathlib
 
 import yaml
 from mkdocs.exceptions import PluginError
-from schema import Optional, Schema, SchemaError
-from yaml_env_tag import construct_env_tag
+from schema import Optional, Schema, SchemaError  # type: ignore
+from yaml_env_tag import construct_env_tag  # type: ignore
 
 from . import util as LOG
 
@@ -33,7 +33,7 @@ class ExternalConfig:
         config_path = pathlib.Path(config_path)
         LOG.debug("Loading config file: ", os.path.basename(config_path))
         yaml.SafeLoader.add_constructor("!ENV", construct_env_tag)
-        with open(config_path, encoding="utf-8", mode="r") as f:
+        with open(config_path, encoding="utf-8") as f:
             config = yaml.safe_load(f) or {}
         self.__validate(config)
         return config
