@@ -15,3 +15,4 @@ plugins:
       # enabled_on_serve: true
       # filter_nav: true
       # only_doc_pages: true
+  - mkdocs_exclude_unused_files

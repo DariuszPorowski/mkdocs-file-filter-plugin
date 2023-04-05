@@ -54,11 +54,13 @@ igittigitt = "^2.1.2"
 schema = "^0.7.5"
 pyyaml = "^6.0"
 pyyaml-env-tag = "^0.1"
+
 [tool.poetry.group.dev.dependencies]
 mkdocs-material = "^9.1.5"
 mkdocs-awesome-pages-plugin = "^2.8.0"
 mkdocs-monorepo-plugin = "^1.0.4"
 mkdocs-literate-nav = "^0.6.0"
+mkdocs-exclude-unused-files = "^1.1.0"
 pytest = "^7.2.2"
 autopep8 = "^2.0.2"
 black = "^23.3.0"

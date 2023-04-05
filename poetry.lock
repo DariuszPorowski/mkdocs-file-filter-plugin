@@ -60,6 +60,25 @@ toml = ["tomli (>=1.1.0)"]
 yaml = ["PyYAML"]
 
 [[package]]
+name = "beautifulsoup4"
+version = "4.12.0"
+description = "Screen-scraping library"
+category = "dev"
+optional = false
+python-versions = ">=3.6.0"
+files = [
+    {file = "beautifulsoup4-4.12.0-py3-none-any.whl", hash = "sha256:2130a5ad7f513200fae61a17abb5e338ca980fa28c439c0571014bc0217e9591"},
+    {file = "beautifulsoup4-4.12.0.tar.gz", hash = "sha256:c5fceeaec29d09c84970e47c65f2f0efe57872f7cff494c9691a26ec0ff13234"},
+]
+
+[package.dependencies]
+soupsieve = ">1.2"
+
+[package.extras]
+html5lib = ["html5lib"]
+lxml = ["lxml"]
+
+[[package]]
 name = "black"
 version = "23.3.0"
 description = "The uncompromising code formatter."
@@ -1121,6 +1140,22 @@ files = [
 mkdocs = ">=1"
 natsort = ">=8.1.0"
 wcmatch = ">=7"
+
+[[package]]
+name = "mkdocs-exclude-unused-files"
+version = "1.1.0"
+description = "A mkdocs plugin that excludes assets that are unused (orphaned) from being included in the final mkdocs output."
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "mkdocs-exclude-unused-files-1.1.0.tar.gz", hash = "sha256:c1e83ccbf6ba2e29f6be0180a12417856d1542cfa1c44e609adfe2e2412b259f"},
+    {file = "mkdocs_exclude_unused_files-1.1.0-py3-none-any.whl", hash = "sha256:9388c7f31dd2b4966658648eff33f9618bda8aa6b05f4004f3689f72ea352062"},
+]
+
+[package.dependencies]
+beautifulsoup4 = "*"
+mkdocs = "*"
 
 [[package]]
 name = "mkdocs-literate-nav"
@@ -2201,6 +2236,18 @@ files = [
 ]
 
 [[package]]
+name = "soupsieve"
+version = "2.4"
+description = "A modern CSS selector implementation for Beautiful Soup."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "soupsieve-2.4-py3-none-any.whl", hash = "sha256:49e5368c2cda80ee7e84da9dbe3e110b70a4575f196efb74e51b94549d921955"},
+    {file = "soupsieve-2.4.tar.gz", hash = "sha256:e28dba9ca6c7c00173e34e4ba57448f0688bb681b7c5e8bf4971daafc093d69a"},
+]
+
+[[package]]
 name = "stevedore"
 version = "5.0.0"
 description = "Manage dynamic plugins for Python applications"
@@ -2529,4 +2576,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4.0"
-content-hash = "b83f169f581382955c7743d80da2defe1f158954f98542405223e2a0c6b78e6c"
+content-hash = "f6d06255c0fb0d7bd2e65c19ad46646540fb9643df6bf0f58ed87825b553127d"
