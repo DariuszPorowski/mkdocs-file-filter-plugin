@@ -40,6 +40,10 @@ classifiers = [
 ]
 packages = [{ include = "mkdocs_file_filter_plugin" }]
 
+[tool.poetry.virtualenvs]
+create = true
+in-project = true
+
 [tool.poetry.urls]
 Issues = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/issues"
 History = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/releases"
