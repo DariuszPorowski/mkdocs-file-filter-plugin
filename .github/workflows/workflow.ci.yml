@@ -23,7 +23,7 @@ on:
 concurrency:
   group: pr-${{ github.ref }}
   cancel-in-progress: true
-  
+
 permissions:
   contents: read
 
@@ -61,8 +61,8 @@ jobs:
       - name: Install dependencies
         run: poetry install --verbose --only=dev
 
-      #! - name: Run ruff
-      #!   run: poetry run ruff -v check .
+      - name: Run ruff
+        run: poetry run ruff -v check .
 
       - name: Check imports sort
         run: poetry run isort --profile black --check-only .
@@ -82,7 +82,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -96,7 +96,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "poetry"
+          cache: poetry
 
       - name: Install dependencies
         run: poetry install --verbose
@@ -108,6 +108,4 @@ jobs:
 
       - name: Test MkDocs build
         run: |
-          pip uninstall -y mkdocs_file_filter_plugin
-          pip install dist/mkdocs_file_filter_plugin-0.0.1.tar.gz
           poetry run mkdocs build --verbose

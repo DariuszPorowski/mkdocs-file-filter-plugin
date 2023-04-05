@@ -70,14 +70,24 @@ flake8 = "^6.0.0"
 bandit = "^1.7.5"
 ruff = "^0.0.260"
 poetry-plugin-up = "^0.3.0"
+pyupgrade = "^3.3.1"
 
 [tool.poetry.plugins."poetry-plugin-up"]
 
-# [tool.pyright]
-# venvPath = ["~/.cache/pypoetry/virtualenvs", "~/.venv", ".venv"]
+[tool.black]
+# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
+target-version = ["py310"]
 
 [tool.isort]
+# https://pycqa.github.io/isort/docs/configuration/options.html
+py_version = 310
 profile = "black"
+
+[tool.ruff]
+# https://beta.ruff.rs/docs/settings/
+target-version = "py310"
+exclude = [".venv"]
+line-length = 88
 
 [build-system]
 requires = ["poetry-core"]
