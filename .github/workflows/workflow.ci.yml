@@ -61,7 +61,9 @@ jobs:
           cache: poetry
 
       - name: Install dependencies
-        run: poetry install --verbose --only dev
+        run: |
+          poetry self add "poetry-dynamic-versioning[plugin]"
+          poetry install --verbose --all-extras --only dev
 
       # - name: Run ruff
       #   run: poetry run ruff -v check .
