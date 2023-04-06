@@ -83,6 +83,7 @@ poetry-plugin-up = "^0.3.0"
 # https://github.com/mtkennerly/poetry-dynamic-versioning#configuration
 enable = true
 style = "semver"
+vcs = "git"
 bump = true
 
 [tool.black]
