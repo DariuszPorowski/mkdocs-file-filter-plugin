@@ -62,7 +62,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # poetry self add "poetry-dynamic-versioning[plugin]"
+          poetry self add "poetry-dynamic-versioning[plugin]"
           poetry install --verbose --all-extras --only dev
 
       # - name: Run ruff
@@ -75,7 +75,7 @@ jobs:
         run: poetry run isort --settings-path pyproject.toml --check-only .
 
       - name: Run black
-        run: poetry run black  --config pyproject.toml --check .
+        run: poetry run black --config pyproject.toml --check .
 
       - name: Run flake8
         run: poetry run flake8 --count .
@@ -97,8 +97,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-        # with:
-        #   fetch-depth: 0
 
       - name: Install Poetry
         run: pipx install poetry
