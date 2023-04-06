@@ -61,7 +61,7 @@ jobs:
           cache: poetry
 
       - name: Install dependencies
-        run: poetry install --verbose --all-extras --only=dev
+        run: poetry install --verbose --only "dev types"
 
       # - name: Run ruff
       #   run: poetry run ruff -v check .
