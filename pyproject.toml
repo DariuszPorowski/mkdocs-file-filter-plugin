@@ -73,7 +73,7 @@ pyupgrade = "^3.3.1"
 mypy = "^1.1.1"
 types-pyyaml = "^6.0.12.9"
 types-setuptools = "^67.6.0.7"
-poetry-plugin-up = {extras = ["plugin"], version = "^0.3.0"}
+poetry-plugin-up = { extras = ["plugin"], version = "^0.3.0" }
 poetry-dynamic-versioning = { extras = ["plugin"], version = "^0.21.4" }
 
 [tool.poetry.plugins."poetry-plugin-up"]
