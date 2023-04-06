@@ -85,7 +85,7 @@ class Judger:
                 return file, False, "mkdocsignore"
         return True, "no rule"
 
-    def __path_fix(self, src_path, abs_src_path) -> tuple[str, str]:
+    def __path_fix(self, src_path, abs_src_path):
         if os.sep != "/":
             src_path = src_path.replace(os.sep, "/")
             abs_src_path = abs_src_path.replace(os.sep, "/")
