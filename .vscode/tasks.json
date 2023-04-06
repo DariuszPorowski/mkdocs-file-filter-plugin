@@ -3,6 +3,24 @@
 		"version": "2.0.0",
 		"tasks": [
 			{
+				"label": "Clenup venv",
+				"type": "shell",
+				"command": "rm -rf .venv && poetry env remove --all",
+				"group": "none",
+				"options": {
+					"cwd": "${workspaceFolder}"
+				}
+			},
+			{
+				"label": "Run ruff",
+				"type": "shell",
+				"command": "poetry run ruff check .",
+				"group": "none",
+				"options": {
+					"cwd": "${workspaceFolder}"
+				}
+			},
+			{
 				"label": "Run build",
 				"type": "shell",
 				"command": "poetry build --verbose",
