@@ -62,7 +62,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry self add "poetry-dynamic-versioning[plugin]"
+          # poetry self add "poetry-dynamic-versioning[plugin]"
           poetry install --verbose --all-extras --only dev
 
       # - name: Run ruff
