@@ -120,7 +120,7 @@ jobs:
 
   test-plugins:
     if: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
-    name: Test (plugin)
+    name: Test (plugins)
     needs:
       - test-self
     runs-on: ubuntu-latest
