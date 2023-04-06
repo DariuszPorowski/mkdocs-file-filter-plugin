@@ -76,10 +76,8 @@ types-setuptools = "^67.6.0.7"
 poetry-dynamic-versioning = "^0.21.4"
 poetry-plugin-up = "^0.3.0"
 
-[tool.poetry.group.types.dependencies]
-
-
 [tool.poetry.plugins."poetry-plugin-up"]
+# https://github.com/MousaZeidBaker/poetry-plugin-up#usage
 
 [tool.poetry-dynamic-versioning]
 # https://github.com/mtkennerly/poetry-dynamic-versioning#configuration
