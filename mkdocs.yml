@@ -10,9 +10,8 @@ plugins:
   - awesome-pages
   - file-filter:
       config: !ENV [MY_FILE_FILTER_CONFIG, ".file-filter.yml"]
-      # enabled: false
       # enabled: !ENV [CI, true]
       # enabled_on_serve: true
       # filter_nav: true
       # only_doc_pages: true
-  - mkdocs_exclude_unused_files
+  # - mkdocs_exclude_unused_files
