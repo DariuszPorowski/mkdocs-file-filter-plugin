@@ -1,8 +1,10 @@
 [tool.poetry]
 name = "mkdocs-file-filter-plugin"
-version = "0.0.1"
+version = "0.0.0"
 description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes, gitignore-style file and Markdown/Frontmatter tags metadata.'
-authors = ["Dariusz Porowski"]
+authors = [
+	"Dariusz Porowski <3431813+dariuszporowski@users.noreply.github.com>",
+]
 homepage = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 repository = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 documentation = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md"
@@ -47,28 +49,72 @@ file-filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0"
-mkdocs = "^1.4.0"
+mkdocs = "^1.4.2"
 igittigitt = "^2.1.2"
-pyyaml = "^6.0"
 schema = "^0.7.5"
+pyyaml = "^6.0"
 pyyaml-env-tag = "^0.1"
 
 [tool.poetry.group.dev.dependencies]
-mkdocs-material = "^9.0.11"
+mkdocs-material = "^9.1.5"
 mkdocs-awesome-pages-plugin = "^2.8.0"
 mkdocs-monorepo-plugin = "^1.0.4"
 mkdocs-literate-nav = "^0.6.0"
-pytest = "^7.2.1"
-autopep8 = "^2.0.1"
-black = "^23.1.0"
-pre-commit = "^3.0.4"
+mkdocs-exclude-unused-files = "^1.1.0"
+pytest = "^7.2.2"
+autopep8 = "^2.0.2"
+black = "^23.3.0"
+pre-commit = "^3.2.2"
 isort = "^5.12.0"
 flake8 = "^6.0.0"
-bandit = "^1.7.4"
+bandit = "^1.7.5"
+ruff = "^0.0.261"
+pyupgrade = "^3.3.1"
+mypy = "^1.1.1"
+types-pyyaml = "^6.0.12.9"
+types-setuptools = "^67.6.0.7"
+poetry-plugin-up = { extras = ["plugin"], version = "^0.3.0" }
+poetry-dynamic-versioning = { extras = ["plugin"], version = "^0.21.4" }
+
+[tool.poetry.plugins."poetry-plugin-up"]
+# https://github.com/MousaZeidBaker/poetry-plugin-up#usage
+
+[tool.poetry-dynamic-versioning]
+# https://github.com/mtkennerly/poetry-dynamic-versioning#configuration
+enable = true
+style = "semver"
+vcs = "git"
+bump = true
+
+[tool.black]
+# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
+target-version = ["py310"]
+line-length = 120
 
 [tool.isort]
+# https://pycqa.github.io/isort/docs/configuration/options.html
+py_version = 310
 profile = "black"
 
+[tool.bandit]
+# https://bandit.readthedocs.io/en/latest/config.html#bandit-settings
+exclude_dirs = [".venv"]
+
+[tool.ruff]
+# https://beta.ruff.rs/docs/settings/
+target-version = "py310"
+exclude = [".venv"]
+line-length = 120
+
+[tool.mypy]
+# https://mypy.readthedocs.io/en/stable/config_file.html
+python_version = "3.10"
+files = "**/*.py"
+exclude = ['/setup\.py$']
+
+[tool.pyright]
+venvPath = ".venv"
+
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"

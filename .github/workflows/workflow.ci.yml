@@ -21,12 +21,30 @@ on:
 
 # Allow one concurrent
 concurrency:
-  group: pr-${{ github.ref }}
+  group: ${{ format('{0}-{1}', github.event_name, github.ref) }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
+  dependency-review:
+    if: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Run Dependency Review
+        uses: actions/dependency-review-action@v3
+        with:
+          comment-summary-in-pr: true
+
   lint:
-    if: ${{ !github.event.pull_request.draft }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -39,29 +57,41 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
-          cache: "poetry"
+          python-version-file: .python-version
+          cache: poetry
 
       - name: Install dependencies
-        run: poetry install --verbose --only=dev
+        run: |
+          poetry self add "poetry-dynamic-versioning[plugin]"
+          poetry install --verbose --all-extras --only=dev
 
-      - name: Check imports sort
-        run: poetry run isort --profile black --check-only .
+      # - name: Run ruff
+      #   run: poetry run ruff -v check .
 
-      - name: Check formatting
-        run: poetry run black --check .
+      - name: Run mypy
+        run: poetry run mypy --config-file pyproject.toml
 
-      - name: Check formatting
+      - name: Run isort
+        run: poetry run isort --settings-path pyproject.toml --check-only .
+
+      - name: Run black
+        run: poetry run black --config pyproject.toml --check .
+
+      - name: Run flake8
         run: poetry run flake8 --count .
 
-  test:
-    if: ${{ !github.event.pull_request.draft }}
-    name: Test
-    needs: lint
+      - name: Run bandit
+        run: poetry run bandit --configfile pyproject.toml --recursive .
+
+  test-self:
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
+    name: Test (self)
+    needs:
+      - lint
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -75,18 +105,45 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "poetry"
+          cache: poetry
 
       - name: Install dependencies
-        run: poetry install --verbose
+        run: |
+          poetry self add "poetry-dynamic-versioning[plugin]"
+          poetry install --verbose --without=dev
 
       - name: Test Build
-        run: |
-          poetry version --verbose
-          poetry build --verbose
+        run: poetry build --verbose
 
       - name: Test MkDocs build
+        run: poetry run mkdocs build --verbose
+
+  test-plugins:
+    if: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
+    name: Test (plugin)
+    needs:
+      - test-self
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version-file: .python-version
+          cache: poetry
+
+      - name: Install dependencies
         run: |
-          pip uninstall -y mkdocs_file_filter_plugin
-          pip install dist/mkdocs_file_filter_plugin-0.0.1.tar.gz
-          poetry run mkdocs build --verbose
+          poetry self add "poetry-dynamic-versioning[plugin]"
+          poetry install --verbose --without=dev
+
+      - name: Test Build
+        run: poetry build --verbose
+
+      - name: Test MkDocs build
+        run: poetry run mkdocs build --verbose --config-file mkdocs.plugins.yml

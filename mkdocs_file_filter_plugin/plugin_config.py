@@ -16,6 +16,4 @@ class PluginConfig(MkDocsConfigBase):
     metadata_property = MkDocsConfigOptions.Type(str, default="tags")
     mkdocsignore = MkDocsConfigOptions.Type(bool, default=False)
     mkdocsignore_file = MkDocsConfigOptions.File(exists=False, default=".mkdocsignore")
-    config = MkDocsConfigOptions.Optional(
-        MkDocsConfigOptions.File(exists=True, default=None)
-    )
+    config = MkDocsConfigOptions.Optional(MkDocsConfigOptions.File(exists=True, default=None))
