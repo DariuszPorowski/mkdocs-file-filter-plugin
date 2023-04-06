@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-file-filter-plugin"
-version = "0.0.1"
+version = "0.0.0"
 description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes, gitignore-style file and Markdown/Frontmatter tags metadata.'
 authors = [
 	"Dariusz Porowski <3431813+dariuszporowski@users.noreply.github.com>",
@@ -69,16 +69,27 @@ isort = "^5.12.0"
 flake8 = "^6.0.0"
 bandit = "^1.7.5"
 ruff = "^0.0.261"
-poetry-plugin-up = "^0.3.0"
 pyupgrade = "^3.3.1"
 mypy = "^1.1.1"
+poetry-dynamic-versioning = { extras = ["plugin"], version = "^0.21.4" }
+poetry-plugin-up = { extras = ["plugin"], version = "^0.3.0" }
+
+[tool.poetry.group.types.dependencies]
 types-pyyaml = "^6.0.12.9"
+types-setuptools = "^67.6.0.7"
 
 [tool.poetry.plugins."poetry-plugin-up"]
+
+[tool.poetry-dynamic-versioning]
+# https://github.com/mtkennerly/poetry-dynamic-versioning#configuration
+enable = true
+style = "semver"
+bump = true
 
 [tool.black]
 # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
 target-version = ["py310"]
+line-length = 120
 
 [tool.isort]
 # https://pycqa.github.io/isort/docs/configuration/options.html
@@ -93,7 +104,7 @@ exclude_dirs = [".venv"]
 # https://beta.ruff.rs/docs/settings/
 target-version = "py310"
 exclude = [".venv"]
-line-length = 88
+line-length = 120
 
 [tool.mypy]
 # https://mypy.readthedocs.io/en/stable/config_file.html
@@ -105,5 +116,5 @@ exclude = ['/setup\.py$']
 venvPath = ".venv"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"

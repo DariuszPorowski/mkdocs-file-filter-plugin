@@ -21,7 +21,7 @@ on:
 
 # Allow one concurrent
 concurrency:
-  group: pr-${{ github.ref }}
+  group: ${{ format('{0}-{1}', github.event_name, github.ref) }}
   cancel-in-progress: true
 
 permissions:
@@ -29,7 +29,7 @@ permissions:
 
 jobs:
   dependency-review:
-    if: ${{ !github.event.pull_request.draft }}
+    if: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
     name: Dependency Review
     runs-on: ubuntu-latest
     permissions:
@@ -44,10 +44,8 @@ jobs:
           comment-summary-in-pr: true
 
   lint:
-    if: ${{ !github.event.pull_request.draft }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
     name: Lint
-    needs:
-      - dependency-review
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -84,11 +82,10 @@ jobs:
         run: poetry run bandit --configfile pyproject.toml --recursive .
 
   test:
-    if: ${{ !github.event.pull_request.draft }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
     name: Test
     needs:
       - lint
-      - dependency-review
     strategy:
       fail-fast: false
       matrix:
@@ -112,10 +109,7 @@ jobs:
         run: poetry install --verbose
 
       - name: Test Build
-        run: |
-          poetry version --verbose
-          poetry build --verbose
+        run: poetry build --verbose
 
       - name: Test MkDocs build
-        run: |
-          poetry run mkdocs build --verbose
+        run: poetry run mkdocs build --verbose

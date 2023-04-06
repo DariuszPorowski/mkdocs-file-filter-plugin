@@ -65,12 +65,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         if self.config.mkdocsignore is True:
             if pathlib.Path(self.config.mkdocsignore_file).is_file() is False:
-                raise MkDocsPluginError(
-                    str(
-                        f"The path '{self.config.mkdocsignore_file}' "
-                        "isn't an existing file."
-                    )
-                )
+                raise MkDocsPluginError(str(f"The path '{self.config.mkdocsignore_file}' isn't an existing file."))
             config.watch.append(str(pathlib.Path(self.config.mkdocsignore_file)))
 
         for k in self.config.keys():
@@ -78,7 +73,7 @@ class FileFilter(MkDocsPlugin[PluginConfig]):
 
         return config
 
-    @event_priority(-100)
+    # @event_priority(-100)
     def on_files(self, files: MkDocsFiles, config: MkDocsConfig):
         if not self.config.enabled:
             return
