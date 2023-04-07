@@ -116,7 +116,7 @@ jobs:
         run: poetry build --verbose
 
       - name: Test MkDocs build
-        run: poetry run mkdocs build --verbose
+        run: poetry run mkdocs build --verbose --config-file mkdocs.yml
 
   test-plugins:
     if: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
@@ -140,7 +140,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry self add "poetry-dynamic-versioning[plugin]"
-          poetry install --verbose --without=dev
+          poetry install --verbose --with=dev
 
       - name: Test Build
         run: poetry build --verbose
