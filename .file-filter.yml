@@ -15,9 +15,15 @@
 # include_tag:
 #   - released
 
-only_doc_pages: true # default value is false
+only_doc_pages: true
 mkdocsignore: true
+exclude_glob:
+  - "**/draft-*.md"
+  - "**/preview-*.md"
 include_tag:
   - released
+  - public preview
+exclude_tag:
+  - draft
 include_regex:
   - "tags.md"

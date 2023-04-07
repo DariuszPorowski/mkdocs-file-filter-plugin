@@ -1,4 +1,3 @@
-
 $paths = @('dist', 'build', 'site', '*.egg-info')
 Remove-Item -Path $paths -Recurse -Force -ErrorAction SilentlyContinue
 
