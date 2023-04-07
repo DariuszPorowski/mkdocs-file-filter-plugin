@@ -82,7 +82,7 @@ class Judger:
                     )
         if self.plugin_config.mkdocsignore is True:
             if self.mkdocsignore_parser.match(pathlib.Path(file.abs_src_path)):
-                return file, False, "mkdocsignore"
+                return False, "mkdocsignore"
         return True, "no rule"
 
     def __path_fix(self, src_path, abs_src_path):
