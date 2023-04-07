@@ -1,7 +1,9 @@
 # MkDocs File Filter Plugin
 
-[![PyPI - Version][pypi-v-image]][pypi-v-link]
-[![PyPI - Python Version][pypi-pyversions-image]][pypi-pyversions-link]
+[![PyPI - version][pypi-version-image]][pypi-version-link]
+[![PyPI - python version][pypi-pyversions-image]][pypi-pyversions-link]
+[![PyPI - python version][pypi-downloads-image]][pypi-downloads-link]
+[![GitHub - ci][github-ci-image]][github-ci-link]
 
 > :exclamation: **This plugin is under early Alpha stage.** Significant changes may occur. It may not yet be fully compatible with other MkDocs configurations and thus may break with some advanced configs. Once these have been resolved and all bugs have been ironed out, it will be moved to an upper stage.
 
@@ -26,6 +28,7 @@
   - [Navigation filtering](#navigation-filtering)
   - [Filter only documentation pages](#filter-only-documentation-pages)
   - [Conflict behavior](#conflict-behavior)
+- [3rd party plugins compatibility](#3rd-party-plugins-compatibility)
 - [License](#license)
 
 ## Installation
@@ -44,7 +47,7 @@ Or include it in a `requirements.txt` file in your project:
 
 ```python
 mkdocs==1.4.*
-mkdocs-file-filter-plugin==0.0.*
+mkdocs-file-filter-plugin
 ```
 
 and run
@@ -442,14 +445,50 @@ plugins:
 
 It is possible to exclude and include will have conflict. For example, you could exclude `drafts/**` but include `*.md`. In that case, **include** has higher priority over exclude. So all `*.md` files from the drafts folder will be **included**.
 
+## 3rd party plugins compatibility
+
+This plugin has been tested with [Material for MkDocs][mkdocs-material-link] theme, and two 3rd party plugins that nicely complement each other.
+
+- [mkdocs-awesome-pages-plugin][mkdocs-awesome-pages-plugin-pypi] plugin allows you to customize how your pages show up in the navigation of your MkDocs without having to configure the entire structure in your `mkdocs.yml`
+- [mkdocs-exclude-unused-files][mkdocs-exclude-unused-files-pypi] cleans up mkdocs output from files that are not referenced in pages (useful to have the smaller artifact and not exposing not attached files after filtration with the file-filter).
+
+Example `mkdocs.yml` config with the proper order of plugins.
+
+```yaml
+# mkdocs.yml
+plugins:
+  - search
+  - awesome-pages #before file-filter
+    # awesome-pages config
+  - file-filter:
+      only_doc_pages: true
+      mkdocsignore: true
+      exclude_glob:
+        - "**/draft-*.md"
+        - "**/preview-*.md"
+      include_regex:
+        - "tags.md"
+      include_tag:
+        - released
+        - public preview
+      exclude_tag:
+        - draft
+  - mkdocs_exclude_unused_files #after file-filter
+    # exclude-unused-files config
+```
+
 ## License
 
 `mkdocs-file-filter-plugin` is distributed under the terms of the [MIT][mit] license.
 
-[pypi-v-image]: https://img.shields.io/pypi/v/mkdocs-file-filter-plugin.svg
-[pypi-v-link]: https://pypi.org/project/mkdocs-file-filter-plugin
-[pypi-pyversions-image]: https://img.shields.io/pypi/pyversions/mkdocs-file-filter-plugin.svg
+[pypi-version-image]: https://img.shields.io/pypi/v/mkdocs-file-filter-plugin?style=flat-square
+[pypi-version-link]: https://pypi.org/project/mkdocs-file-filter-plugin
+[pypi-pyversions-image]: https://img.shields.io/pypi/pyversions/mkdocs-file-filter-plugin?style=flat-square
 [pypi-pyversions-link]: https://pypi.org/project/mkdocs-file-filter-plugin
+[pypi-downloads-image]: https://img.shields.io/pypi/dm/mkdocs-file-filter-plugin?style=flat-square
+[pypi-downloads-link]: https://pypi.org/project/mkdocs-file-filter-plugin
+[github-ci-image]: https://img.shields.io/github/actions/workflow/status/DariuszPorowski/mkdocs-file-filter-plugin/workflow.ci.yml?style=flat-square&branch=main&event=push
+[github-ci-link]: https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/actions/workflows/workflow.ci.yml?query=branch%3Amain+event%3Apush
 [mkdocs-plugins]: http://www.mkdocs.org/user-guide/plugins
 [mkdocs-envs]: https://www.mkdocs.org/user-guide/configuration/#environment-variables
 [mkdocs-metadata]: https://www.mkdocs.org/user-guide/writing-your-docs/#meta-data
@@ -459,4 +498,6 @@ It is possible to exclude and include will have conflict. For example, you could
 [pip]: https://pip.pypa.io
 [gitignore]: https://git-scm.com/docs/gitignore#_pattern_format
 [mit]: https://opensource.org/licenses/MIT
+[mkdocs-material-link]: https://squidfunk.github.io/mkdocs-material
 [mkdocs-awesome-pages-plugin-pypi]: https://pypi.org/project/mkdocs-awesome-pages-plugin
+[mkdocs-exclude-unused-files-pypi]: https://pypi.org/project/mkdocs-exclude-unused-files

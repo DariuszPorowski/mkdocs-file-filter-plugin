@@ -2,18 +2,28 @@
 # include_glob:
 #   - "test/test.md"
 #   - "**/draft-*.md"
-# exclude_glob:
-#   - "Contributions/**"
 # include_tag:
 #   - foo
 #   - "#bar"
 # exclude_tag:
-#   - test
+#   - "#bar"
 
-only_doc_pages: true # default value is false
-exclude_regex:
-  - '.*\.md$'
-include_regex:
-  - "tags.md"
+# INCLUDE ONLY DOC TAGED WITH 'released'
+# only_doc_pages: true
+# exclude_regex:
+#   - '.*\.md$'
+# include_tag:
+#   - released
+
+only_doc_pages: true
+mkdocsignore: true
+exclude_glob:
+  - "**/draft-*.md"
+  - "**/preview-*.md"
 include_tag:
   - released
+  - public preview
+exclude_tag:
+  - draft
+include_regex:
+  - "tags.md"

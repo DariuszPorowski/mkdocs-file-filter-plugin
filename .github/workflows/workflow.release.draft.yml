@@ -21,7 +21,7 @@ jobs:
         uses: release-drafter/release-drafter@v5
         id: release-drafter
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Release URL
         run: |

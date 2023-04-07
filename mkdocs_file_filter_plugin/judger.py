@@ -2,10 +2,10 @@ import fnmatch
 import os
 import pathlib
 import re
-from typing import Union
+from typing import Optional, Union
 from urllib.parse import urlsplit
 
-import igittigitt
+import igittigitt  # type: ignore
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File as MkDocsFile
 from mkdocs.structure.nav import Link as MkDocsLink
@@ -25,39 +25,32 @@ class Judger:
 
         if self.plugin_config.mkdocsignore:
             self.mkdocsignore_parser = igittigitt.IgnoreParser()
-            self.mkdocsignore_parser.parse_rule_file(
-                pathlib.Path(self.plugin_config.mkdocsignore_file)
-            )
+            self.mkdocsignore_parser.parse_rule_file(pathlib.Path(self.plugin_config.mkdocsignore_file))
 
-    def evaluate_nav(self, nav: NavigationItem) -> NavigationItem:
+    def evaluate_nav(self, nav: NavigationItem) -> Optional[NavigationItem]:
         if isinstance(nav, MkDocsSection):
             nev_section = [self.evaluate_nav(child) for child in nav.children]
             nev_section = list(filter(lambda item: item is not None, nev_section))
             if nev_section != []:
-                return MkDocsSection(nav.title, nev_section)
+                return MkDocsSection(nav.title, nev_section)  # type: ignore
             else:
                 LOG.debug(f"remove navigation section: {nav.title}")
                 return None
-        else:
+        elif isinstance(nav, MkDocsLink):
             scheme, netloc, path, query, fragment = urlsplit(nav.url)
-            if (
-                isinstance(nav, MkDocsLink)
-                and not nav.url.startswith("/")
-                and not scheme
-                and not netloc
-            ):
+            if not nav.url.startswith("/") and not scheme and not netloc:
                 LOG.debug(f"remove navigation link: {nav.title} {nav.url}")
                 return None
             else:
                 return nav
+        else:
+            return nav
 
     def evaluate_file(self, file: MkDocsFile):
         if self.plugin_config.only_doc_pages and not file.is_documentation_page():
-            return True, "omitted - not doc page"
+            return True, "skipped - not doc page"
 
-        file.src_path, file.abs_src_path = self.__path_fix(
-            file.src_path, file.abs_src_path
-        )
+        file.src_path, file.abs_src_path = self.__path_fix(file.src_path, file.abs_src_path)
 
         for glob in self.plugin_config.include_glob:
             if fnmatch.fnmatchcase(file.src_path, glob):
@@ -89,7 +82,7 @@ class Judger:
                     )
         if self.plugin_config.mkdocsignore is True:
             if self.mkdocsignore_parser.match(pathlib.Path(file.abs_src_path)):
-                return file, False, "mkdocsignore"
+                return False, "mkdocsignore"
         return True, "no rule"
 
     def __path_fix(self, src_path, abs_src_path):

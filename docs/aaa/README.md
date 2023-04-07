@@ -1,7 +1,0 @@
----
-tags:
-  - foo
-  - released
----
-
-# README
