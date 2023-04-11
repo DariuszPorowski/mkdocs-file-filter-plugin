@@ -14,11 +14,13 @@ jobs:
     name: PyPI Release
     environment:
       name: PyPI
-      url: "https://pypi.org/project/mkdocs-file-filter-plugin"
+      url: https://pypi.org/project/mkdocs-file-filter-plugin
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install Poetry
         run: pipx install poetry
@@ -26,16 +28,13 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: .python-version
+          python-version-file: .python-version
           cache: poetry
 
       - name: Install dependencies
         run: |
           poetry self add "poetry-dynamic-versioning[plugin]"
           poetry install --verbose --without=dev
-
-      # - name: Set Version
-      #   run: poetry version ${GITHUB_REF_NAME/v/}
 
       - name: Build
         run: poetry build --verbose
@@ -55,7 +54,7 @@ jobs:
     name: GitHub Release
     needs: pypi-release
     environment:
-      name: GitHub
+      name: github-releases
       url: ${{ steps.gh-release.outputs.url }}
     runs-on: ubuntu-latest
     steps:
@@ -73,3 +72,37 @@ jobs:
           files: |
             dist/*
             schema*.json
+
+  gh-pages-build:
+    name: GitHub Pages (build)
+    needs: gh-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          verbose: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+
+  gh-pages-deploy:
+    name: GitHub Pages (deploy)
+    needs: gh-pages-build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

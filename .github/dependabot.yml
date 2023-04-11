@@ -8,8 +8,8 @@ updates:
     schedule:
       interval: daily
     commit-message:
-      prefix: "[pip] "
-      prefix-development: "[pip dev] "
+      prefix: "[pip] :arrow_up: "
+      prefix-development: "[pip dev] :arrow_up: "
       include: scope
 
   - package-ecosystem: github-actions
@@ -17,4 +17,4 @@ updates:
     schedule:
       interval: daily
     commit-message:
-      prefix: "[github-actions] "
+      prefix: "[github-actions] :arrow_up: "

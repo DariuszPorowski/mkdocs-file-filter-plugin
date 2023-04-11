@@ -9,57 +9,21 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
-      # - id: check-yaml
-      # - id: check-json
+      - id: check-yaml
+        exclude: (.github|mkdocs.*.yml)
+      - id: check-json
+        exclude: (.vscode|.devcontainer)
       - id: check-toml
       - id: debug-statements
       - id: no-commit-to-branch
+      - id: check-case-conflict
+      - id: check-docstring-first
 
   - repo: local
     hooks:
       - id: pyupgrade
         name: pyupgrade
-        entry: poetry run pyupgrade --py38-plus
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: mypy
-        name: mypy
-        entry: poetry run mypy --config-file pyproject.toml
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: isort
-        name: isort
-        entry: poetry run isort --settings-path pyproject.toml
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: black
-        name: black
-        entry: poetry run black --config pyproject.toml
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: flake8
-        name: flake8
-        entry: poetry run flake8
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: bandit
-        name: bandit
-        entry: poetry run bandit --configfile pyproject.toml --recursive
+        entry: poetry poe pyupgrade
         types: [python]
         language: system
 
@@ -67,6 +31,62 @@ repos:
     hooks:
       - id: ruff
         name: ruff
-        entry: poetry run ruff
+        entry: poetry poe ruff-fix
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: poetry poe isort-fix
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: poetry poe black-fix
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: poetry poe flake8
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: pydocstyle
+        name: pydocstyle
+        entry: poetry poe pydocstyle
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: poetry poe pre-commit-mypy
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: poetry poe pylint
+        language: system
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: bandit
+        name: bandit
+        entry: poetry poe pre-commit-bandit
         types: [python]
         language: system

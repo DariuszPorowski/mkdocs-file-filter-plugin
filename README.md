@@ -2,7 +2,7 @@
 
 [![PyPI - version][pypi-version-image]][pypi-version-link]
 [![PyPI - python version][pypi-pyversions-image]][pypi-pyversions-link]
-[![PyPI - python version][pypi-downloads-image]][pypi-downloads-link]
+[![PyPI - downloads][pypi-stats-image]][pypi-stats-link]
 [![GitHub - ci][github-ci-image]][github-ci-link]
 
 > :exclamation: **This plugin is under early Alpha stage.** Significant changes may occur. It may not yet be fully compatible with other MkDocs configurations and thus may break with some advanced configs. Once these have been resolved and all bugs have been ironed out, it will be moved to an upper stage.
@@ -485,8 +485,8 @@ plugins:
 [pypi-version-link]: https://pypi.org/project/mkdocs-file-filter-plugin
 [pypi-pyversions-image]: https://img.shields.io/pypi/pyversions/mkdocs-file-filter-plugin?style=flat-square
 [pypi-pyversions-link]: https://pypi.org/project/mkdocs-file-filter-plugin
-[pypi-downloads-image]: https://img.shields.io/pypi/dm/mkdocs-file-filter-plugin?style=flat-square
-[pypi-downloads-link]: https://pypi.org/project/mkdocs-file-filter-plugin
+[pypi-stats-image]: https://img.shields.io/pypi/dm/mkdocs-file-filter-plugin?style=flat-square
+[pypi-stats-link]: https://pypistats.org/packages/mkdocs-file-filter-plugin
 [github-ci-image]: https://img.shields.io/github/actions/workflow/status/DariuszPorowski/mkdocs-file-filter-plugin/workflow.ci.yml?style=flat-square&branch=main&event=push
 [github-ci-link]: https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/actions/workflows/workflow.ci.yml?query=branch%3Amain+event%3Apush
 [mkdocs-plugins]: http://www.mkdocs.org/user-guide/plugins

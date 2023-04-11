@@ -12,33 +12,6 @@
 				}
 			},
 			{
-				"label": "Run ruff",
-				"type": "shell",
-				"command": "poetry run ruff check .",
-				"group": "none",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			},
-			{
-				"label": "Run build",
-				"type": "shell",
-				"command": "poetry build --verbose",
-				"group": "build",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			},
-			{
-				"label": "Reinstall local package",
-				"type": "shell",
-				"command": "pip uninstall -y mkdocs_file_filter_plugin && pip install -e .",
-				"group": "test",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			},
-			{
 				"label": "Run mkdocs serve",
 				"type": "shell",
 				"command": "poetry run mkdocs serve --verbose",
