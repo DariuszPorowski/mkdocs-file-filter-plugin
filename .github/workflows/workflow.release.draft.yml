@@ -2,24 +2,31 @@
 name: Release Drafter
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
-permissions: write-all
+concurrency:
+  group: ${{ format('{0}-{1}', github.event_name, github.ref) }}
+  cancel-in-progress: true
+
+permissions: {}
 
 jobs:
   release-draft:
-    if: github.repository_owner == 'DariuszPorowski'
+    if: ${{ github.repository_owner == 'DariuszPorowski' }}
+    name: Draft Release
+    permissions:
+      contents: write
+      pull-requests: read
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
       - name: Release Drafter
         uses: release-drafter/release-drafter@v5
         id: release-drafter
+        with:
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
 

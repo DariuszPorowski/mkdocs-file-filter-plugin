@@ -154,6 +154,7 @@ show_error_context = true
 pretty = true
 explicit_package_bases = true
 ignore_missing_imports = true
+follow_imports = "silent"
 
 [tool.bandit]
 # https://bandit.readthedocs.io/en/latest/config.html#bandit-settings

@@ -206,6 +206,11 @@ jobs:
       - name: Run PyTest
         run: poetry poe test
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Publish Test Results
         uses: dorny/test-reporter@v1
         if: ${{ always() }}
@@ -214,18 +219,18 @@ jobs:
           path: "*-junit.xml"
           reporter: java-junit
 
-      - name: Write LCOV Report to Job Summary
-        uses: livewing/lcov-job-summary@v1
-        with:
-          lcov: coverage.lcov
+      # - name: Write LCOV Report to Job Summary
+      #   uses: livewing/lcov-job-summary@v1
+      #   with:
+      #     lcov: coverage.lcov
 
-      - name: Write LCOV Report to PR as comment
-        uses: romeovs/lcov-reporter-action@master
-        with:
-          github-token: ${{ github.token }}
-          lcov-file: coverage.lcov
-          delete-old-comments: true
-          title: Code Coverage Report
+      # - name: Write LCOV Report to PR as comment
+      #   uses: romeovs/lcov-reporter-action@master
+      #   with:
+      #     github-token: ${{ github.token }}
+      #     lcov-file: coverage.lcov
+      #     delete-old-comments: true
+      #     title: Code Coverage Report
 
       - name: Upload Test and Coverage results
         uses: actions/upload-artifact@v3

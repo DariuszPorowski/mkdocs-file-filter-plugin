@@ -5,7 +5,7 @@
 [![PyPI - downloads][pypi-stats-image]][pypi-stats-link]
 [![GitHub - ci][github-ci-image]][github-ci-link]
 
-> :exclamation: **This plugin is under early Alpha stage.** Significant changes may occur. It may not yet be fully compatible with other MkDocs configurations and thus may break with some advanced configs. Once these have been resolved and all bugs have been ironed out, it will be moved to an upper stage.
+> ❗ **This plugin is under early Alpha stage.** Significant changes may occur. It may not yet be fully compatible with other MkDocs configurations and thus may break with some advanced configs. Once these have been resolved and all bugs have been ironed out, it will be moved to an upper stage.
 
 ---
 
@@ -96,7 +96,7 @@ plugins:
         - released
 ```
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > If you have no `plugins` entry in your config file yet, you'll likely also want to add the `search` plugin. MkDocs enables it by default if there is no `plugins` entry set, but now you have to enable it explicitly.
 >
@@ -115,7 +115,7 @@ plugins:
       # config: path/to/config/file/.file-filter.yml
 ```
 
-> :bulb: **HINT**
+> 💡 **HINT**
 >
 > For external file config, you can use [MkDocs Environment Variables][mkdocs-envs] to set the desired file dynamically. A useful case for serving the site with different content based on stage/environment/etc. Works well with CI/CD automation.
 
@@ -146,7 +146,7 @@ include_tag:
   - prod
 ```
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > - External config uses exactly the same properties as plugin's config in the `mkdocs.yml` except `config` property.
 >
@@ -175,7 +175,7 @@ The below table shows all supported options by the plugin.
 
 ## Usage
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > - If you do not provide patterns, everything will stay the same - standard MkDocs behavior - include all.
 >
@@ -200,7 +200,7 @@ plugins:
 
 **RESULT:** exclude all content from `drafts` and related subdirectories, but include all markdown files with prefix starting `preview` from `drafts` and related subdirectories.
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > **Glob** patterns relative to your [docs_dir][mkdocs-docs-dir] setting from `mkdocs.yml`
 
@@ -219,7 +219,7 @@ plugins:
 
 **RESULT:** exclude all files with `tmp`, `bin` or `tar` extension and include all files with `js`, or `css` extension.
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > **Regex** patterns relative to your [docs_dir][mkdocs-docs-dir] setting from `mkdocs.yml`
 
@@ -365,7 +365,7 @@ docs/**/draft-*.md
 
 **RESULT:** exclude all content from `docs/test` and related subdirectories and all markdown files with prefix starting `draft` from `docs` and related subdirectories.
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > **.mkdocsignore** patterns relative to your root.
 
@@ -416,7 +416,7 @@ Nav **results** with `filter_nav: true`:
 - Xyz: path/xyz.md
 ```
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > If you use any other 3rd-party plugins that modify navigation (e.g., [mkdocs-awesome-pages-plugin][mkdocs-awesome-pages-plugin-pypi]) - first, test and evaluate expected behavior. Plugin configuration order may impact results.
 >

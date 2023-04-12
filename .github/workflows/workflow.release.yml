@@ -6,8 +6,9 @@ on:
     tags:
       - "v*.*.*"
 
-permissions:
-  contents: write
+concurrency:
+  group: ${{ format('{0}-{1}', github.event_name, github.ref) }}
+  cancel-in-progress: false
 
 jobs:
   pypi-release:
@@ -16,10 +17,13 @@ jobs:
       name: PyPI
       url: https://pypi.org/project/mkdocs-file-filter-plugin
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.ref }}
           fetch-depth: 0
 
       - name: Install Poetry
@@ -40,9 +44,11 @@ jobs:
         run: poetry build --verbose
 
       - name: Publish to PyPI
-        run: poetry publish --verbose --username=__token__ --password ${{ secrets.PYPI_API_TOKEN }}
+        run: poetry publish --verbose --username=__token__ --password "${PYPI_API_TOKEN}"
+        env:
+          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
 
-      - name: Upload Artifact
+      - name: Upload build to artifacts
         uses: actions/upload-artifact@v3
         with:
           name: plugin
@@ -50,36 +56,56 @@ jobs:
             dist/*
             schema*.json
 
-  gh-release:
-    name: GitHub Release
+  gh-release-update:
+    name: Update GitHub Release
     needs: pypi-release
     environment:
       name: github-releases
       url: ${{ steps.gh-release.outputs.url }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Download Artifact
+      - name: Download build from artifacts
         uses: actions/download-artifact@v3
         with:
           name: plugin
           path: .
 
-      - name: Release
+      - name: Upload build artifacts to release
         id: gh-release
         uses: softprops/action-gh-release@v1
         with:
-          generate_release_notes: true
+          prerelease: false
           files: |
             dist/*
             schema*.json
 
+      # https://docs.github.com/en/rest/releases/releases#update-a-release
+      - name: Mark as latest
+        uses: octokit/request-action@v2.1.7
+        id: set_release_make_latest
+        with:
+          route: PATCH /repos/{repo}/releases/{release_id}
+          repo: ${{ github.repository }}
+          release_id: ${{ steps.gh-release.outputs.id }}
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
   gh-pages-build:
     name: GitHub Pages (build)
-    needs: gh-release
+    needs: gh-release-update
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -96,6 +122,7 @@ jobs:
     name: GitHub Pages (deploy)
     needs: gh-pages-build
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:

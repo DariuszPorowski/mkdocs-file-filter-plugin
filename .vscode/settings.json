@@ -33,18 +33,39 @@
 	// markdown
 	"markdown.extension.toc.levels": "2..6",
 	// python general
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.black-formatter",
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": true
+		},
+	},
+	"python.languageServer": "Pylance",
 	// https://code.visualstudio.com/docs/python/settings-reference
 	"python.terminal.activateEnvInCurrentTerminal": true,
 	// python code analysis
 	"python.analysis.autoImportCompletions": true,
 	"python.analysis.typeCheckingMode": "basic",
 	// python formatting
-	"python.formatting.provider": "black",
+	"python.formatting.provider": "none",
 	"python.formatting.blackArgs": [
 		"--config",
 		"pyproject.toml"
 	],
+	// https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter
+	"black-formatter.args": [
+		"--config",
+		"pyproject.toml"
+	],
+	"isort.args": [
+		"--settings-path",
+		"pyproject.toml"
+	],
 	"python.formatting.autopep8Args": [
+		"--global-config",
+		"pyproject.toml"
+	],
+	"autopep8.args": [
 		"--global-config",
 		"pyproject.toml"
 	],
@@ -54,6 +75,10 @@
 	// python linting - pylint
 	"python.linting.pylintEnabled": true,
 	"python.linting.pylintArgs": [
+		"--rcfile",
+		"pyproject.toml"
+	],
+	"pylint.args": [
 		"--rcfile",
 		"pyproject.toml"
 	],
@@ -69,7 +94,13 @@
 	"python.linting.mypyEnabled": true,
 	"python.linting.mypyArgs": [
 		"--config-file",
-		"pyproject.toml"
+		"pyproject.toml",
+		"--no-pretty",
+	],
+	"mypy-type-checker.args": [
+		"--config-file",
+		"pyproject.toml",
+		"--no-pretty",
 	],
 	// python linting - pydocstyle
 	"python.linting.pydocstyleEnabled": true,
@@ -101,5 +132,5 @@
 		"--config",
 		"pyproject.toml"
 	],
-	"ruff.fixAll": true,
+	"ruff.fixAll": true
 }
