@@ -111,7 +111,7 @@ repos:
     hooks:
       - id: mypy
         name: mypy
-        entry: poetry poe pre-commit-mypy
+        entry: poetry poe mypy-pre-commit
         types: [python]
         language: system
 
@@ -127,6 +127,6 @@ repos:
     hooks:
       - id: bandit
         name: bandit
-        entry: poetry poe pre-commit-bandit
+        entry: poetry poe bandit-pre-commit
         types: [python]
         language: system

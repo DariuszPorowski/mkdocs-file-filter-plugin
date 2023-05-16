@@ -139,9 +139,9 @@ jobs:
         run: poetry build --verbose
 
       - name: Test MkDocs build (self)
-        run: poetry poe mkdocs-build --config-file mkdocs.yml
+        run: poetry run mkdocs build --config-file mkdocs.yml --verbose
         working-directory: tests/fixtures
 
       - name: Test MkDocs build (plugins)
-        run: poetry poe mkdocs-build --config-file mkdocs.plugins.yml
+        run: poetry run mkdocs build --config-file mkdocs.plugins.yml --verbose
         working-directory: tests/fixtures
