@@ -64,13 +64,13 @@ jobs:
             schema*.json
 
       # https://docs.github.com/en/rest/releases/releases#update-a-release
-      - name: Mark as latest
-        uses: octokit/request-action@v2.1.7
-        id: set_release_make_latest
-        with:
-          route: PATCH /repos/{repo}/releases/{release_id}
-          repo: ${{ github.repository }}
-          release_id: ${{ steps.gh-release.outputs.id }}
-          make_latest: true
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      # - name: Mark as latest
+      #   uses: octokit/request-action@v2.1.7
+      #   id: set_release_make_latest
+      #   with:
+      #     route: PATCH /repos/{repo}/releases/{release_id}
+      #     repo: ${{ github.repository }}
+      #     release_id: ${{ steps.gh-release.outputs.id }}
+      #     make_latest: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ github.token }}

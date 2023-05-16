@@ -79,7 +79,7 @@ pyupgrade = "^3.4.0"
 
 [tool.poetry-dynamic-versioning]
 # https://github.com/mtkennerly/poetry-dynamic-versioning#configuration
-enable = false
+enable = true
 style = "semver"
 vcs = "git"
 bump = true
