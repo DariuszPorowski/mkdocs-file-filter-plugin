@@ -487,8 +487,8 @@ plugins:
 [pypi-pyversions-link]: https://pypi.org/project/mkdocs-file-filter-plugin
 [pypi-stats-image]: https://img.shields.io/pypi/dm/mkdocs-file-filter-plugin?style=flat-square
 [pypi-stats-link]: https://pypistats.org/packages/mkdocs-file-filter-plugin
-[github-ci-image]: https://img.shields.io/github/actions/workflow/status/DariuszPorowski/mkdocs-file-filter-plugin/workflow.ci.yml?style=flat-square&branch=main&event=push
-[github-ci-link]: https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/actions/workflows/workflow.ci.yml?query=branch%3Amain+event%3Apush
+[github-ci-image]: https://img.shields.io/github/actions/workflow/status/DariuszPorowski/mkdocs-file-filter-plugin/ci.yml?style=flat-square&branch=main&event=push
+[github-ci-link]: https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush
 [mkdocs-plugins]: http://www.mkdocs.org/user-guide/plugins
 [mkdocs-envs]: https://www.mkdocs.org/user-guide/configuration/#environment-variables
 [mkdocs-metadata]: https://www.mkdocs.org/user-guide/writing-your-docs/#meta-data
