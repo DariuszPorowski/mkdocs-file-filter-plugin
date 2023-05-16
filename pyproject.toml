@@ -87,7 +87,6 @@ bump = true
 [tool.poe.tasks]
 # https://github.com/nat-n/poethepoet
 test = "poetry run pytest -c pyproject.toml --junit-xml=report-junit.xml --cov-report term-missing --cov-report=html --cov-report=xml --cov-report=lcov --cov=mkdocs_file_filter_plugin tests/"
-install-dev = "poetry install --with=dev --verbose"
 install = "poetry install --without=dev --verbose"
 build = "poetry build --verbose"
 mkdocs-build = "poetry run mkdocs build --verbose"

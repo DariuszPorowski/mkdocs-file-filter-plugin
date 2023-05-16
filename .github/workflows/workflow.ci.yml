@@ -4,192 +4,57 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "**/*.py"
+      - "poetry.lock"
+      - "poetry.toml"
+      - "pyproject.toml"
+      - "tests/**"
+      - "schema*.json"
   pull_request:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
     types:
       - opened
-      - reopened
-      - synchronize
       - ready_for_review
+      - synchronize
+      - reopened
     branches:
       - main
     paths:
-      - "mkdocs_file_filter_plugin/**"
+      - "**/*.py"
+      - "poetry.lock"
+      - "poetry.toml"
+      - "pyproject.toml"
       - "tests/**"
       - "schema*.json"
-      - "mkdocs*.yml"
-      - "poetry.lock"
-      - "pyproject.toml"
-      - "setup.py"
 
 # Allow one concurrent
 concurrency:
-  group: ${{ format('{0}-{1}', github.event_name, github.ref) }}
+  group: ${{ format('{0}-{1}-{2}-{3}-{4}', github.workflow, github.event_name, github.ref || github.event.client_payload.ref, github.base_ref, github.head_ref) }}
   cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
-  dependency-review:
-    if: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
-    name: Dependency Review
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: Run Dependency Review
-        uses: actions/dependency-review-action@v3
-        with:
-          comment-summary-in-pr: true
-
-  codeql-analyze:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft && !contains(github.event.head_commit.message, 'skip-codeql')) }}
-    name: CodeQL Analyze
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      security-events: write
-    strategy:
-      fail-fast: false
-      matrix:
-        language: ["python"]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
-        # Use only 'java' to analyze code written in Java, Kotlin or both
-        # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
-        # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      # Initializes the CodeQL tools for scanning.
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ matrix.language }}
-          queries: security-extended
-          # If you wish to specify custom queries, you can do so here or in a config file.
-          # By default, queries listed here will override any specified in a config file.
-          # Prefix the list here with "+" to use these queries and those in the config file.
-
-          # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-          # queries: security-extended,security-and-quality
-
-      # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
-      # If this step fails, then you should remove it and run the build manually (see below)
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
-
-      # ℹ️ Command-line programs to run using the OS shell.
-      # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-
-      #   If the Autobuild fails above, remove it and uncomment the following three lines.
-      #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
-
-      # - run: |
-      #     echo "Run, Build Application using script"
-      #     ./location_of_script_within_repo/buildscript.sh
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-        with:
-          category: "/language:${{matrix.language}}"
-          upload: false
-          output: codeql-results
-
-      - name: Upload Sarif Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: Analyses Results (SARIF)
-          path: codeql-results
-          if-no-files-found: warn
-
-  codeql-results:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft && !contains(github.event.head_commit.message, 'skip-codeql')) }}
-    name: CodeQL Results
-    needs:
-      - codeql-analyze
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: Download Sarifs
-        uses: actions/download-artifact@v3
-        with:
-          path: codeql-results
-
-      - name: Upload Results
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: codeql-results
-          wait-for-processing: true
-
-  lint:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: Install Poetry
-        run: pipx install poetry
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version-file: .python-version
-          cache: poetry
-
-      - name: Install dependencies
-        run: |
-          poetry self add "poethepoet[plugin]"
-          poetry self add "poetry-dynamic-versioning[plugin]"
-          poetry poe install-dev
-
-      - name: Run Ruff
-        run: poetry poe ruff-check
-
-      - name: Run isort
-        run: poetry poe isort-check
-
-      - name: Run Black
-        run: poetry poe black-check
-      - name: Run Flake8
-        run: poetry poe flake8
-
-      - name: Run PyDocstyle
-        run: poetry poe pydocstyle
-
-      - name: Run MyPy
-        run: poetry poe mypy
-
-      - name: Run PyLint
-        run: poetry poe pylint
-
-      - name: Run Bandit
-        run: poetry poe bandit
-
   test:
     if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
     name: Test
-    needs:
-      - lint
     permissions:
       issues: read
       checks: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install Poetry
-        run: pipx install poetry
+        run: |
+          pipx install poetry
+          pipx inject poetry poetry-plugin-up
+          pipx inject poetry poetry-dynamic-versioning
+          pipx inject poetry poethepoet
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -198,10 +63,7 @@ jobs:
           cache: poetry
 
       - name: Install dependencies
-        run: |
-          poetry self add "poethepoet[plugin]"
-          poetry self add "poetry-dynamic-versioning[plugin]"
-          poetry poe install-dev
+        run: poetry install --verbose
 
       - name: Run PyTest
         run: poetry poe test
@@ -215,7 +77,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: ${{ always() }}
         with:
-          name: Test Results
+          name: test-results
           path: "*-junit.xml"
           reporter: java-junit
 
@@ -242,7 +104,7 @@ jobs:
             coverage.lcov
             htmlcov/*
 
-  test-mkdocs-self:
+  test-mkdocs:
     if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
     name: Test MkDocs (self)
     needs:
@@ -254,11 +116,15 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout Repo
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install Poetry
-        run: pipx install poetry
+        run: |
+          pipx install poetry
+          pipx inject poetry poetry-plugin-up
+          pipx inject poetry poetry-dynamic-versioning
+          pipx inject poetry poethepoet
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -267,44 +133,15 @@ jobs:
           cache: poetry
 
       - name: Install dependencies
-        run: |
-          poetry self add "poethepoet[plugin]"
-          poetry self add "poetry-dynamic-versioning[plugin]"
-          poetry poe install
+        run: poetry install --verbose
 
       - name: Test Build
-        run: poetry poe build
+        run: poetry build --verbose
 
-      - name: Test MkDocs build
+      - name: Test MkDocs build (self)
         run: poetry poe mkdocs-build --config-file mkdocs.yml
+        working-directory: tests/fixtures
 
-  test-mkdocs-plugins:
-    if: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
-    name: Test MkDocs (plugins)
-    needs:
-      - test-mkdocs-self
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: Install Poetry
-        run: pipx install poetry
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version-file: .python-version
-          cache: poetry
-
-      - name: Install dependencies
-        run: |
-          poetry self add "poethepoet[plugin]"
-          poetry self add "poetry-dynamic-versioning[plugin]"
-          poetry poe install-dev
-
-      - name: Test Build
-        run: poetry poe build
-
-      - name: Test MkDocs build
+      - name: Test MkDocs build (plugins)
         run: poetry poe mkdocs-build --config-file mkdocs.plugins.yml
+        working-directory: tests/fixtures
