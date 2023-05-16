@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ format('{0}-{1}', github.event_name, github.ref) }}
+  group: ${{ format('{0}-{1}-{2}-{3}-{4}', github.workflow, github.event_name, github.ref, github.base_ref, github.head_ref) }}
   cancel-in-progress: true
 
 permissions: {}
@@ -22,7 +22,7 @@ jobs:
       pull-requests: read
     runs-on: ubuntu-latest
     steps:
-      - name: Release Drafter
+      - name: Run Release Drafter
         uses: release-drafter/release-drafter@v5
         id: release-drafter
         with:
@@ -30,9 +30,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Release URL
+      - name: Set Release URL in the Summary
         run: |
           echo "${RELEASE_URL}"
-          echo "${RELEASE_URL}" >> $GITHUB_STEP_SUMMARY
+          echo "${RELEASE_URL}" >> "${GITHUB_STEP_SUMMARY}"
         env:
           RELEASE_URL: ${{ steps.release-drafter.outputs.html_url }}

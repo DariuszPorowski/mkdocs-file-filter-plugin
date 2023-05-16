@@ -1,0 +1,76 @@
+---
+name: Publish Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  publish-pypi:
+    name: Publish to PyPI
+    environment:
+      name: PyPI
+      url: https://pypi.org/project/mkdocs-file-filter-plugin
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+          pipx inject poetry poetry-plugin-up
+          pipx inject poetry poetry-dynamic-versioning
+          pipx inject poetry poethepoet
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version-file: .python-version
+          cache: poetry
+
+      - name: Install dependencies
+        run: poetry install --without=dev --verbose
+
+      - name: Build
+        run: poetry build --verbose
+
+      - name: Publish to PyPI
+        run: poetry publish --verbose --username=__token__ --password "${PYPI_API_TOKEN}" --verbose
+        env:
+          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Upload build to artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugin
+          path: |
+            dist/*
+            schema*.json
+
+      - name: Update release assets
+        id: gh-release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: false
+          files: |
+            dist/*
+            schema*.json
+
+      # https://docs.github.com/en/rest/releases/releases#update-a-release
+      - name: Mark as latest
+        uses: octokit/request-action@v2.1.7
+        id: set_release_make_latest
+        with:
+          route: PATCH /repos/{repo}/releases/{release_id}
+          repo: ${{ github.repository }}
+          release_id: ${{ steps.gh-release.outputs.id }}
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
