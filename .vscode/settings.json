@@ -1,136 +1,177 @@
 {
-	// git
-	"git.autorefresh": true,
-	"git.autofetch": true,
-	"git.fetchOnPull": true,
-	"git.pruneOnFetch": true,
-	"git.branchProtection": [
-		"main",
-		"master"
-	],
-	// schemas
-	"yaml.schemas": {
-		"https://squidfunk.github.io/mkdocs-material/schema.json": [
-			"mkdocs*.yml"
-		],
-		"schema-file-filter-config.json": [
-			".file-filter*.yml"
-		]
-	},
-	// files
-	"files.trimTrailingWhitespace": true,
-	"files.eol": "\n",
-	"files.insertFinalNewline": true,
-	"files.associations": {
-		"CODEOWNERS": "ignore",
-		"*.mkdocsignore": "ignore",
-		".pages": "yaml"
-	},
-	// editor
-	"editor.formatOnSave": true,
-	"editor.formatOnPaste": true,
-	"editor.formatOnType": true,
-	// markdown
-	"markdown.extension.toc.levels": "2..6",
-	// python general
-	"[python]": {
-		"editor.defaultFormatter": "ms-python.black-formatter",
-		"editor.formatOnSave": true,
-		"editor.codeActionsOnSave": {
-			"source.organizeImports": true
-		},
-	},
-	"python.languageServer": "Pylance",
-	// https://code.visualstudio.com/docs/python/settings-reference
-	"python.terminal.activateEnvInCurrentTerminal": true,
-	// python code analysis
-	"python.analysis.autoImportCompletions": true,
-	"python.analysis.typeCheckingMode": "basic",
-	// python formatting
-	"python.formatting.provider": "none",
-	"python.formatting.blackArgs": [
-		"--config",
-		"pyproject.toml"
-	],
-	// https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter
-	"black-formatter.args": [
-		"--config",
-		"pyproject.toml"
-	],
-	"isort.args": [
-		"--settings-path",
-		"pyproject.toml"
-	],
-	"python.formatting.autopep8Args": [
-		"--global-config",
-		"pyproject.toml"
-	],
-	"autopep8.args": [
-		"--global-config",
-		"pyproject.toml"
-	],
-	// python linting
-	"python.linting.enabled": true,
-	"python.linting.lintOnSave": true,
-	// python linting - pylint
-	"python.linting.pylintEnabled": true,
-	"python.linting.pylintArgs": [
-		"--rcfile",
-		"pyproject.toml"
-	],
-	"pylint.args": [
-		"--rcfile",
-		"pyproject.toml"
-	],
-	// python linting - pycodestyle
-	"python.linting.pycodestyleEnabled": true,
-	"python.linting.pycodestyleArgs": [
-		"--config-file",
-		"pyproject.toml"
-	],
-	// python linting - flake8
-	"python.linting.flake8Enabled": true,
-	// python linting - mypy
-	"python.linting.mypyEnabled": true,
-	"python.linting.mypyArgs": [
-		"--config-file",
-		"pyproject.toml",
-		"--no-pretty",
-	],
-	"mypy-type-checker.args": [
-		"--config-file",
-		"pyproject.toml",
-		"--no-pretty",
-	],
-	// python linting - pydocstyle
-	"python.linting.pydocstyleEnabled": true,
-	"python.linting.pydocstyleArgs": [
-		"--config",
-		"pyproject.toml"
-	],
-	// python linting - prospector
-	"python.linting.prospectorEnabled": false,
-	"python.linting.prospectorArgs": [],
-	// python linting - pylama
-	"python.linting.pylamaEnabled": false,
-	"python.linting.pylamaArgs": [],
-	// python linting - bandit
-	"python.linting.banditEnabled": true,
-	"python.linting.banditArgs": [
-		"--configfile",
-		"pyproject.toml"
-	],
-	// python testing
-	"python.testing.pytestEnabled": true,
-	"python.testing.pytestArgs": [
-		"tests"
-	],
-	"pythonTestExplorer.testFramework": "pytest",
-	"pythonTestExplorer.testplanEnabled": true,
-	// python linting - ruff
-	"ruff.args": [
-		"--config",
-		"pyproject.toml"
-	],
-	"ruff.fixAll": true
+  // git
+  "git.autorefresh": true,
+  "git.autofetch": true,
+  "git.fetchOnPull": true,
+  "git.pruneOnFetch": true,
+  "git.pullBeforeCheckout": true,
+  "git.branchProtection": [
+    "main",
+    "master"
+  ],
+  "git.inputValidationSubjectLength": null,
+  "git.mergeEditor": true,
+  "git.enableSmartCommit": true,
+  // github
+  "github.branchProtection": true,
+  "githubPullRequests.showPullRequestNumberInTree": true,
+  // schemas
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "devContainer.json"
+      ],
+      "url": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json"
+    }
+  ],
+  "yaml.schemaStore.enable": true,
+  "yaml.schemas": {
+    "https://squidfunk.github.io/mkdocs-material/schema.json": [
+      "mkdocs*.yml"
+    ],
+    "schema-file-filter-config.json": [
+      ".file-filter*.yml"
+    ]
+  },
+  // files
+  "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "CODEOWNERS": "ignore",
+    "*.mkdocsignore": "ignore",
+    ".pages": "yaml",
+    "*.env*": "properties",
+    "*.sarif": "json"
+  },
+  // editor
+  "editor.inlineSuggest.enabled": true,
+  "editor.detectIndentation": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  // formaters
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  // markdown
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  },
+  "markdown.extension.toc.slugifyMode": "github",
+  "markdown.extension.toc.updateOnSave": true,
+  "markdown.extension.toc.unorderedList.marker": "-",
+  "markdown.extension.tableFormatter.delimiterRowNoPadding": true,
+  "markdown.extension.tableFormatter.normalizeIndentation": true,
+  "markdown.extension.orderedList.marker": "one",
+  "markdown.extension.toc.levels": "2..6",
+  // python general
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+  },
+  "python.languageServer": "Pylance",
+  // https://code.visualstudio.com/docs/python/settings-reference
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  // python code analysis
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.typeCheckingMode": "basic",
+  // python formatting
+  "python.formatting.provider": "none",
+  "python.formatting.blackArgs": [
+    "--config",
+    "pyproject.toml"
+  ],
+  // https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter
+  "black-formatter.args": [
+    "--config",
+    "pyproject.toml"
+  ],
+  "isort.args": [
+    "--settings-path",
+    "pyproject.toml"
+  ],
+  "python.formatting.autopep8Args": [
+    "--global-config",
+    "pyproject.toml"
+  ],
+  "autopep8.args": [
+    "--global-config",
+    "pyproject.toml"
+  ],
+  // python linting
+  "python.linting.enabled": true,
+  "python.linting.lintOnSave": true,
+  // python linting - pylint
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": [
+    "--rcfile",
+    "pyproject.toml"
+  ],
+  "pylint.args": [
+    "--rcfile",
+    "pyproject.toml"
+  ],
+  // python linting - pycodestyle
+  "python.linting.pycodestyleEnabled": true,
+  "python.linting.pycodestyleArgs": [
+    "--config-file",
+    "pyproject.toml"
+  ],
+  // python linting - flake8
+  "python.linting.flake8Enabled": true,
+  // python linting - mypy
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyArgs": [
+    "--config-file",
+    "pyproject.toml",
+    "--no-pretty",
+  ],
+  "mypy-type-checker.args": [
+    "--config-file",
+    "pyproject.toml",
+    "--no-pretty",
+  ],
+  // python linting - pydocstyle
+  "python.linting.pydocstyleEnabled": true,
+  "python.linting.pydocstyleArgs": [
+    "--config",
+    "pyproject.toml"
+  ],
+  // python linting - prospector
+  "python.linting.prospectorEnabled": false,
+  "python.linting.prospectorArgs": [],
+  // python linting - pylama
+  "python.linting.pylamaEnabled": false,
+  "python.linting.pylamaArgs": [],
+  // python linting - bandit
+  "python.linting.banditEnabled": true,
+  "python.linting.banditArgs": [
+    "--configfile",
+    "pyproject.toml"
+  ],
+  // python testing
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "pythonTestExplorer.testFramework": "pytest",
+  "pythonTestExplorer.testplanEnabled": true,
+  // python linting - ruff
+  "ruff.args": [
+    "--config",
+    "pyproject.toml"
+  ],
+  "ruff.fixAll": true
 }

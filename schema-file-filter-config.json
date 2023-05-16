@@ -1,105 +1,105 @@
 {
-	"$schema": "https://json-schema.org/draft-07/schema",
-	"title": "mkdocs-file-filter-plugin config schema",
-	"type": "object",
-	"properties": {
-		"enabled": {
-			"title": "Enable plugin",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "boolean",
-			"default": true
-		},
-		"enabled_on_serve": {
-			"title": "Enable on serve",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "boolean",
-			"default": true
-		},
-		"only_doc_pages": {
-			"title": "Filter only documentation pages",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "boolean",
-			"default": false
-		},
-		"filter_nav": {
-			"title": "Remove navigation items based on excludes",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "boolean",
-			"default": true
-		},
-		"metadata_property": {
-			"title": "Metadata property name for Tags",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "string",
-			"default": "tags"
-		},
-		"mkdocsignore": {
-			"title": "Enable .mkdocsignore support",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "boolean",
-			"default": false
-		},
-		"mkdocsignore_file": {
-			"title": ".mkdocsignore file path",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "string",
-			"default": ".mkdocsignore",
-			"format": "path"
-		},
-		"exclude_glob": {
-			"title": "Globs to exclude",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"default": []
-		},
-		"exclude_regex": {
-			"title": "Regexes to exclude",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"default": []
-		},
-		"exclude_tag": {
-			"title": "Tags to exclude",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"default": []
-		},
-		"include_glob": {
-			"title": "Globs to include",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"default": []
-		},
-		"include_regex": {
-			"title": "Regexes to include",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"default": []
-		},
-		"include_tag": {
-			"title": "Tags to include",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
-			"type": "array",
-			"items": {
-				"type": "string"
-			},
-			"default": []
-		}
-	},
-	"additionalProperties": false
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "mkdocs-file-filter-plugin config schema",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "title": "Enable plugin",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "boolean",
+      "default": true
+    },
+    "enabled_on_serve": {
+      "title": "Enable on serve",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "boolean",
+      "default": true
+    },
+    "only_doc_pages": {
+      "title": "Filter only documentation pages",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "boolean",
+      "default": false
+    },
+    "filter_nav": {
+      "title": "Remove navigation items based on excludes",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "boolean",
+      "default": true
+    },
+    "metadata_property": {
+      "title": "Metadata property name for Tags",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "string",
+      "default": "tags"
+    },
+    "mkdocsignore": {
+      "title": "Enable .mkdocsignore support",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "boolean",
+      "default": false
+    },
+    "mkdocsignore_file": {
+      "title": ".mkdocsignore file path",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "string",
+      "default": ".mkdocsignore",
+      "format": "path"
+    },
+    "exclude_glob": {
+      "title": "Globs to exclude",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "exclude_regex": {
+      "title": "Regexes to exclude",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "exclude_tag": {
+      "title": "Tags to exclude",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "include_glob": {
+      "title": "Globs to include",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "include_regex": {
+      "title": "Regexes to include",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "include_tag": {
+      "title": "Tags to include",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#usage",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  },
+  "additionalProperties": false
 }

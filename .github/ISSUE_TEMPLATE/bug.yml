@@ -35,6 +35,14 @@ body:
       placeholder: This will be automatically formatted into code, so no need for backticks.
     validations:
       required: false
+  - type: input
+    id: self
+    attributes:
+      label: 🌌 Environment (plugin version)
+      description: What `mkdocs-file-filter-plugin` version are you running?
+      placeholder: 0.8.0
+    validations:
+      required: true
   - type: dropdown
     id: os
     attributes:
@@ -51,7 +59,7 @@ body:
     attributes:
       label: 🌌 Environment (Python)
       description: "What python version are you running? Get it with: `python --version`"
-      placeholder: 3.10.8
+      placeholder: 3.10.9
     validations:
       required: false
   - type: input
@@ -59,7 +67,7 @@ body:
     attributes:
       label: 🌌 Environment (MkDocs)
       description: "What mkdocs version are you running? Get it with: `mkdocs --version`"
-      placeholder: 1.4.0
+      placeholder: 1.4.3
     validations:
       required: false
   - type: textarea
@@ -90,7 +98,7 @@ body:
     id: terms
     attributes:
       label: 📜 Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/CODE_OF_CONDUCT.md)
+      description: By submitting this issue, you agree to follow our [`Code of Conduct`](https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/CODE_OF_CONDUCT.md)
       options:
         - label: I agree to follow this project's Code of Conduct.
           required: true

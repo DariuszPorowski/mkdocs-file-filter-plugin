@@ -1,23 +1,63 @@
-default_language_version:
-  python: python3.10
+default_install_hook_types:
+  - pre-commit
 
 default_stages: [commit, push]
 
 repos:
+  - repo: local
+    hooks:
+      - id: autoupdate
+        name: pre-commit autoupdate
+        entry: poetry run pre-commit autoupdate
+        language: system
+        pass_filenames: false
+        # files: .pre-commit-config.yaml
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-        exclude: (.github|mkdocs.*.yml)
-      - id: check-json
-        exclude: (.vscode|.devcontainer)
-      - id: check-toml
-      - id: debug-statements
-      - id: no-commit-to-branch
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-builtin-literals
       - id: check-case-conflict
       - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-json
+        exclude: ".vscode/|.devcontainer/"
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-vcs-permalinks
+      - id: check-xml
+      - id: check-yaml
+        exclude: "mkdocs(?:\\.[a-zA-Z]+)?\\.yml"
+      - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: "\\.svg$|\\.SVG$|\\.drawio$|\\.mmd$|\\.DRAWIO$|\\.MMD$"
+      - id: forbid-submodules
+      - id: no-commit-to-branch
+      - id: pretty-format-json
+        args:
+          - "--autofix"
+          - "--no-sort-keys"
+        exclude: ".vscode/|.devcontainer/"
+      - id: trailing-whitespace
+        exclude: "\\.svg$|\\.SVG$|\\.drawio$|\\.mmd$|\\.DRAWIO$|\\.MMD$"
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.16.3
+    hooks:
+      - id: gitleaks
+        args:
+          - --config
+          - ".github/linters/.gitleaks.toml"
+
+  - repo: https://gitlab.com/bmares/check-json5
+    rev: v1.0.0
+    hooks:
+      - id: check-json5
 
   - repo: local
     hooks:

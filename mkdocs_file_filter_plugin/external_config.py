@@ -35,7 +35,7 @@ class ExternalConfig:  # pylint: disable=too-few-public-methods
 
     def load(self, config_path: pathlib.Path) -> dict:
         """TODO."""
-        log.debug(f"Loading config file: {str(config_path.name)}")
+        log.debug(f"Loading config file: {config_path.name!s}")
         yaml.SafeLoader.add_constructor("!ENV", construct_env_tag)
         with pathlib.Path.open(config_path, encoding="utf-8") as config_file:
             config = yaml.safe_load(config_file) or {}

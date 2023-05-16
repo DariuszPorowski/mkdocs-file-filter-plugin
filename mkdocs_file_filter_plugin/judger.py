@@ -41,7 +41,7 @@ class Judger:
             if nev_section:
                 return MkDocsSection(
                     nav.title,
-                    nev_section,  # type: ignore [arg-type]  # noqa: PGH003
+                    nev_section,  # type: ignore [arg-type]
                 )
             log.debug(f"remove navigation section: {nav.title}")
             return None

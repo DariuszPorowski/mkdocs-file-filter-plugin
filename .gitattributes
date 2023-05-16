@@ -13,4 +13,5 @@
 # Common files config
 *.jpg -text
 *.png -text
+*.gif -text
 *.pdf -text
