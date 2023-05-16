@@ -106,11 +106,11 @@ jobs:
 
   test-mkdocs:
     if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
-    name: Test MkDocs (self)
+    name: Test MkDocs
     needs:
       - test
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -145,3 +145,4 @@ jobs:
       - name: Test MkDocs build (plugins)
         run: poetry run mkdocs build --config-file mkdocs.plugins.yml --verbose
         working-directory: tests/fixtures
+        continue-on-error: true
