@@ -14,7 +14,7 @@ class TestExternalConfig:
     @pytest.mark.parametrize(
         ("test_input", "expected"),
         [
-            ("tests/test_external_config_valid.yml", {"only_doc_pages": True}),
+            ("tests/fixtures/test_external_config_valid.yml", {"only_doc_pages": True}),
         ],
     )
     def test_load_external_config_valid(self, test_input: str, expected: dict) -> None:
@@ -26,7 +26,7 @@ class TestExternalConfig:
     @pytest.mark.parametrize(
         ("test_input", "expected"),
         [
-            ("tests/test_external_config_invalid.yml", "Wrong key 'foo' in {'foo': 'bar'}"),
+            ("tests/fixtures/test_external_config_invalid.yml", "Wrong key 'foo' in {'foo': 'bar'}"),
         ],
     )
     def test_load_external_config_invalid(self, test_input: str, expected: str) -> None:
