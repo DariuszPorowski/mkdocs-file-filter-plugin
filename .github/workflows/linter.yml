@@ -47,7 +47,11 @@ jobs:
           list-files: shell
 
       - name: Install Poetry
-        run: pipx install poetry
+        run: |
+          pipx install poetry
+          pipx inject poetry poetry-plugin-up
+          pipx inject poetry poetry-dynamic-versioning
+          pipx inject poetry poethepoet
 
       - name: Setup Python
         uses: actions/setup-python@v4
