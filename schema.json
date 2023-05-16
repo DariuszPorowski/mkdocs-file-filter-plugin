@@ -1,40 +1,40 @@
 {
-	"$schema": "https://json-schema.org/draft-07/schema",
-	"title": "mkdocs-file-filter-plugin schema",
-	"oneOf": [
-		{
-			"title": "mkdocs-file-filter-plugin",
-			"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md",
-			"enum": [
-				"file-filter"
-			]
-		},
-		{
-			"type": "object",
-			"properties": {
-				"file-filter": {
-					"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#configuration",
-					"type": "object",
-					"default": null,
-					"properties": {
-						"config": {
-							"title": "External config file path",
-							"markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#configuration",
-							"type": "string",
-							"default": null,
-							"format": "path"
-						}
-					},
-					"anyOf": [
-						{
-							"$ref": "https://raw.githubusercontent.com/DariuszPorowski/mkdocs-file-filter-plugin/main/schema-file-filter-config.json",
-							"additionalProperties": true
-						}
-					],
-					"additionalProperties": true
-				}
-			},
-			"additionalProperties": false
-		}
-	]
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "mkdocs-file-filter-plugin schema",
+  "oneOf": [
+    {
+      "title": "mkdocs-file-filter-plugin",
+      "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md",
+      "enum": [
+        "file-filter"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "file-filter": {
+          "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#configuration",
+          "type": "object",
+          "default": null,
+          "properties": {
+            "config": {
+              "title": "External config file path",
+              "markdownDescription": "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/blob/main/README.md#configuration",
+              "type": "string",
+              "default": null,
+              "format": "path"
+            }
+          },
+          "anyOf": [
+            {
+              "$ref": "https://raw.githubusercontent.com/DariuszPorowski/mkdocs-file-filter-plugin/main/schema-file-filter-config.json",
+              "additionalProperties": true
+            }
+          ],
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
 }

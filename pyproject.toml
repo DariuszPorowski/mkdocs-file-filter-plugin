@@ -3,7 +3,7 @@ name = "mkdocs-file-filter-plugin"
 version = "0.0.0"
 description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes, gitignore-style file and Markdown/Frontmatter tags metadata.'
 authors = [
-	"Dariusz Porowski <3431813+dariuszporowski@users.noreply.github.com>",
+  "Dariusz Porowski <3431813+dariuszporowski@users.noreply.github.com>",
 ]
 homepage = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
 repository = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin"
@@ -11,32 +11,32 @@ documentation = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/bl
 readme = "README.md"
 license = "MIT"
 keywords = [
-	"mkdocs",
-	"plugin",
-	"exclude",
-	"include",
-	"glob",
-	"regex",
-	"gitignore",
-	"markdown",
-	"frontmatter",
-	"metadata",
-	"tags",
+  "mkdocs",
+  "plugin",
+  "exclude",
+  "include",
+  "glob",
+  "regex",
+  "gitignore",
+  "markdown",
+  "frontmatter",
+  "metadata",
+  "tags",
 ]
 classifiers = [
-	"Development Status :: 3 - Alpha",
-	"Programming Language :: Python",
-	"Programming Language :: Python :: 3",
-	"Programming Language :: Python :: 3.8",
-	"Programming Language :: Python :: 3.9",
-	"Programming Language :: Python :: 3.10",
-	"Programming Language :: Python :: 3.11",
-	"Programming Language :: Python :: 3 :: Only",
-	"Operating System :: OS Independent",
-	"License :: OSI Approved :: MIT License",
-	"Intended Audience :: Developers",
-	"Intended Audience :: Information Technology",
-	"Topic :: Documentation",
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "Topic :: Documentation",
 ]
 packages = [{ include = "mkdocs_file_filter_plugin" }]
 
@@ -46,75 +46,206 @@ History = "https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/releases
 
 [tool.poetry.plugins."mkdocs.plugins"]
 file-filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
+file_filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0"
-mkdocs = "^1.4.2"
+mkdocs = "^1.4.3"
 igittigitt = "^2.1.2"
 schema = "^0.7.5"
 pyyaml = "^6.0"
 pyyaml-env-tag = "^0.1"
 
 [tool.poetry.group.dev.dependencies]
-mkdocs-material = "^9.1.5"
-mkdocs-awesome-pages-plugin = "^2.8.0"
-mkdocs-monorepo-plugin = "^1.0.4"
-mkdocs-literate-nav = "^0.6.0"
+mkdocs-material = "^9.1.12"
+mkdocs-awesome-pages-plugin = "^2.9.1"
 mkdocs-exclude-unused-files = "^1.1.0"
-pytest = "^7.2.2"
-autopep8 = "^2.0.2"
-black = "^23.3.0"
-pre-commit = "^3.2.2"
 isort = "^5.12.0"
+black = "^23.3.0"
+pylint = "^2.17.4"
 flake8 = "^6.0.0"
+mypy = "^1.3.0"
+mypy-extensions = "^1.0.0"
+pydocstyle = "^6.3.0"
 bandit = "^1.7.5"
-ruff = "^0.0.261"
-pyupgrade = "^3.3.1"
-mypy = "^1.2.0"
-types-pyyaml = "^6.0.12.9"
-types-setuptools = "^67.6.0.7"
-poetry-plugin-up = { extras = ["plugin"], version = "^0.3.0" }
-poetry-dynamic-versioning = { extras = ["plugin"], version = "^0.21.4" }
+pytest = "^7.3.1"
+pytest-cov = "^4.0.0"
+pre-commit = "^3.3.1"
+ruff = "^0.0.267"
+pyupgrade = "^3.4.0"
 
 [tool.poetry.plugins."poetry-plugin-up"]
 # https://github.com/MousaZeidBaker/poetry-plugin-up#usage
 
 [tool.poetry-dynamic-versioning]
 # https://github.com/mtkennerly/poetry-dynamic-versioning#configuration
-enable = true
+enable = false
 style = "semver"
 vcs = "git"
 bump = true
 
-[tool.black]
-# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
-target-version = ["py310"]
-line-length = 120
+[tool.poe.tasks]
+# https://github.com/nat-n/poethepoet
+test = "poetry run pytest -c pyproject.toml --junit-xml=report-junit.xml --cov-report term-missing --cov-report=html --cov-report=xml --cov-report=lcov --cov=mkdocs_file_filter_plugin tests/"
+install = "poetry install --without=dev --verbose"
+build = "poetry build --verbose"
+isort-check = "poetry run isort --settings-path pyproject.toml --check-only ."
+isort-fix = "poetry run isort --settings-path pyproject.toml"
+black-check = "poetry run black --config pyproject.toml --check ."
+black-fix = "poetry run black --config pyproject.toml ."
+pylint = "poetry run pylint --rcfile pyproject.toml ."
+flake8 = "poetry run flake8 --count ."
+mypy = "poetry run mypy --config-file pyproject.toml --install-types --non-interactive ."
+mypy-pre-commit = "poetry run mypy --config-file pyproject.toml --install-types --non-interactive"
+pydocstyle = "poetry run pydocstyle --config pyproject.toml --count ."
+bandit = "poetry run bandit --configfile pyproject.toml --recursive ."
+bandit-pre-commit = "poetry run bandit --configfile pyproject.toml --recursive"
+ruff-check = "poetry run ruff check --config pyproject.toml --no-fix ."
+ruff-fix = "poetry run ruff check --config pyproject.toml --fix ."
+pre-commit-update = "poetry run pre-commit autoupdate"
+pre-commit-all = "poetry run pre-commit run --all-files"
+pyupgrade = "poetry run pyupgrade --py38-plus"
+
+[tool.poe.tasks.clean-win]
+shell = "Remove-Item -Path @('dist', 'build', 'site', 'htmlcov', 'coverage.lcov', 'coverage.xml', '.coverage') -Recurse -Force -ErrorAction SilentlyContinue"
+interpreter = "pwsh"
+
+[tool.poe.tasks.clean-linux]
+shell = "rm -rf dist build site htmlcov coverage.lcov coverage.xml .coverage"
+interpreter = "posix"
 
 [tool.isort]
 # https://pycqa.github.io/isort/docs/configuration/options.html
-py_version = 310
+py_version = 38
 profile = "black"
+
+[tool.black]
+# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
+target-version = ["py38"]
+line-length = 120
+
+[tool.pylint]
+# https://pylint.readthedocs.io/en/latest/user_guide/configuration/all-options.html
+py-version = "3.8"
+ignore = [".venv"]
+max-line-length = 120
+recursive = true
+
+[tool.pydocstyle]
+# https://www.pydocstyle.org/en/stable/usage.html#available-options
+convention = "google"
+
+[tool.mypy]
+# https://mypy.readthedocs.io/en/stable/config_file.html
+python_version = "3.8"
+exclude = ["setup.py", ".venv"]
+disallow_any_unimported = true
+show_column_numbers = true
+show_error_context = true
+pretty = true
+explicit_package_bases = true
+ignore_missing_imports = true
+follow_imports = "silent"
 
 [tool.bandit]
 # https://bandit.readthedocs.io/en/latest/config.html#bandit-settings
 exclude_dirs = [".venv"]
 
+[tool.bandit.assert_used]
+skips = ["*/test_*.py"]
+
 [tool.ruff]
 # https://beta.ruff.rs/docs/settings/
-target-version = "py310"
-exclude = [".venv"]
-line-length = 120
+# select = ["ALL"]
 
-[tool.mypy]
-# https://mypy.readthedocs.io/en/stable/config_file.html
-python_version = "3.10"
-files = "**/*.py"
-exclude = ['/setup\.py$']
+select = [
+  "F",
+  "E",
+  "W",
+  "C90",
+  "I",
+  "N",
+  "D",
+  "UP",
+  "YTT",
+  "ANN",
+  "S",
+  "BLE",
+  "FBT",
+  "B",
+  "A",
+  "COM",
+  "C4",
+  "DTZ",
+  "T10",
+  "DJ",
+  "EM",
+  "EXE",
+  "ISC",
+  "ICN",
+  "G",
+  "INP",
+  "PIE",
+  "T20",
+  "PYI",
+  "PT",
+  "Q",
+  "RSE",
+  "RET",
+  "SLF",
+  "SIM",
+  "TID",
+  "TCH",
+  "INT",
+  "ARG",
+  "PTH",
+  "ERA",
+  "PD",
+  "PGH",
+  "PL",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "TRY",
+  "NPY",
+  "RUF",
+]
+line-length = 120
+target-version = "py38"
+ignore = ["ANN101"]
+fix = false
+force-exclude = true
+format = "grouped"
+show-fixes = true
+
+[tool.ruff.pycodestyle]
+max-doc-length = 120
+
+[tool.ruff.pydocstyle]
+# Use Google-style docstrings.
+convention = "google"
+
+[tool.ruff.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.autopep8]
+max_line_length = 120
+in-place = true
+recursive = true
+aggressive = 3
+exclude_globs = [".venv"]
 
 [tool.pyright]
+# https://microsoft.github.io/pyright/#/configuration
 venvPath = ".venv"
 
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+junit_family = "xunit2"
+junit_log_passing_tests = true
+junit_logging = "all"
+
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+requires = ["poetry-core>=1.3.0", "poetry-dynamic-versioning"]
 build-backend = "poetry_dynamic_versioning.backend"

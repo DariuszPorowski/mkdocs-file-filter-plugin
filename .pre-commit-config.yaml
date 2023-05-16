@@ -1,65 +1,69 @@
-default_language_version:
-  python: python3.10
+default_install_hook_types:
+  - pre-commit
 
 default_stages: [commit, push]
 
 repos:
+  - repo: local
+    hooks:
+      - id: autoupdate
+        name: pre-commit autoupdate
+        entry: poetry run pre-commit autoupdate
+        language: system
+        pass_filenames: false
+        # files: .pre-commit-config.yaml
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      # - id: check-yaml
-      # - id: check-json
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-json
+        exclude: ".vscode/|.devcontainer/"
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
       - id: check-toml
+      - id: check-vcs-permalinks
+      - id: check-xml
+      - id: check-yaml
+        exclude: "mkdocs(?:\\.[a-zA-Z]+)?\\.yml"
       - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: "\\.svg$|\\.SVG$|\\.drawio$|\\.mmd$|\\.DRAWIO$|\\.MMD$"
+      - id: forbid-submodules
       - id: no-commit-to-branch
+      - id: pretty-format-json
+        args:
+          - "--autofix"
+          - "--no-sort-keys"
+        exclude: ".vscode/|.devcontainer/"
+      - id: trailing-whitespace
+        exclude: "\\.svg$|\\.SVG$|\\.drawio$|\\.mmd$|\\.DRAWIO$|\\.MMD$"
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.16.3
+    hooks:
+      - id: gitleaks
+        args:
+          - --config
+          - ".github/linters/.gitleaks.toml"
+
+  - repo: https://gitlab.com/bmares/check-json5
+    rev: v1.0.0
+    hooks:
+      - id: check-json5
 
   - repo: local
     hooks:
       - id: pyupgrade
         name: pyupgrade
-        entry: poetry run pyupgrade --py38-plus
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: mypy
-        name: mypy
-        entry: poetry run mypy --config-file pyproject.toml
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: isort
-        name: isort
-        entry: poetry run isort --settings-path pyproject.toml
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: black
-        name: black
-        entry: poetry run black --config pyproject.toml
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: flake8
-        name: flake8
-        entry: poetry run flake8
-        types: [python]
-        language: system
-
-  - repo: local
-    hooks:
-      - id: bandit
-        name: bandit
-        entry: poetry run bandit --configfile pyproject.toml --recursive
+        entry: poetry poe pyupgrade
         types: [python]
         language: system
 
@@ -67,6 +71,62 @@ repos:
     hooks:
       - id: ruff
         name: ruff
-        entry: poetry run ruff
+        entry: poetry poe ruff-fix
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: poetry poe isort-fix
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: poetry poe black-fix
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: poetry poe flake8
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: pydocstyle
+        name: pydocstyle
+        entry: poetry poe pydocstyle
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: poetry poe mypy-pre-commit
+        types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: poetry poe pylint
+        language: system
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: bandit
+        name: bandit
+        entry: poetry poe bandit-pre-commit
         types: [python]
         language: system

@@ -1,60 +1,33 @@
-	{ // See https://go.microsoft.com/fwlink/?LinkId=733558
-		// for the documentation about the tasks.json format
-		"version": "2.0.0",
-		"tasks": [
-			{
-				"label": "Clenup venv",
-				"type": "shell",
-				"command": "rm -rf .venv && poetry env remove --all",
-				"group": "none",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			},
-			{
-				"label": "Run ruff",
-				"type": "shell",
-				"command": "poetry run ruff check .",
-				"group": "none",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			},
-			{
-				"label": "Run build",
-				"type": "shell",
-				"command": "poetry build --verbose",
-				"group": "build",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			},
-			{
-				"label": "Reinstall local package",
-				"type": "shell",
-				"command": "pip uninstall -y mkdocs_file_filter_plugin && pip install -e .",
-				"group": "test",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			},
-			{
-				"label": "Run mkdocs serve",
-				"type": "shell",
-				"command": "poetry run mkdocs serve --verbose",
-				"group": "test",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			},
-			{
-				"label": "Run mkdocs build",
-				"type": "shell",
-				"command": "poetry run mkdocs build --verbose",
-				"group": "test",
-				"options": {
-					"cwd": "${workspaceFolder}"
-				}
-			}
-		]
-	}
+  { // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Clenup venv",
+        "type": "shell",
+        "command": "rm -rf .venv && poetry env remove --all",
+        "group": "none",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        }
+      },
+      {
+        "label": "Run mkdocs serve",
+        "type": "shell",
+        "command": "poetry run mkdocs serve --verbose",
+        "group": "test",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        }
+      },
+      {
+        "label": "Run mkdocs build",
+        "type": "shell",
+        "command": "poetry run mkdocs build --verbose",
+        "group": "test",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        }
+      }
+    ]
+  }

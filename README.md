@@ -2,10 +2,10 @@
 
 [![PyPI - version][pypi-version-image]][pypi-version-link]
 [![PyPI - python version][pypi-pyversions-image]][pypi-pyversions-link]
-[![PyPI - python version][pypi-downloads-image]][pypi-downloads-link]
+[![PyPI - downloads][pypi-stats-image]][pypi-stats-link]
 [![GitHub - ci][github-ci-image]][github-ci-link]
 
-> :exclamation: **This plugin is under early Alpha stage.** Significant changes may occur. It may not yet be fully compatible with other MkDocs configurations and thus may break with some advanced configs. Once these have been resolved and all bugs have been ironed out, it will be moved to an upper stage.
+> ❗ **This plugin is under early Alpha stage.** Significant changes may occur. It may not yet be fully compatible with other MkDocs configurations and thus may break with some advanced configs. Once these have been resolved and all bugs have been ironed out, it will be moved to an upper stage.
 
 ---
 
@@ -96,7 +96,7 @@ plugins:
         - released
 ```
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > If you have no `plugins` entry in your config file yet, you'll likely also want to add the `search` plugin. MkDocs enables it by default if there is no `plugins` entry set, but now you have to enable it explicitly.
 >
@@ -115,7 +115,7 @@ plugins:
       # config: path/to/config/file/.file-filter.yml
 ```
 
-> :bulb: **HINT**
+> 💡 **HINT**
 >
 > For external file config, you can use [MkDocs Environment Variables][mkdocs-envs] to set the desired file dynamically. A useful case for serving the site with different content based on stage/environment/etc. Works well with CI/CD automation.
 
@@ -146,7 +146,7 @@ include_tag:
   - prod
 ```
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > - External config uses exactly the same properties as plugin's config in the `mkdocs.yml` except `config` property.
 >
@@ -156,26 +156,26 @@ include_tag:
 
 The below table shows all supported options by the plugin.
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `config` | string | *none* | Path to external plugin's configuration file |
-| `enabled` | bool | `true` | Turn on/off plugin without removing/adding plugin's config from `mkdocs.yml` |
-| `enabled_on_serve` | bool | `true` | Turn on/off plugin on `serve` command |
-| `only_doc_pages` | bool | `false` | Filtering limited only to the documentation pages (markdown files), the rest included by default. |
-| `filter_nav` | bool | `true` | Remove `nav` items pointed to excluded files |
-| `mkdocsignore` | bool | `false` | Use gitignore-style file for patterns |
-| `mkdocsignore_file` | string | `.mkdocsignore` | Path to gitignore-style file with patterns |
-| `metadata_property` | string | `tags` | What Markdown/FrontMatter metadata property list will be used for checking keywords |
-| `exclude_tag` | [string] | *none* | List of excluded tags |
-| `include_tag` | [string] | *none* | List of included tags |
-| `exclude_glob` | [string] | *none* | Exclude glob patterns |
-| `include_glob` | [string] | *none* | Include glob patterns |
-| `exclude_regex` | [string] | *none* | Exclude regex patterns |
-| `include_regex` | [string] | *none* | Include regex patterns |
+| Option              | Type     | Default         | Description                                                                                       |
+|---------------------|----------|-----------------|---------------------------------------------------------------------------------------------------|
+| `config`            | string   | *none*          | Path to external plugin's configuration file                                                      |
+| `enabled`           | bool     | `true`          | Turn on/off plugin without removing/adding plugin's config from `mkdocs.yml`                      |
+| `enabled_on_serve`  | bool     | `true`          | Turn on/off plugin on `serve` command                                                             |
+| `only_doc_pages`    | bool     | `false`         | Filtering limited only to the documentation pages (markdown files), the rest included by default. |
+| `filter_nav`        | bool     | `true`          | Remove `nav` items pointed to excluded files                                                      |
+| `mkdocsignore`      | bool     | `false`         | Use gitignore-style file for patterns                                                             |
+| `mkdocsignore_file` | string   | `.mkdocsignore` | Path to gitignore-style file with patterns                                                        |
+| `metadata_property` | string   | `tags`          | What Markdown/FrontMatter metadata property list will be used for checking keywords               |
+| `exclude_tag`       | [string] | *none*          | List of excluded tags                                                                             |
+| `include_tag`       | [string] | *none*          | List of included tags                                                                             |
+| `exclude_glob`      | [string] | *none*          | Exclude glob patterns                                                                             |
+| `include_glob`      | [string] | *none*          | Include glob patterns                                                                             |
+| `exclude_regex`     | [string] | *none*          | Exclude regex patterns                                                                            |
+| `include_regex`     | [string] | *none*          | Include regex patterns                                                                            |
 
 ## Usage
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > - If you do not provide patterns, everything will stay the same - standard MkDocs behavior - include all.
 >
@@ -200,7 +200,7 @@ plugins:
 
 **RESULT:** exclude all content from `drafts` and related subdirectories, but include all markdown files with prefix starting `preview` from `drafts` and related subdirectories.
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > **Glob** patterns relative to your [docs_dir][mkdocs-docs-dir] setting from `mkdocs.yml`
 
@@ -219,7 +219,7 @@ plugins:
 
 **RESULT:** exclude all files with `tmp`, `bin` or `tar` extension and include all files with `js`, or `css` extension.
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > **Regex** patterns relative to your [docs_dir][mkdocs-docs-dir] setting from `mkdocs.yml`
 
@@ -365,7 +365,7 @@ docs/**/draft-*.md
 
 **RESULT:** exclude all content from `docs/test` and related subdirectories and all markdown files with prefix starting `draft` from `docs` and related subdirectories.
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > **.mkdocsignore** patterns relative to your root.
 
@@ -416,7 +416,7 @@ Nav **results** with `filter_nav: true`:
 - Xyz: path/xyz.md
 ```
 
-> :warning: **NOTE**
+> ⚠️ **NOTE**
 >
 > If you use any other 3rd-party plugins that modify navigation (e.g., [mkdocs-awesome-pages-plugin][mkdocs-awesome-pages-plugin-pypi]) - first, test and evaluate expected behavior. Plugin configuration order may impact results.
 >
@@ -485,8 +485,8 @@ plugins:
 [pypi-version-link]: https://pypi.org/project/mkdocs-file-filter-plugin
 [pypi-pyversions-image]: https://img.shields.io/pypi/pyversions/mkdocs-file-filter-plugin?style=flat-square
 [pypi-pyversions-link]: https://pypi.org/project/mkdocs-file-filter-plugin
-[pypi-downloads-image]: https://img.shields.io/pypi/dm/mkdocs-file-filter-plugin?style=flat-square
-[pypi-downloads-link]: https://pypi.org/project/mkdocs-file-filter-plugin
+[pypi-stats-image]: https://img.shields.io/pypi/dm/mkdocs-file-filter-plugin?style=flat-square
+[pypi-stats-link]: https://pypistats.org/packages/mkdocs-file-filter-plugin
 [github-ci-image]: https://img.shields.io/github/actions/workflow/status/DariuszPorowski/mkdocs-file-filter-plugin/workflow.ci.yml?style=flat-square&branch=main&event=push
 [github-ci-link]: https://github.com/DariuszPorowski/mkdocs-file-filter-plugin/actions/workflows/workflow.ci.yml?query=branch%3Amain+event%3Apush
 [mkdocs-plugins]: http://www.mkdocs.org/user-guide/plugins

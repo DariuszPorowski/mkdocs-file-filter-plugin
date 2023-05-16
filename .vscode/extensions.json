@@ -1,16 +1,27 @@
 {
-	// See http://go.microsoft.com/fwlink/?LinkId=827846
-	// for the documentation about the extensions.json format
-	"recommendations": [
-		// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
-		"EditorConfig.EditorConfig",
-		"GitHub.vscode-pull-request-github",
-		"ms-vscode-remote.vscode-remote-extensionpack",
-		"ms-vscode-remote.remote-containers",
-		"ms-python.python",
-		"ms-python.vscode-pylance",
-		"ms-python.isort",
-		"yzhang.markdown-all-in-one",
-		"charliermarsh.ruff"
-	]
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+    // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+    "editorconfig.editorconfig",
+    "github.vscode-pull-request-github",
+    "ms-vscode-remote.vscode-remote-extensionpack",
+    "ms-vscode-remote.remote-containers",
+    "ms-python.python",
+    "ms-python.isort",
+    "ms-python.vscode-pylance",
+    "ms-python.pylint",
+    "ms-python.black-formatter",
+    "ms-python.flake8",
+    "ms-python.mypy-type-checker",
+    "yzhang.markdown-all-in-one",
+    "charliermarsh.ruff",
+    "donjayamanne.python-environment-manager",
+    "littlefoxteam.vscode-python-test-adapter",
+    "donjayamanne.git-extension-pack",
+    "visualstudioexptteam.vscodeintellicode",
+    "ms-azuretools.vscode-docker",
+    "redhat.vscode-yaml",
+    "github.remotehub"
+  ]
 }

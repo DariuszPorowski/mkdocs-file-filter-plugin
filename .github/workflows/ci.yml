@@ -1,0 +1,148 @@
+---
+name: CI
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - "poetry.lock"
+      - "poetry.toml"
+      - "pyproject.toml"
+      - "tests/**"
+      - "schema*.json"
+  pull_request:
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+    types:
+      - opened
+      - ready_for_review
+      - synchronize
+      - reopened
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - "poetry.lock"
+      - "poetry.toml"
+      - "pyproject.toml"
+      - "tests/**"
+      - "schema*.json"
+
+# Allow one concurrent
+concurrency:
+  group: ${{ format('{0}-{1}-{2}-{3}-{4}', github.workflow, github.event_name, github.ref || github.event.client_payload.ref, github.base_ref, github.head_ref) }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
+    name: Test
+    permissions:
+      issues: read
+      checks: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+          pipx inject poetry poetry-plugin-up
+          pipx inject poetry poetry-dynamic-versioning
+          pipx inject poetry poethepoet
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version-file: .python-version
+          cache: poetry
+
+      - name: Install dependencies
+        run: poetry install --verbose
+
+      - name: Run PyTest
+        run: poetry poe test
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Publish Test Results
+        uses: dorny/test-reporter@v1
+        if: ${{ always() }}
+        with:
+          name: test-results
+          path: "*-junit.xml"
+          reporter: java-junit
+
+      # - name: Write LCOV Report to Job Summary
+      #   uses: livewing/lcov-job-summary@v1
+      #   with:
+      #     lcov: coverage.lcov
+
+      # - name: Write LCOV Report to PR as comment
+      #   uses: romeovs/lcov-reporter-action@master
+      #   with:
+      #     github-token: ${{ github.token }}
+      #     lcov-file: coverage.lcov
+      #     delete-old-comments: true
+      #     title: Code Coverage Report
+
+      - name: Upload Test and Coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test and Coverage Results
+          path: |
+            *-junit.xml
+            coverage.xml
+            coverage.lcov
+            htmlcov/*
+
+  test-mkdocs:
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && !github.event.pull_request.draft) }}
+    name: Test MkDocs
+    needs:
+      - test
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+          pipx inject poetry poetry-plugin-up
+          pipx inject poetry poetry-dynamic-versioning
+          pipx inject poetry poethepoet
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: poetry
+
+      - name: Install dependencies
+        run: poetry install --verbose
+
+      - name: Test Build
+        run: poetry build --verbose
+
+      - name: Test MkDocs build (self)
+        run: poetry run mkdocs build --config-file mkdocs.yml --verbose
+        working-directory: tests/fixtures
+
+      - name: Test MkDocs build (plugins)
+        run: poetry run mkdocs build --config-file mkdocs.plugins.yml --verbose
+        working-directory: tests/fixtures
+        continue-on-error: true
