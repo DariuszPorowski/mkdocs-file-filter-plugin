@@ -861,19 +861,19 @@ wcmatch = ">=7"
 
 [[package]]
 name = "mkdocs-exclude-unused-files"
-version = "1.1.0"
+version = "1.2.1"
 description = "A mkdocs plugin that excludes assets that are unused (orphaned) from being included in the final mkdocs output."
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8.1,<4.0"
 files = [
-    {file = "mkdocs-exclude-unused-files-1.1.0.tar.gz", hash = "sha256:c1e83ccbf6ba2e29f6be0180a12417856d1542cfa1c44e609adfe2e2412b259f"},
-    {file = "mkdocs_exclude_unused_files-1.1.0-py3-none-any.whl", hash = "sha256:9388c7f31dd2b4966658648eff33f9618bda8aa6b05f4004f3689f72ea352062"},
+    {file = "mkdocs_exclude_unused_files-1.2.1-py3-none-any.whl", hash = "sha256:d174a27d4b438057980f9b3b423206fe00ba17077866d31b6d723bd463a6d83e"},
+    {file = "mkdocs_exclude_unused_files-1.2.1.tar.gz", hash = "sha256:ab20c61d60314935f22f60ac4f7113c8d865bad9c9ad7b70827870041d9e5cde"},
 ]
 
 [package.dependencies]
-beautifulsoup4 = "*"
-mkdocs = "*"
+beautifulsoup4 = ">=4.12.2,<5.0.0"
+mkdocs = ">=1.4.3,<2.0.0"
 
 [[package]]
 name = "mkdocs-material"
