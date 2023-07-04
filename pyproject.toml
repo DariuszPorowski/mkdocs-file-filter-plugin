@@ -71,7 +71,7 @@ bandit = "^1.7.5"
 pytest = "^7.3.1"
 pytest-cov = "^4.0.0"
 pre-commit = "^3.3.1"
-ruff = ">=0.0.267,<0.0.271"
+ruff = ">=0.0.267,<0.0.277"
 pyupgrade = "^3.4.0"
 
 [tool.poetry.plugins."poetry-plugin-up"]
