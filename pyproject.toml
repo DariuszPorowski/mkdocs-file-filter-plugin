@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-file-filter-plugin"
-version = "0.0.9-pre.9+8593da5"
+version = "0.0.0"
 description = 'A MkDocs plugin that lets you exclude/include docs files using globs, regexes, gitignore-style file and Markdown/Frontmatter tags metadata.'
 authors = [
   "Dariusz Porowski <3431813+dariuszporowski@users.noreply.github.com>",
@@ -79,7 +79,7 @@ pyupgrade = "^3.9.0"
 
 [tool.poetry-dynamic-versioning]
 # https://github.com/mtkennerly/poetry-dynamic-versioning#configuration
-enable = false
+enable = true
 style = "semver"
 vcs = "git"
 bump = true
