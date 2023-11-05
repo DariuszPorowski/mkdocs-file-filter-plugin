@@ -2,13 +2,10 @@
 
 import logging
 
-from mkdocs.utils import warning_filter
-
 # ------------------------------------------
 # Logging
 # ------------------------------------------
 log = logging.getLogger("mkdocs.plugins." + __name__)
-log.addFilter(warning_filter)
 
 PLUGIN_LABEL = "FILE-FILTER"
 

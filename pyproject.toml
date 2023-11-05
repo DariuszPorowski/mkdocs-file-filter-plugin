@@ -31,6 +31,7 @@ classifiers = [
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3 :: Only",
   "Operating System :: OS Independent",
   "License :: OSI Approved :: MIT License",
@@ -50,29 +51,29 @@ file_filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0"
-mkdocs = "^1.4.3"
+mkdocs = "^1.5.3"
 igittigitt = "^2.1.4"
 schema = "^0.7.5"
-pyyaml = ">=5.1,<7"
+pyyaml = "^6.0.1"
 pyyaml-env-tag = "^0.1"
 
 [tool.poetry.group.dev.dependencies]
-mkdocs-material = "^9.1.19"
-mkdocs-awesome-pages-plugin = "^2.9.1"
+mkdocs-material = "^9.4.8"
+mkdocs-awesome-pages-plugin = "^2.9.2"
 mkdocs-exclude-unused-files = "^1.2.1"
 isort = "^5.12.0"
-black = "^23.7.0"
-pylint = "^2.17.4"
-flake8 = "^6.0.0"
-mypy = "^1.4.1"
+black = "^23.10.1"
+pylint = "^3.0.2"
+flake8 = "^6.1.0"
+mypy = "^1.6.1"
 mypy-extensions = "^1.0.0"
 pydocstyle = "^6.3.0"
 bandit = "^1.7.5"
-pytest = "^7.4.0"
+pytest = "^7.4.3"
 pytest-cov = "^4.1.0"
-pre-commit = "^3.3.3"
-ruff = ">=0.0.280,<0.0.283"
-pyupgrade = "^3.9.0"
+pre-commit = "^3.5.0"
+ruff = "^0.1.4"
+pyupgrade = "^3.15.0"
 
 [tool.poetry.plugins."poetry-plugin-up"]
 # https://github.com/MousaZeidBaker/poetry-plugin-up#usage
@@ -155,7 +156,7 @@ exclude_dirs = [".venv"]
 skips = ["*/test_*.py"]
 
 [tool.ruff]
-# https://beta.ruff.rs/docs/settings/
+# https://docs.astral.sh/ruff/settings/
 # select = ["ALL"]
 
 select = [
@@ -216,7 +217,7 @@ target-version = "py38"
 ignore = ["ANN101"]
 fix = false
 force-exclude = true
-format = "grouped"
+output-format = "github"
 show-fixes = true
 
 [tool.ruff.pycodestyle]
@@ -247,5 +248,5 @@ junit_log_passing_tests = true
 junit_logging = "all"
 
 [build-system]
-requires = ["poetry-core>=1.3.0", "poetry-dynamic-versioning"]
+requires = ["poetry-core>=1.8.1", "poetry-dynamic-versioning"]
 build-backend = "poetry_dynamic_versioning.backend"
