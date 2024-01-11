@@ -30,7 +30,7 @@ jobs:
           pipx inject poetry poethepoet
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
           cache: poetry
@@ -47,7 +47,7 @@ jobs:
           PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
 
       - name: Upload build to artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: plugin
           path: |

@@ -57,7 +57,7 @@ jobs:
           pipx inject poetry poethepoet
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
           cache: poetry
@@ -95,7 +95,7 @@ jobs:
       #     title: Code Coverage Report
 
       - name: Upload Test and Coverage results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Test and Coverage Results
           path: |
@@ -127,7 +127,7 @@ jobs:
           pipx inject poetry poethepoet
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: poetry
