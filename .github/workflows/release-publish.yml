@@ -47,7 +47,7 @@ jobs:
           PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
 
       - name: Upload build to artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: plugin
           path: |
