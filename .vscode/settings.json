@@ -78,7 +78,7 @@
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     },
   },
   "python.languageServer": "Pylance",
@@ -169,7 +169,7 @@
   "pythonTestExplorer.testFramework": "pytest",
   "pythonTestExplorer.testplanEnabled": true,
   // python linting - ruff
-  "ruff.args": [
+  "ruff.lint.args": [
     "--config",
     "pyproject.toml"
   ],
