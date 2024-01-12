@@ -27,7 +27,6 @@ classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -50,7 +49,7 @@ file-filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
 file_filter = "mkdocs_file_filter_plugin.plugin:FileFilter"
 
 [tool.poetry.dependencies]
-python = ">=3.8.1,<4.0"
+python = ">=3.9,<4.0"
 mkdocs = "^1.5.3"
 igittigitt = "^2.1.4"
 schema = "^0.7.5"
@@ -58,21 +57,21 @@ pyyaml = "^6.0.1"
 pyyaml-env-tag = "^0.1"
 
 [tool.poetry.group.dev.dependencies]
-mkdocs-material = "^9.4.8"
+mkdocs-material = "^9.5.3"
 mkdocs-awesome-pages-plugin = "^2.9.2"
 mkdocs-exclude-unused-files = "^1.2.1"
-isort = "^5.12.0"
-black = "^23.10.1"
-pylint = "^3.0.2"
-flake8 = ">=6.1,<8.0"
-mypy = "^1.6.1"
+isort = "^5.13.2"
+black = "^23.12.1"
+pylint = "^3.0.3"
+flake8 = "^7.0.0"
+mypy = "^1.8.0"
 mypy-extensions = "^1.0.0"
 pydocstyle = "^6.3.0"
-bandit = "^1.7.5"
-pytest = "^7.4.3"
+bandit = "^1.7.6"
+pytest = "^7.4.4"
 pytest-cov = "^4.1.0"
-pre-commit = "^3.5.0"
-ruff = "^0.1.4"
+pre-commit = "^3.6.0"
+ruff = "^0.1.12"
 pyupgrade = "^3.15.0"
 
 [tool.poetry.plugins."poetry-plugin-up"]
@@ -105,7 +104,7 @@ ruff-check = "poetry run ruff check --config pyproject.toml --no-fix ."
 ruff-fix = "poetry run ruff check --config pyproject.toml --fix ."
 pre-commit-update = "poetry run pre-commit autoupdate"
 pre-commit-all = "poetry run pre-commit run --all-files"
-pyupgrade = "poetry run pyupgrade --py38-plus"
+pyupgrade = "poetry run pyupgrade --py39-plus"
 
 [tool.poe.tasks.clean-win]
 shell = "Remove-Item -Path @('dist', 'build', 'site', 'htmlcov', 'coverage.lcov', 'coverage.xml', '.coverage') -Recurse -Force -ErrorAction SilentlyContinue"
@@ -117,17 +116,17 @@ interpreter = "posix"
 
 [tool.isort]
 # https://pycqa.github.io/isort/docs/configuration/options.html
-py_version = 38
+py_version = 39
 profile = "black"
 
 [tool.black]
 # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
-target-version = ["py38"]
+target-version = ["py39"]
 line-length = 120
 
 [tool.pylint]
 # https://pylint.readthedocs.io/en/latest/user_guide/configuration/all-options.html
-py-version = "3.8"
+py-version = "3.9"
 ignore = [".venv"]
 max-line-length = 120
 recursive = true
@@ -138,7 +137,7 @@ convention = "google"
 
 [tool.mypy]
 # https://mypy.readthedocs.io/en/stable/config_file.html
-python_version = "3.8"
+python_version = "3.9"
 exclude = ["setup.py", ".venv"]
 disallow_any_unimported = true
 show_column_numbers = true
@@ -213,7 +212,7 @@ select = [
   "RUF",
 ]
 line-length = 120
-target-version = "py38"
+target-version = "py39"
 ignore = ["ANN101"]
 fix = false
 force-exclude = true
