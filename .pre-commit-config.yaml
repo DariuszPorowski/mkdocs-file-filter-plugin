@@ -47,7 +47,7 @@ repos:
         exclude: "\\.svg$|\\.SVG$|\\.drawio$|\\.mmd$|\\.DRAWIO$|\\.MMD$"
 
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.18.1
+    rev: v8.18.2
     hooks:
       - id: gitleaks
         args:
