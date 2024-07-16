@@ -19,8 +19,8 @@
 only_doc_pages: true
 # mkdocsignore: true
 exclude_glob:
-  - "**\\draft-*.md"
-  - "**\\preview-*.md"
+  - "**/draft-*.md"
+  - "**/preview-*.md"
 include_tag:
   - released
   - public preview
