@@ -1,3 +1,4 @@
+---
 # mkdocsignore: false
 # include_glob:
 #   - "test/test.md"
@@ -16,7 +17,7 @@
 #   - released
 
 only_doc_pages: true
-mkdocsignore: true
+# mkdocsignore: true
 exclude_glob:
   - "**/draft-*.md"
   - "**/preview-*.md"
