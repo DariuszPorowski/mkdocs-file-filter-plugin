@@ -1,11 +1,12 @@
 """Judger decides to include/exclude files and navigation items."""
+
 from __future__ import annotations
 
 import fnmatch
 import os
 import pathlib
 import re
-from typing import Union
+from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
 
 import igittigitt
@@ -18,7 +19,8 @@ from mkdocs.structure.pages import Page as MkDocsPage
 from . import logger as log
 from .plugin_config import PluginConfig  # noqa: TCH001
 
-NavigationItem = Union[MkDocsPage, MkDocsSection, MkDocsLink]
+if TYPE_CHECKING:
+    from mkdocs.structure import StructureItem as MkDocsStructureItem
 
 
 class Judger:
@@ -33,15 +35,15 @@ class Judger:
             self.mkdocsignore_parser = igittigitt.IgnoreParser()
             self.mkdocsignore_parser.parse_rule_file(pathlib.Path(self.plugin_config.mkdocsignore_file))
 
-    def evaluate_nav(self, nav: NavigationItem) -> NavigationItem | None:
+    def evaluate_nav(self, nav: MkDocsStructureItem) -> MkDocsStructureItem | None:
         """TODO."""
         if isinstance(nav, MkDocsSection):
-            nev_section = [self.evaluate_nav(child) for child in nav.children]
-            nev_section = list(filter(lambda item: item is not None, nev_section))
-            if nev_section:
+            nav_section = [self.evaluate_nav(child) for child in nav.ancestors]
+            nav_section = list(filter(lambda item: item is not None, nav_section))
+            if nav_section:
                 return MkDocsSection(
-                    nav.title,
-                    nev_section,  # type: ignore [arg-type]
+                    nav.title,  # type: ignore [arg-type]
+                    nav_section,  # type: ignore [arg-type]
                 )
             log.debug(f"remove navigation section: {nav.title}")
             return None
@@ -91,15 +93,20 @@ class Judger:
                         False,
                         str(f"{self.plugin_config.metadata_property}: {tag}"),
                     )
-        if self.plugin_config.mkdocsignore is True and self.mkdocsignore_parser.match(pathlib.Path(file.abs_src_path)):
+        if self.plugin_config.mkdocsignore is True and self.mkdocsignore_parser.match(
+            pathlib.Path(file.abs_src_path or ""),
+        ):
             return False, "mkdocsignore"
         return True, "no rule"
 
-    def __path_fix(self, src_path: str, abs_src_path: str) -> tuple[str, str]:
+    def __path_fix(self, src_path: str, abs_src_path: str | None) -> tuple[str, str | None]:
         """TODO."""
         if os.sep != "/":
             src_path = src_path.replace(os.sep, "/")
+
+        if abs_src_path is not None and os.sep != "/":
             abs_src_path = abs_src_path.replace(os.sep, "/")
+
         return src_path, abs_src_path
 
     def __get_metadata(self, file: MkDocsFile) -> list[str]:
